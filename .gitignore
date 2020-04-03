@@ -1,0 +1,11 @@
+# node.js dependencies
+node_modules/
+
+#bundle files
+dist/
+
+#IDE confs
+.vscode/
+.vs/
+
+.idea/
