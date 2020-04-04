@@ -7,6 +7,7 @@
       >
         <my-navbar />
         <router-view />
+        <my-form />
         <my-footer />
       </v-container>
     </v-content>
@@ -16,11 +17,13 @@
 <script>
   import MyNavbar from '../Navbar'
   import MyFooter from '../footer'
+  import MyForm from '../Form'
 
   export default {
     components: {
       MyNavbar,
       MyFooter,
+      MyForm,
     },
     data () {
       return {
