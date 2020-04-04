@@ -1,5 +1,5 @@
 <template>
-    <v-img style="z-index:3" src="../../public/web-combiomed-futer-04-04.png" >
+    <v-img style="z-index:3; margin-top: 75px; margin-bottom: -28px" src="../../public/web-combiomed-futer-04-04.png" >
   
     <v-row justify="center" style="margin-top: 135px;"> 
           <v-col md="2">

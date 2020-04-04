@@ -28,9 +28,9 @@
         drawer: null,
         links: [
           { text: 'Nosotros', route: '/dashboard', roles: [] },
-          { text: 'Productos', route: '/news', roles: [] },
+          { text: 'Productos', route: '/dashboard', roles: [] },
           { text: 'Servicios', route: '/blog', roles: ['User'] },
-          { text: 'Noticias y Eventos', route: '/clients' },
+          { text: 'Noticias y Eventos', route: '/news' },
           { text: 'Contactos', route: '/clients' },
         ],
         baseUrl: process.env.BASE_URL,
