@@ -11,8 +11,7 @@ import NewsAndEvents from './components/newsAndevents/NewsAndEvents.vue'
 import InitialPage from './components/InitialPage'
 import AppLayout from './components/Home/App_Layout'
 import Product from './components/product/Products'
-import Product_description from './components/product/Product_description'
-
+import ProductDescription from './components/product/Product_description'
 
 Vue.use(Router)
 
@@ -22,11 +21,11 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: AppLayout,
-      children: [{
-        path: '',
-        component: InitialPage,
-      }],
+      component: InitialPage,
+      // children: [{
+      //   path: '',
+      //   component: InitialPage,
+      // }],
     },
     {
       path: '/login',
@@ -41,7 +40,7 @@ const router = new Router({
     },
     {
       path: '/product_description',
-      component: Product_description,
+      component: ProductDescription,
     },
     {
       path: '/dashboard',
