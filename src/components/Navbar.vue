@@ -1,9 +1,9 @@
 <template>
   <v-app-bar
     app
-    color="grey"
-    elevation="1"
     hide-off-scroll
+    tabs
+    class="semi-transparent"
   >
     <v-toolbar-title class="text-uppercase">
       <v-btn
@@ -22,24 +22,25 @@
         </router-link>
       </v-btn>
     </v-toolbar-title>
-
-    <v-spacer></v-spacer>
-
-    <div
-      v-for="i in links"
-      :key="i.text"
-      align="center"
+    <v-divider />
+    <v-tabs
+      :align-with-title="false"
+      background-color="transparent"
+      color="white"
+      slider-color="#8b0000"
+      :hide-slider="this.$route.path === '/'"
+      slider-size="3"
     >
-      <v-btn
-        text
-        block
-        :retain-focus-on-click="true"
-        color="white"
+      <v-tab
+        v-for="i in links"
+        :key="i.text"
         :to="i.route"
+        background-color="transparent"
+        class="white--text"
       >
         {{ i.text }}
-      </v-btn>
-    </div>
+      </v-tab>
+    </v-tabs>
   </v-app-bar>
 </template>
 
@@ -81,3 +82,13 @@
     },
   }
 </script>
+<style>
+  .semi-transparent {
+   background-color: #838282 !important;
+   opacity: 0.75;
+ }
+.semi-transparent-blue {
+   background-color: transparent !important;
+   solid-color: gray;
+ }
+</style>
