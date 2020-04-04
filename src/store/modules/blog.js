@@ -46,18 +46,21 @@ const mutations = {
 }
 
 const actions = {
-    getPaginateBlog: async ({ commit }, payload) => {
+    getPaginateBlog: async ({ commit }, params) => {
         commit('SET_BLOG', [])
-        await axios.get(`/blog/blog?offset=${payload.offset}`)
+        await axios.get(`/blog/blog`,{params})
         .then(res => {
             if (res.data.success) {
                 commit('SET_COUNT_POST', res.data.data.count)
                 commit('SET_BLOG', res.data.data.posts)
+                return res.data.data.posts
             } else {
                 commit('SET_PRODUCT_ERROR', res.data.message)
+                return []
             }
         }).catch(e => {
             console.log(e)
+            return []
         })
     },
     getPaginateNews: async ({ commit }, payload) => {

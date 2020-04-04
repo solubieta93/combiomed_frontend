@@ -1,5 +1,5 @@
-<template>
-    <v-img style="z-index:3; margin-top: 75px; margin-bottom: -28px" src="../../public/web-combiomed-futer-04-04.png" >
+<template >
+  <v-img class="back fill-height" src="../../public/web-combiomed-futer-04-04.png" >
   
     <v-row justify="center" style="margin-top: 135px;"> 
           <v-col md="2">
@@ -12,45 +12,45 @@
               E-mail: combio@icid.cu
             </p>
           </v-col>
-           <v-col md="2"> 
+          <v-col md="2"> 
             <p class="caption font-italic font-weight-bold">
               Telf:(+53) 7 2739088, (+53)7 2719132
             </p>
           </v-col>
     </v-row>
-   
-      <v-row   justify="center">
-        <v-col cols="3">
-          <v-text-field label="Nombre" single-line outlined dense />
-        </v-col>
-        <v-col cols="2">
-          <v-text-field label="E-mail" single-line outlined dense/>
-        </v-col>
+
+    <v-row   justify="center">
+      <v-col cols="3">
+        <v-text-field label="Nombre" single-line outlined dense />
+      </v-col>
+      <v-col cols="2">
+        <v-text-field label="E-mail" single-line outlined dense/>
+      </v-col>
+    
+      <v-col cols="3">
+        <v-text-field label="Asunto" single-line outlined dense
+        />
+      </v-col>
+    </v-row>
+    <v-row   justify="center">
+      <v-col cols="8">
+        <v-textarea label="Introduzca su mensaje"  single-line outlined dense height="173px"/>
+      </v-col>
       
-        <v-col cols="3">
-          <v-text-field label="Asunto" single-line outlined dense
-          />
-        </v-col>
-      </v-row>
-      <v-row   justify="center">
-        <v-col cols="8">
-          <v-textarea label="Introduzca su mensaje"  single-line outlined dense height="173px"/>
-        </v-col>
-        
-      
-      </v-row>
-      <v-row justify="center">
-        <v-col
-          cols="8"
+    
+    </v-row>
+    <v-row justify="center">
+      <v-col
+        cols="8"
+      >
+        <v-btn color="#001A33" block
         >
-          <v-btn color="#001A33" block
-          >
-            <h5 style="    color: white;">Enviar ahora</h5>
-          </v-btn>
-        </v-col>
-        
-      </v-row>
-    </v-img>
+          <h5 style="    color: white;">Enviar ahora</h5>
+        </v-btn>
+      </v-col>
+      
+    </v-row>
+  </v-img>
 </template>
 
 
@@ -141,3 +141,9 @@
     },
   }
 </script>
+
+<style scoped>
+  .back {
+    background-color: white;
+  }
+</style>
