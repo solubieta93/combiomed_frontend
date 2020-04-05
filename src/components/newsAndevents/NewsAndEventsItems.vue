@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-      <div class='grid'>
+      <div class='grid' v-if= !detail>
           <div class='item-0'>
             <v-img src="../../../public/ampa- (1).png" class="fill-height">
               <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
@@ -36,13 +36,7 @@
           </div>
       </div>
 
-
-
-
-
-
-
-      <!-- <v-row dense>
+      <v-row dense v-if= detail>
         <v-col
           v-for="(card, i) in blog"
           :key="card.title"
@@ -58,7 +52,7 @@
                 </v-overlay>	
             </v-img>
         </v-col>
-      </v-row> -->
+      </v-row>
 
       <v-pagination
       v-model="page"
@@ -82,6 +76,18 @@
       limit: {
         type: Number,
         default: 10
+      },
+      detail: {
+        type: Boolean,
+        default: false
+      },
+      post_id: {
+        type: Number,
+        default: -1
+      },
+      start: {
+        type: Number,
+        default: -1
       }
     },
     data () {
@@ -115,7 +121,10 @@
       paginate () {
         this.$store.dispatch('getPaginateBlog', {
           offset: this.page - 1,
-          limit: this.limit
+          limit: this.limit,
+          // dont mared if id_distinct or/and start is -1 because in backend is prepare for that
+          id_distinct: this.post_id,
+          start: this.start
         })
       },
     },

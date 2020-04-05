@@ -84,6 +84,14 @@
       </div>
       
       <news-and-events-items :limit="4" :page="2"/>
+
+      <v-btn
+        text
+        color="deep-purple accent-4"
+        @click="showMoreDialog(blog[1])"
+      >
+        Leer más
+      </v-btn>
   </v-container>  
 </template>
 
@@ -122,6 +130,10 @@
           offset: 0,
           limit: 4
         })
+      },
+      showMoreDialog (item) {
+        console.log(item)
+        this.$router.push({path:`/blog/${item}`})
       },
     },
   }
