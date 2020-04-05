@@ -1,161 +1,89 @@
 <template>
   <v-container fluid 
-    class="back">
+    class="white_back">
     <navbar />
 
-    <v-img v-if="blog && blog.length && !blog[0].image"
+    <v-img
     src="../../../public/ampa- (1).png" style="top:0px"/>
     <v-img 
     src="../../../public/web-combiomed-historia-03.png" style="top:-40px"/>
 
-    <!-- FIRST NEWS -->
-    <v-col cols="12" >
-        <v-row  justify="left" style="height: 50px; margin-top: 10px; ">
-         <v-col  md="1">
-         </v-col>
-       <v-col  md="2" >
-           <h3 class="text-uppercase" style="margin-top: -14px; margin-left: 16px; color: grey;">
-            TITULAR de la noticia
-            <br>
-          </h3>
-        </v-col>
-        <v-col  md="7">
-         <hr>
-        </v-col>
-        </v-row>
-    </v-col>
-           
-    <v-row  justify="left" style=" margin-left: 16px; color: grey;">
-      <v-col  md="1">
-      </v-col>
-      <v-col  md="9" justify="justify">
-        <p class="text-justify">
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-        </p>
-      </v-col>
-    </v-row>
-
-    <!-- SECOND NEWS -->
-    <v-col cols="12" >
-        <v-row  justify="left" style="height: 50px; margin-top: 10px; ">
-          <v-col  md="1">
-          </v-col>
-          <v-col  md="4" >
-            <v-img src="../../../public/ampa- (1).png" style="top:0px"/>
-          </v-col>   
-          <v-col  md="2" >
-            <h3 class="text-uppercase" style="margin-top: -14px; margin-left: 16px; color: grey;">
-            TITULAR de la noticia
-            <br>
-          </h3>
-          </v-col>
+    
+      <!-- TITLE -->
+      <v-col cols="12">
+        <v-row  justify="center" style="height: 50px; color: grey;">
           <v-col  md="3">
-            <hr/>
-          </v-col>
-        </v-row>
-    </v-col>
-           
-    <v-row  justify="left" style=" margin-left: 16px; color: grey;">
-      <v-col  md="5">
-      </v-col>
-       
-      <v-col  md="5">
-        <p class="text-justify">
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-        </p>
-      </v-col>
-      
-    </v-row>
-
-     <!-- THIRD NEWS -->
-    <v-col cols="12" >
-        <v-row  justify="left" style="height: 50px; margin-top: 10px; ">
-          <v-col  md="1">
+              <hr>
           </v-col>
           <v-col  md="2" >
-            <h3 class="text-uppercase" style="margin-top: -14px; margin-left: 16px; color: grey;">
-              TITULAR de la noticia
-              <br>
-            </h3>
-          </v-col>
-          <v-col  md="3">
+              <h3 class="text-uppercase" style="margin-top: -14px; margin-left: 16px;">
+                Noticias y Eventos
+                <br>
+              </h3>
+            </v-col>
+            <v-col  md="3">
             <hr>
           </v-col>
-          <v-col  md="4" >
-            <v-img src="../../../public/ampa- (1).png" style="top:0px"/>
-          </v-col>
         </v-row>
-    </v-col>
-           
-    <v-row  justify="left" style=" margin-left: 16px; color: grey;">
-      <v-col  md="1">
       </v-col>
-      <v-col  md="5">
-        <p class="text-justify">
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el 
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad funcionamos bajo el nombre COMBIOMED:empresa de tecnología médica digital.
-        </p>
-      </v-col>
+
+      <!-- FOUR FIRST NEWS -->
+      <div class="div_product">
+        <div class='my_container'>
+        <div class='grid'>
+          <div class='item-0'>
+            <v-img src="../../../public/ampa- (1).png" class="fill-height">
+            <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
+                    <div>
+                <h3 class="text-uppercase">{{blog[0].title}}</h3>
+                <h3>{{blog[0].abstract}}</h3>
+                <h3>Autor: {{blog[0].owner}}</h3>
+                    </div>
+            </v-overlay>	
+        </v-img>
+          </div>
+          <div class='item-1'>
+            <v-img src="../../../public/ampa- (1).png" class="fill-height">
+            <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
+                    <div>
+                <h3 class="text-uppercase">{{blog[0].title}}</h3>
+                <h3>{{blog[0].abstract}}</h3>
+                <h3>Autor: {{blog[0].owner}}</h3>
+                    </div>
+            </v-overlay>	
+          </v-img>
+          </div>
+          <div class='item-2'>
+            <v-img src="../../../public/ampa- (1).png" class="fill-height">
+            <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
+                    <div>
+                <h3 class="text-uppercase">{{blog[0].title}}</h3>
+                <h3>{{blog[0].abstract}}</h3>
+                <h3>Autor: {{blog[0].owner}}</h3>
+                    </div>
+            </v-overlay>	
+        </v-img>
+          </div>
+          <div class='item-3'>
+            <v-img src="../../../public/ampa- (1).png" class="fill-height">
+            <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
+                    <div>
+                <h3 class="text-uppercase">{{blog[0].title}}</h3>
+                <h3>{{blog[0].abstract}}</h3>
+                <h3>Autor: {{blog[0].owner}}</h3>
+                    </div>
+            </v-overlay>	
+        </v-img>
+          </div>
+        </div>
+	    </div>
+      </div>
+
+      <div>
+        <img class="fill-height" src="../../../public/news_middle_image.png"  style="margin-top: 100px; margin-bottom: 50px;" />
+      </div>
       
-    </v-row>
-
-    <v-container>
-      <NewsAndEventsItems> </NewsAndEventsItems>
-    </v-container>
-   
-
-    <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addNews"
-      max-width="600px"
-    >
-      <add-post
-        :post="newNews"
-        :mode="'creating'"
-        :onSave="() => { addNews = false }"
-      />
-    </v-dialog>
-    <v-card-text v-if="isAdmin" style="height: 100px; position: relative">
-      <v-btn
-        absolute
-        dark
-        fab
-        right
-        small
-        color="pink"
-        @click="showAddNewsDialog()"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-card-text>
+      <news-and-events-items/>
   </v-container>  
 </template>
 
@@ -163,6 +91,8 @@
   import Navbar from '@/components/Navbar'
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import AddPost from '@/components/newsAndevents/AddPost'
+  import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
+  import ShowPostOnCard from '@/components/newsAndevents/ShowPostOnCard'
   import Footer from '@/components/footer'
   import Form from '@/components/Form'
   import { mapGetters } from 'vuex'
@@ -172,6 +102,8 @@
       Navbar,
       NewsAndEventsItems,
       AddPost,
+      ShowPostDetail,
+      ShowPostOnCard,
       Footer,
       Form,
      },
@@ -210,9 +142,9 @@
     },
     methods: {
       async paginate () {
-        await this.$store.dispatch('getPaginateNews', {
+        await this.$store.dispatch('getPaginateBlog', {
           offset: (this.page - 1),
-          limit: 3
+          limit: 6
         })
       },
       async showAddNewsDialog () {
@@ -230,8 +162,61 @@
     },
   }
 </script>
+
 <style scoped>
-  .back {
+
+.white_back {
     background-color: white !important;
   }
+
+.div_product{
+	font-family: helvetica;
+	font-size: 18px;
+}
+
+div img{
+	width:100%;
+	height:100%;
+  object-fit: fill; 
+}
+
+.my_container {
+	margin:auto;
+	width:80%;
+}
+
+.grid{
+	display:grid;
+	grid-template-columns: repeat(3, 1fr);
+  /* grid-template-rows: repeat(5, 1fr); */
+	grid-gap: 16px;
+  column-gap: 16px;
+	grid-auto-rows:200px;
+}
+
+.grid div{	
+	overflow:hidden;
+}
+
+.item-0{
+	grid-row: 1/3;
+  grid-column: 1/2;
+	height: 100%;
+}
+.item-1{
+	grid-row: 1/3;
+  grid-column: 2/3;
+	height: 100%;
+}
+.item-2{
+	grid-row: 1/5;
+	grid-column: 3/4;
+	height: 100%;
+}
+.item-3{
+	grid-column: 1/3;
+  grid-row: 3/5;
+	height: 100%;
+}
+
 </style>
