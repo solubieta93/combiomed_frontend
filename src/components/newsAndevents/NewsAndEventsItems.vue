@@ -1,138 +1,41 @@
 <template>
     <v-container fluid>
       <div class='grid' v-if= !detail>
-        <v-hover v-slot:default=" { hover }">
-          <v-card class="item-0">
-            <v-img src="../../../public/ampa- (1).png" class="fill-height">
-              <v-expand-transition>
-                <div 
-                  v-if="hover"
-                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                  style="height: 100%"
-                >
-                </div>
-                <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:100px; left: 0px;">
-                          <div>
-                      <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                      <h3>{{blog[0].abstract}}</h3>
-                      <h3>Autor: {{blog[0].owner}}</h3>
-                          </div>
-                  </v-overlay>
-              </v-expand-transition>	
-            </v-img>
-          </v-card>
-        </v-hover>
-        <v-hover v-slot:default=" { hover }">
-          <v-card class="item-1">
-            <v-img src="../../../public/ampa- (1).png" class="fill-height">
-              <v-expand-transition>
-                <div 
-                  v-if="hover"
-                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                  style="height: 100%"
-                >                  
-                </div>
-                <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
-                          <div>
-                      <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                      <h3>{{blog[0].abstract}}</h3>
-                      <h3>Autor: {{blog[0].owner}}</h3>
-                          </div>
-                  </v-overlay>
-              </v-expand-transition>	
-            </v-img>
-          </v-card>
-        </v-hover>
-        <v-hover v-slot:default=" { hover }">
-          <v-card class="item-2">
-            <v-img src="../../../public/ampa- (1).png" class="fill-height">
-              <v-expand-transition>
-                <div 
-                  v-if="hover"
-                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                  style="height: 100%"
-                >                  
-                </div>
-                <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
-                          <div>
-                      <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                      <h3>{{blog[0].abstract}}</h3>
-                      <h3>Autor: {{blog[0].owner}}</h3>
-                          </div>
-                  </v-overlay>
-              </v-expand-transition>	
-            </v-img>
-          </v-card>
-        </v-hover>
-        <!-- <template v-for="(item,i) in items">
+        <template v-for="(post,i) in blog">
           <v-hover 
-            :key="item"
-            v-slot:default="{ hover }"
-          >
-            <v-card
-              :elevation="hover ? 12 : 2"
-              :class="item.class"
-            >
-              <v-img src="../../../public/ampa- (1).png"  :aspect-ratio="16/9">
-                <v-expand-transition>
-                  <div 
-                    v-if="hover"
-                    class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                    style="height: 100%"
-                  >
-                    <v-btn 
-                    text large color='white' class="div_product"
-                    :to="`/blog/${blog[i].id}`" 
+                :key="post"
+                v-slot:default="{ hover }"
+              >
+                <v-card
+                  :elevation="hover ? 12 : 2"
+                  :class="items[i].class"
+                >
+                  <v-img src="../../../public/ampa- (1).png" class="fill-height">
+                  <v-expand-transition>
+                    <div 
+                      v-if="hover"
+                      class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
+                      style="height: 100%"
                     >
-                      Leer Mas
-                    </v-btn>
-                  </div>
-                  <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  :style="item.style">
-                    <div>
-                      <h3 class="text-uppercase">{{blog[i].title}}</h3>
-                      <h3>{{blog[i].abstract}}</h3>
-                      <h3>Autor: {{blog[i].owner}}</h3>
+                      <v-btn 
+                      text large color='white' class="div_product"
+                      :to="`/news/${blog[i].id}`"  
+                      >
+                        Leer Mas
+                      </v-btn>
                     </div>
-                  </v-overlay>	
-                </v-expand-transition>
-              </v-img>
-            </v-card>
+                    <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  :style="items[i].style">
+                              <div>
+                          <h3 class="text-uppercase">{{post.title}}</h3>
+                          <h3>{{post.abstract}}</h3>
+                          <h3>Autor: {{post.owner}}</h3>
+                              </div>
+                      </v-overlay>
+                  </v-expand-transition>	
+                  </v-img>
+                </v-card>
           </v-hover>
-        </template> -->
-          <!-- <div class='item-0'>
-            <v-img src="../../../public/ampa- (1).png" class="fill-height">
-              <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
-                      <div>
-                  <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                  <h3>{{blog[0].abstract}}</h3>
-                  <h3>Autor: {{blog[0].owner}}</h3>
-                      </div>
-              </v-overlay>	
-            </v-img>
-          </div>
-          
-          <div class='item-1' v-if="blog[1]">
-            <v-img src="../../../public/ampa- (1).png" class="fill-height">
-              <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
-                      <div>
-                  <h3 class="text-uppercase">{{blog[1].title}}</h3>
-                  <h3>{{blog[1].abstract}}</h3>
-                  <h3>Autor: {{blog[1].owner}}</h3>
-                      </div>
-              </v-overlay>	
-            </v-img>
-          </div>
-          <div class='item-2' v-if="blog[2]">
-            <v-img src="../../../public/ampa- (1).png" class="fill-height">
-              <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
-                      <div>
-                  <h3 class="text-uppercase">{{blog[2].title}}</h3>
-                  <h3>{{blog[2].abstract}}</h3>
-                  <h3>Autor: {{blog[2].owner}}</h3>
-                      </div>
-              </v-overlay>	
-            </v-img>
-          </div> -->
+        </template>
       </div>
 
       <v-row dense v-if= detail>
@@ -195,8 +98,8 @@
         items: [
           // 275px
           { class: 'item-0', style: "height:141px; left: 0px; top: 67%;" },
-          { class: 'item-1', style: "height:141px; left: 0px; top: 67%;" },
-          { class: 'item-2', style: "height:141px; left: 0px; top: 67%;" },
+          { class: 'item-1', style: "height:141px; left: 0px; top: 40%;" },
+          { class: 'item-2', style: "height:141px; left: 0px; top: 40%;" },
         ],
       }
     },
