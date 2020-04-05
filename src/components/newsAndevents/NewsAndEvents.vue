@@ -46,9 +46,9 @@
             <v-img src="../../../public/ampa- (1).png" class="fill-height">
             <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
                     <div>
-                <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                <h3>{{blog[0].abstract}}</h3>
-                <h3>Autor: {{blog[0].owner}}</h3>
+                <h3 class="text-uppercase">{{blog[1].title}}</h3>
+                <h3>{{blog[1].abstract}}</h3>
+                <h3>Autor: {{blog[1].owner}}</h3>
                     </div>
             </v-overlay>	
           </v-img>
@@ -57,9 +57,9 @@
             <v-img src="../../../public/ampa- (1).png" class="fill-height">
             <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
                     <div>
-                <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                <h3>{{blog[0].abstract}}</h3>
-                <h3>Autor: {{blog[0].owner}}</h3>
+                <h3 class="text-uppercase">{{blog[2].title}}</h3>
+                <h3>{{blog[2].abstract}}</h3>
+                <h3>Autor: {{blog[2].owner}}</h3>
                     </div>
             </v-overlay>	
         </v-img>
@@ -68,9 +68,9 @@
             <v-img src="../../../public/ampa- (1).png" class="fill-height">
             <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
                     <div>
-                <h3 class="text-uppercase">{{blog[0].title}}</h3>
-                <h3>{{blog[0].abstract}}</h3>
-                <h3>Autor: {{blog[0].owner}}</h3>
+                <h3 class="text-uppercase">{{blog[3].title}}</h3>
+                <h3>{{blog[3].abstract}}</h3>
+                <h3>Autor: {{blog[3].owner}}</h3>
                     </div>
             </v-overlay>	
         </v-img>
@@ -83,7 +83,7 @@
         <img class="fill-height" src="../../../public/news_middle_image.png"  style="margin-top: 100px; margin-bottom: 50px;" />
       </div>
       
-      <news-and-events-items/>
+      <news-and-events-items :limit="4" :page="2"/>
   </v-container>  
 </template>
 
@@ -98,7 +98,7 @@
   import { mapGetters } from 'vuex'
 
   export default {
-     components: {
+    components: {
       Navbar,
       NewsAndEventsItems,
       AddPost,
@@ -106,35 +106,11 @@
       ShowPostOnCard,
       Footer,
       Form,
-     },
-     data () {
-      return {
-        show: false,
-        showMore: false,
-        editing: false,
-        addNews: false,
-        page: 1,
-        newNews: Object({}),
-        overlay: false,
-        title: '',
-        content: '',
-        abstract: '',
-      }
     },
     computed: {
-      ...mapGetters(['blog' , 'user', 'count_post', 'comments']),
+      ...mapGetters(['blog', 'user', 'count_post']),
       isAdmin: function () {
         return this.user && this.user.is_superuser
-      },
-      pagination_length () {
-        return Number.parseInt(this.count_post % 3 > 0 ? (this.count_post / 3) + 1 : this.count_post / 3)
-      },
-    },
-    watch: {
-      page (value) {
-        if (value) {
-          this.paginate()
-        }
       },
     },
     mounted: async function () {
@@ -143,21 +119,9 @@
     methods: {
       async paginate () {
         await this.$store.dispatch('getPaginateBlog', {
-          offset: (this.page - 1),
-          limit: 6
+          offset: 0,
+          limit: 4
         })
-      },
-      async showAddNewsDialog () {
-        this.addNews = true
-        this.newNews = await this.$store.dispatch('getNewPost')
-      },
-      async submit () {
-        const res = await this.$store.dispatch('postPost', this.newPost)
-        if (!res.success) {
-          this.saveError = res.message
-          return
-        }
-        this.addPost = false
       },
     },
   }

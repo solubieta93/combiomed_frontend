@@ -47,7 +47,7 @@
     </v-row>
 
     <!-- TO SHOW OTHER NEWS AS SUGERENCY -->
-    <news-and-events-items/>
+    <news-and-events-items :limit="6"/>
 
     <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
     <v-dialog
