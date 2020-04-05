@@ -1,6 +1,41 @@
 <template>
     <v-container fluid>
       <div class='grid' v-if= !detail>
+        <!-- <template v-for="(item,i) in items">
+          <v-hover 
+            :key="item"
+            v-slot:default="{ hover }"
+          >
+            <v-card
+              :elevation="hover ? 12 : 2"
+              :class="item.class"
+            >
+              <v-img src="../../../public/ampa- (1).png"  :aspect-ratio="16/9">
+                <v-expand-transition>
+                  <div 
+                    v-if="hover"
+                    class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
+                    style="height: 100%"
+                  >
+                    <v-btn 
+                    text large color='white' class="div_product"
+                    :to="`/blog/${blog[i].id}`" 
+                    >
+                      Leer Mas
+                    </v-btn>
+                  </div>
+                  <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  :style="item.style">
+                    <div>
+                      <h3 class="text-uppercase">{{blog[i].title}}</h3>
+                      <h3>{{blog[i].abstract}}</h3>
+                      <h3>Autor: {{blog[i].owner}}</h3>
+                    </div>
+                  </v-overlay>	
+                </v-expand-transition>
+              </v-img>
+            </v-card>
+          </v-hover>
+        </template> -->
           <div class='item-0'>
             <v-img src="../../../public/ampa- (1).png" class="fill-height">
               <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
@@ -94,6 +129,12 @@
     data () {
       return {
         page: 1,
+        items: [
+          // 275px
+          { class: 'item-0', style: "height:141px; left: 0px; top: 67%;" },
+          { class: 'item-1', style: "height:141px; left: 0px; top: 67%;" },
+          { class: 'item-2', style: "height:141px; left: 0px; top: 67%;" },
+        ],
       }
     },
     computed: {
@@ -136,6 +177,14 @@
 
 
 <style scoped>
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+}
 
 .div_news{
 	font-family: helvetica;

@@ -31,7 +31,8 @@ const router = new Router({
     {
       path: '/login',
       component: Login,
-    }, {
+    }, 
+    {
       path: '/product',
       component: Product,
     },
@@ -56,49 +57,30 @@ const router = new Router({
       path: '/news',
       // name: 'news',
       component: AppLayout,
-      children: [{
-        path: '',
-        component: NewsAndEvents,
-      }],
+      children: [
+        {
+          path: '',
+          component: NewsAndEvents,
+        },
+        {
+          path: ':postId',
+          component: NewsAndEventsDetail,
+        },
+      ],
     },
-    {
-      path: '/blog/',
-      // name: 'blog',
-      component: AppLayout,
-      children: [{
-        path: '',
-        component: NewsAndEventsDetail,
-      }],
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/news',
-      component: AppLayout,
-      children: [{
-        name: 'newsItem',
-        path: '/newsItem/:post/comments/:comments_post/mode/:mode',
-        component: NewsItem,
-        props: true,
-      }],
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/blog',
-      component: AppLayout,
-      children: [{
-        name: 'blogItem',
-        path: '/blogItem/:post/comments/:comments_post/mode/:mode',
-        component: BlogItem,
-        props: true,
-      }],
-      meta: {
-        requiresAuth: true,
-      },
-    },
+    // {
+    //   path: '/blog',
+    //   name: 'blog',
+    //   component: AppLayout,
+    //   children: [{
+    //     path: '/:postId',
+    //     component: NewsAndEventsDetail,
+    //     props: true,
+    //   }],
+    //   meta: {
+    //     requiresAuth: true,
+    //   },
+    // },
     {
       path: '*',
       redirect: '/',

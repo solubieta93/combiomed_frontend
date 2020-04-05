@@ -3,6 +3,7 @@ import axios from '../../axios-auth'
 
 const state = {
     blog: [],
+    post: null,
     comments: [],
     count_post: 0,
     count_comments: 0,
@@ -12,6 +13,9 @@ const state = {
 const mutations = {
     SET_BLOG (state, payload) {
         state.blog = payload
+    },
+    SET_POST (state, payload) {
+        state.post = payload
     },
     SET_COMMENT (state, payload) {
         state.comments = payload
@@ -86,6 +90,24 @@ const actions = {
         }).catch(error => {
             commit('SET_PRODUCT_ERROR', error.message)
         })
+    },
+    getPost: async ({commit}, id) => {
+        try {
+            console.log('init_action')
+            const res = await axios.get(`/blog/${id}`)
+            console.log(res, 'get result')
+            if(res.status === 200) {
+                await commit('SET_POST', res.data)
+                console.log('return true', 'action')
+                return true
+            }
+            await commit('SET_PRODUCT_ERROR', res.data.detail)
+            return false
+        } catch (e) {
+            console.log(e, 'catch action')
+            await commit('SET_PRODUCT_ERROR', e.message)
+            return false
+        }
     },
     postPost: async ({ commit }, payload) => {
         try {
@@ -267,6 +289,9 @@ const getters = {
     },
     showNewPost (state) {
         return state.showNewPost
+    },
+    post (state) {
+        return state.post
     },
 }
 

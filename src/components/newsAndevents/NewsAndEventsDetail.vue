@@ -3,7 +3,7 @@
     class="white_back">
     <navbar />
 
-    <v-img v-if="!blog[0].image"
+    <v-img v-if="!post.image"
     src="../../../public/ampa- (1).png" style="top:0px"/>
     <v-img 
     src="../../../public/web-combiomed-historia-03.png" style="top:-40px"/>
@@ -16,7 +16,7 @@
         <v-col  md="2" >
            <h3 class="text-uppercase" style="margin-top: -14px; margin-left: 16px; color: grey;">
             <!-- {{post.title}} -->
-            {{blog[0].title}}
+            {{post.title}}
             <br>
           </h3>
         </v-col>
@@ -31,7 +31,7 @@
       <v-col  md="9" justify="justify">
         <p class="text-justify">
             <!-- {{post.content}} -->
-            {{blog[0].context}}
+            {{post.context}}
         </p>
       </v-col>
     </v-row>
@@ -85,7 +85,7 @@
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
   import Footer from '@/components/footer'
   import Form from '@/components/Form'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     components: {
@@ -96,32 +96,29 @@
       Footer,
       Form,
     },
-    props: {
-      post: {
-        id: Number,
-        title: String,
-        owner: String,
-        context: String,
-        image: null,
-        news: Boolean,
-        default: null,
-      },
-    },
     computed: {
-      ...mapGetters(['blog' , 'user', 'count_post', 'comments']),
+      ...mapGetters(['blog' , 'user', 'post']),
+      ...mapActions(['getPost']),
       isAdmin: function () {
         return this.user && this.user.is_superuser
       },
     },
     mounted: async function () {
+      console.log('mounted init')
+
+      const ok = await this.$store.dispatch('getPost',this.$route.params.postId)
+      console.log(ok, 'dispatchEvent')
+      if (!ok)
+        this.$router.push('/')
+
       await this.paginate()
     },
     methods: {
-      async paginate () {
+      async paginate (offset=0, limit=2) {
         await this.$store.dispatch('getPaginateBlog', {
-          offset: 0,
-          limit: 2,
-          // id_distinct: this.post.id
+          offset,
+          limit,
+          id_distinct: this.$route.params.postId,
         })
       },
       async showAddNewsDialog () {
