@@ -12,6 +12,7 @@
               </v-overlay>	
             </v-img>
           </div>
+          
           <div class='item-1' v-if="blog[1]">
             <v-img src="../../../public/ampa- (1).png" class="fill-height">
               <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
@@ -109,7 +110,8 @@
         if (value) {
           console.log(value, 'value')
           this.page = value
-          this.limit = 3
+          if (!this.detail)
+            this.limit = 3
           this.paginate()
         }
       },

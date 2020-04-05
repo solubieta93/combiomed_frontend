@@ -1,5 +1,5 @@
 <template >
-  <v-img class="back fill-height" src="../../public/web-combiomed-futer-04-04.png" >
+  <v-img class="back " src="../../public/web-combiomed-futer-04-04.png" >
   
     <v-row justify="center" style="margin-top: 135px;"> 
           <v-col md="2">
