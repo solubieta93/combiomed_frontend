@@ -12,7 +12,7 @@
           </v-row>
         </v-col>
      </v-row>
-       <p style="margin-left: 445px color: lightgrey"> @ Copyright 2020 Combiomed BioCubaFarma </p>
+       <p style="margin-left: 445px; color: lightgrey"> @ Copyright 2020 Combiomed BioCubaFarma </p>
  </v-img>
 </template>
 
