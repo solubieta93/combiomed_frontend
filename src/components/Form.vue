@@ -53,18 +53,17 @@
   </v-img>
 </template>
 
-
 <script>
   import Navbar from '@/components/Navbar'
   import Carousel_Portada from '@/components/Home/Carousel_Portada'
   import Footer from '@/components/footer'
 
   export default {
-     components: {
-        Navbar,
-       Carousel_Portada,
-       Footer
-     },
+    components: {
+      Navbar,
+      Carousel_Portada,
+      Footer,
+    },
     data () {
       return {
         baseUrl: process.env.BASE_URL,

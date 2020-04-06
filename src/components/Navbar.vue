@@ -3,44 +3,81 @@
     app
     hide-off-scroll
     tabs
-    class="semi-transparent"
+    color="transparent"
+    prominent
   >
-    <v-toolbar-title class="text-uppercase">
-      <v-btn
-        depressed
-        :retain-focus-on-click="false"
-        color="transparent"
-        title
-        block
-      >
-        <router-link to="/">
-          <v-img
-            :src="`${baseUrl}Logo sin genérico - Fondo blanco.png`"
-            height="40px"
-            width="200px"
-          />
-        </router-link>
-      </v-btn>
-    </v-toolbar-title>
-    <v-divider />
-    <v-tabs
-      :align-with-title="false"
-      background-color="transparent"
-      color="white"
-      slider-color="#8b0000"
-      :hide-slider="this.$route.path === '/'"
-      slider-size="3"
+    <v-overlay
+      absolute
+      color="#001A33"
+      class="fill"
     >
-      <v-tab
-        v-for="i in links"
-        :key="i.text"
-        :to="i.route"
-        background-color="transparent"
-        class="white--text"
+      <v-row
+        class="fill pa-0 ma-0"
+        align="end"
       >
-        {{ i.text }}
-      </v-tab>
-    </v-tabs>
+        <v-col
+          class="pa-0 ma-0"
+          align-self="end"
+        >
+          <v-row class="pa-0 ma-0">
+            <v-spacer />
+            <v-col
+              class="pa-0 ma-0"
+              cols="6"
+            >
+              <v-row
+                align="start"
+                class="pa-0 ma-0"
+              >
+                <v-toolbar-title class="text-uppercase">
+                  <v-btn
+                    color="transparent"
+                    title
+                    text
+                    to="/"
+                    width="300px"
+                    height="70px"
+                  >
+                    <v-img
+                      :src="`${baseUrl}Logo sin genérico - Fondo blanco.png`"
+                      height="70px"
+                      width="300px"
+                      :aspect-ratio="1.0778"
+                    />
+                  </v-btn>
+                </v-toolbar-title>
+              </v-row>
+            </v-col>
+            <v-spacer />
+          </v-row>
+
+          <v-divider
+            dark
+            style="width: 100vw"
+            color="white"
+          />
+          <v-tabs
+            :align-with-title="false"
+            background-color="transparent"
+            color="white"
+            slider-color="#8b0000"
+            :hide-slider="this.$route.path === '/'"
+            centered
+            show-arrows
+          >
+            <v-tab
+              v-for="i in links"
+              :key="i.text"
+              :to="i.route"
+              background-color="transparent"
+              class="white--text"
+            >
+              {{ i.text }}
+            </v-tab>
+          </v-tabs>
+        </v-col>
+      </v-row>
+    </v-overlay>
   </v-app-bar>
 </template>
 
@@ -90,5 +127,9 @@
 .semi-transparent-blue {
    background-color: transparent !important;
    solid-color: gray;
+ }
+ .fill {
+   width: 100vw;
+   height: 128px;
  }
 </style>
