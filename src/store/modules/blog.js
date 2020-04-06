@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import axios from '../../axios-auth'
+import {apiURI} from "../../globalConstants";
 
 const state = {
     blog: [],
@@ -59,8 +60,9 @@ const actions = {
         await axios.get(`/blog/blog`,{params})
         .then(res => {
             if (res.data.success) {
-                commit('SET_TWOPOSTS', res.data.data.posts)
-                return res.data.data.posts
+                const posts = res.data.data.posts.map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
+                commit('SET_TWOPOSTS', posts)
+                return posts
             } else {
                 commit('SET_PRODUCT_ERROR', res.data.message)
                 return []
@@ -77,20 +79,20 @@ const actions = {
             if (res.data.success) {
                 await commit('SET_COUNT_POST', res.data.data.count)
                 await commit('SET_BLOG', res.data.data.posts)
-                return { 
-                    posts: res.data.data.posts,
+                return {
+                    posts: res.data.data.posts.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
                     count: res.data.data.count,
                 }
             } else {
                 await commit('SET_PRODUCT_ERROR', res.data.message)
-                return { 
+                return {
                     posts: [],
                     count: 0,
                 }
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e)
-            return { 
+            return {
                 posts: [],
                 count: 0,
             }
@@ -103,7 +105,7 @@ const actions = {
         .then(res => {
             if (res.data.success) {
                 commit('SET_COUNT_POST', res.data.data.count)
-                commit('SET_BLOG', res.data.data.news)
+                commit('SET_BLOG', res.data.data.news.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })))
             } else {
                 commit('SET_PRODUCT_ERROR', res.data.message)
             }
@@ -127,7 +129,10 @@ const actions = {
             const res = await axios.get(`/blog/${id}`)
             console.log(res, 'get result')
             if(res.status === 200) {
-                await commit('SET_POST', res.data)
+                await commit('SET_POST', {
+                    ...res.data,
+                    image: res.data.image ? apiURI + res.data.image : null,
+                })
                 console.log('return true', 'action')
                 return true
             }

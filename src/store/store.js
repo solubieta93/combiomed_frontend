@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from './modules/auth'
 import product from './modules/product'
 import blog from './modules/blog'
+import file from './modules/file'
 
 Vue.use(Vuex)
 
@@ -39,5 +40,6 @@ export const store = new Vuex.Store({
     auth,
     product,
     blog,
+    file,
   },
 })
