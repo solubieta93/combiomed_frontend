@@ -87,7 +87,7 @@
       <add-post
         :post="newPost"
         :mode="'creating'"
-        :onSave="() => { addPost = false }"
+        :onSave="() => { addPost = false; paginate() }"
       />
     </v-dialog>
     <v-card-text v-if="isAdmin" style="height: 100px; position: relative">
@@ -136,7 +136,9 @@
           { class: 'item-3', style: "height:141px; left: 0px; top: 67%;" },
         ],
         postFixed: [],
-        newPost: false
+        newPost: null,
+        addPost: false
+
       }
     },
     computed: {
@@ -158,6 +160,7 @@
       },
       async showAddNewsDialog () {
         this.newPost = await this.$store.dispatch('getNewPost')
+        this.addPost = true
       },
       async submit () {
         const res = await this.$store.dispatch('postPost', this.newPost)
