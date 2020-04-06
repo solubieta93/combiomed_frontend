@@ -4,6 +4,7 @@ import axios from '../../axios-auth'
 const state = {
     blog: [],
     post: null,
+    twoposts: [],
     comments: [],
     count_post: 0,
     count_comments: 0,
@@ -16,6 +17,9 @@ const mutations = {
     },
     SET_POST (state, payload) {
         state.post = payload
+    },
+    SET_TWOPOSTS (state, payload) {
+        state.twoposts = payload
     },
     SET_COMMENT (state, payload) {
         state.comments = payload
@@ -50,13 +54,12 @@ const mutations = {
 }
 
 const actions = {
-    getPaginateBlog: async ({ commit }, params) => {
-        commit('SET_BLOG', [])
+    getTwoPosts: async ({ commit }, params) => {
+        commit('SET_TWOPOSTS', [])
         await axios.get(`/blog/blog`,{params})
         .then(res => {
             if (res.data.success) {
-                commit('SET_COUNT_POST', res.data.data.count)
-                commit('SET_BLOG', res.data.data.posts)
+                commit('SET_TWOPOSTS', res.data.data.posts)
                 return res.data.data.posts
             } else {
                 commit('SET_PRODUCT_ERROR', res.data.message)
@@ -66,6 +69,32 @@ const actions = {
             console.log(e)
             return []
         })
+    },
+    getPaginateBlog: async ({ commit }, params) => {
+        try {
+            await commit('SET_BLOG', [])
+            const res = await axios.get(`/blog/blog`,{params})
+            if (res.data.success) {
+                await commit('SET_COUNT_POST', res.data.data.count)
+                await commit('SET_BLOG', res.data.data.posts)
+                return { 
+                    posts: res.data.data.posts,
+                    count: res.data.data.count,
+                }
+            } else {
+                await commit('SET_PRODUCT_ERROR', res.data.message)
+                return { 
+                    posts: [],
+                    count: 0,
+                }
+            }
+        } catch(e) {
+            console.log(e)
+            return { 
+                posts: [],
+                count: 0,
+            }
+        }
     },
     getPaginateNews: async ({ commit }, payload) => {
         commit('SET_BLOG', [])
@@ -94,6 +123,7 @@ const actions = {
     getPost: async ({commit}, id) => {
         try {
             console.log('init_action')
+            commit('SET_POST', [])
             const res = await axios.get(`/blog/${id}`)
             console.log(res, 'get result')
             if(res.status === 200) {

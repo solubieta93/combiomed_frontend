@@ -38,7 +38,7 @@
 
     <!-- TO SHOW OTHER TWO NEWS -->
     <v-row
-      v-for="(card, i) in blog"
+      v-for="(card, i) in this.twoposts"
       :key="card.title"
       >
         <show-post-detail 
@@ -48,33 +48,8 @@
     </v-row>
 
     <!-- TO SHOW OTHER NEWS AS SUGERENCY -->
-    <news-and-events-items :limit="6" :detail="true" :page="2" :start="2"/>
-    <!-- :post_id="post.id"/> -->
-
-    <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addNews"
-      max-width="600px"
-    >
-      <add-post
-        :post="newNews"
-        :mode="'creating'"
-        :onSave="() => { addNews = false }"
-      />
-    </v-dialog>
-    <v-card-text v-if="isAdmin" style="height: 100px; position: relative">
-      <v-btn
-        absolute
-        dark
-        fab
-        right
-        small
-        color="pink"
-        @click="showAddNewsDialog()"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-card-text>
+    <news-and-events-items :start="2" :limit="3" :post_id="postId"/>
+    
   </v-container>  
 </template>
 
@@ -83,6 +58,7 @@
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import AddPost from '@/components/newsAndevents/AddPost'
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
+  import ShowPostOnCard from '@/components/newsAndevents/ShowPostOnCard'
   import Footer from '@/components/footer'
   import Form from '@/components/Form'
   import { mapGetters, mapActions } from 'vuex'
@@ -93,46 +69,50 @@
       NewsAndEventsItems,
       AddPost,
       ShowPostDetail,
+      ShowPostOnCard,
       Footer,
       Form,
     },
+    data () {
+      return {
+        twoposts: [],
+        plaf: null
+      }
+    },
     computed: {
-      ...mapGetters(['blog' , 'user', 'post']),
-      ...mapActions(['getPost']),
+      ...mapGetters(['user', 'post']),
       isAdmin: function () {
         return this.user && this.user.is_superuser
       },
+      postId () {
+        return this.$route.params.postId
+      }
     },
     mounted: async function () {
-      console.log('mounted init')
-
-      const ok = await this.$store.dispatch('getPost',this.$route.params.postId)
-      console.log(ok, 'dispatchEvent')
-      if (!ok)
-        this.$router.push('/')
-
-      await this.paginate()
+      await this.load()
+    },
+    watch : {
+      async postId (value) {
+        if (value) 
+          await this.load()
+      }
     },
     methods: {
       async paginate (offset=0, limit=2) {
-        await this.$store.dispatch('getPaginateBlog', {
+        const {count, posts } = await this.$store.dispatch('getPaginateBlog', {
           offset,
           limit,
           id_distinct: this.$route.params.postId,
         })
+        this.twoposts = posts
       },
-      async showAddNewsDialog () {
-        this.addNews = true
-        this.newNews = await this.$store.dispatch('getNewPost')
-      },
-      async submit () {
-        const res = await this.$store.dispatch('postPost', this.newPost)
-        if (!res.success) {
-          this.saveError = res.message
-          return
-        }
-        this.addPost = false
-      },
+      async load(){
+        const ok = await this.$store.dispatch('getPost',this.$route.params.postId)
+        console.log(ok, 'dispatchEvent')
+        if (!ok)
+          this.$router.push('/')
+        await this.paginate()
+      }
     },
   }
 </script>

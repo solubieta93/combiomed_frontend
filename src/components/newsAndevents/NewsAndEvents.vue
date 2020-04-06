@@ -51,7 +51,7 @@
                       <!-- to='/dashboard' -->
                         <v-btn 
                         text large color='white' class="div_product"
-                        :to="`/news/${blog[i].id}`" 
+                        :to="`/news/${postFixed[i].id}`" 
                         >
                           Leer Mas
                         </v-btn>
@@ -59,9 +59,9 @@
                       <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  :style="item.style">
                       <!-- "height:141px; left: 0px; top: 275px;"> -->
                         <div>
-                          <h3 class="text-uppercase">{{blog[i].title}}</h3>
-                          <h3>{{blog[i].abstract}}</h3>
-                          <h3>Autor: {{blog[i].owner}}</h3>
+                          <h3 class="text-uppercase">{{postFixed[i].title}}</h3>
+                          <h3>{{postFixed[i].abstract}}</h3>
+                          <h3>Autor: {{postFixed[i].owner}}</h3>
                         </div>
                       </v-overlay>	
                     </v-expand-transition>
@@ -77,7 +77,32 @@
         <img class="fill-height" src="../../../public/news_middle_image.png"  style="margin-top: 100px; margin-bottom: 50px;" />
       </div>
       
-      <news-and-events-items :limit="4" :page="2"/>
+      <news-and-events-items :start="4" :limit="3" />
+
+      <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
+    <v-dialog
+      v-model="addPost"
+      max-width="600px"
+    >
+      <add-post
+        :post="newPost"
+        :mode="'creating'"
+        :onSave="() => { addPost = false }"
+      />
+    </v-dialog>
+    <v-card-text v-if="isAdmin" style="height: 100px; position: relative">
+      <v-btn
+        absolute
+        dark
+        fab
+        right
+        small
+        color="pink"
+        @click="showAddNewsDialog()"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-card-text>
   </v-container>  
 </template>
 
@@ -110,10 +135,12 @@
           { class: 'item-2', style: "height:141px; left: 0px; top: 83.6%;"},
           { class: 'item-3', style: "height:141px; left: 0px; top: 67%;" },
         ],
+        postFixed: [],
+        newPost: false
       }
     },
     computed: {
-      ...mapGetters(['blog', 'user', 'count_post']),
+      ...mapGetters(['user']),
       isAdmin: function () {
         return this.user && this.user.is_superuser
       },
@@ -123,15 +150,22 @@
     },
     methods: {
       async paginate () {
-        await this.$store.dispatch('getPaginateBlog', {
+        const {posts, count} = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
           limit: 4
         })
+        this.postFixed = posts
       },
-      showMoreDialog (item) {
-        console.log(item)
-        // this.$router.push({path:`/blog${item}`})
-        this.$router.push('blog', {params: {post_id: item}})
+      async showAddNewsDialog () {
+        this.newPost = await this.$store.dispatch('getNewPost')
+      },
+      async submit () {
+        const res = await this.$store.dispatch('postPost', this.newPost)
+        if (!res.success) {
+          this.saveError = res.message
+          return
+        }
+        this.addPost = false
       },
     },
   }

@@ -1,9 +1,9 @@
 <template>
     <v-container fluid>
-      <div class='grid' v-if= !detail>
-        <template v-for="(post,i) in blog">
+      <div class='grid'>
+        <template v-for="(post,i) in posts">
           <v-hover 
-                :key="post"
+                :key="i"
                 v-slot:default="{ hover }"
               >
                 <v-card
@@ -19,7 +19,7 @@
                     >
                       <v-btn 
                       text large color='white' class="div_product"
-                      :to="`/news/${blog[i].id}`"  
+                      :to="`/news/${post.id}`"  
                       >
                         Leer Mas
                       </v-btn>
@@ -38,24 +38,6 @@
         </template>
       </div>
 
-      <v-row dense v-if= detail>
-        <v-col
-          v-for="(card, i) in blog"
-          :key="card.title"
-          :cols="4"
-        >
-            <v-img src="../../../public/ampa- (1).png">
-                <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
-                        <div>
-                    <h3 class="text-uppercase">{{card.title}}</h3>
-                    <h3>{{card.abstract}}</h3>
-                    <h3>Autor: {{card.owner}}</h3>
-                        </div>
-                </v-overlay>	
-            </v-img>
-        </v-col>
-      </v-row>
-
       <v-pagination
       v-model="page"
       :length="pagination_length"
@@ -71,10 +53,6 @@
 
   export default {
     props: {
-      page: {
-        type: Number,
-        default: 1
-      },
       limit: {
         type: Number,
         default: 10
@@ -89,8 +67,8 @@
       },
       start: {
         type: Number,
-        default: -1
-      }
+        default: 0
+      },
     },
     data () {
       return {
@@ -101,40 +79,50 @@
           { class: 'item-1', style: "height:141px; left: 0px; top: 40%;" },
           { class: 'item-2', style: "height:141px; left: 0px; top: 40%;" },
         ],
+        posts: [],
+        count_post: 0,
       }
     },
     computed: {
-      ...mapGetters(['blog', 'user', 'count_post']),
+      ...mapGetters(['user']),
       isAdmin: function () {
         return this.user && this.user.is_superuser
       },
       pagination_length () {
-        return Number.parseInt(this.count_post % this.limit > 0 ? (this.count_post / this.limit) + 1 : this.count_post / this.limit)
+        if (!this.count_post) return 0
+        const count = this.count_post - this.start
+        return Number.parseInt(count % this.limit > 0 ? (count / this.limit) + 1 : count / this.limit)
       },
+      postId () {
+        return this.post_id
+      }
     },
     watch: {
-      page (value) {
+      async page (value) {
         if (value) {
-          console.log(value, 'value')
-          this.page = value
-          if (!this.detail)
-            this.limit = 3
-          this.paginate()
+          await this.paginate()
+        }
+      },
+      async postId (value) {
+        if (value) {
+          await this.paginate()
         }
       },
     },
-    mounted: function () {
-      this.paginate()
+    mounted: async function () {
+      await this.paginate()
     },
     methods: {
-      paginate () {
-        this.$store.dispatch('getPaginateBlog', {
-          offset: this.page - 1,
+      async paginate () {
+        console.log(this.start, 'start')
+        console.log(this.limit, 'limit')
+        const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
+          offset: this.start + (this.page - 1) * this.limit,
           limit: this.limit,
-          // dont mared if id_distinct or/and start is -1 because in backend is prepare for that
           id_distinct: this.post_id,
-          start: this.start
         })
+        this.posts = posts
+        this.count_post = count
       },
     },
   }
