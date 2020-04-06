@@ -1,51 +1,65 @@
 <template>
-    <v-container fluid>
-      <div class='grid'>
-        <template v-for="(post,i) in posts">
-          <v-hover 
-                :key="i"
-                v-slot:default="{ hover }"
-              >
-                <v-card
-                  :elevation="hover ? 12 : 2"
-                  :class="items[i].class"
+  <v-container fluid>
+    <div class="grid">
+      <template v-for="(post,i) in posts">
+        <v-hover
+          :key="i"
+          v-slot:default="{ hover }"
+        >
+          <v-card
+            :elevation="hover ? 12 : 2"
+            :class="items[i].class"
+          >
+            <v-img
+              :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
+              class="fill-height"
+            >
+              <v-expand-transition>
+                <div
+                  v-if="hover"
+                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
+                  style="height: 100%"
                 >
-                  <v-img src="../../../public/ampa- (1).png" class="fill-height">
-                  <v-expand-transition>
-                    <div 
-                      v-if="hover"
-                      class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                      style="height: 100%"
-                    >
-                      <v-btn 
-                      text large color='white' class="div_product"
-                      :to="`/news/${post.id}`"  
-                      >
-                        Leer Mas
-                      </v-btn>
-                    </div>
-                    <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  :style="items[i].style">
-                              <div>
-                          <h3 class="text-uppercase">{{post.title}}</h3>
-                          <h3>{{post.abstract}}</h3>
-                          <h3>Autor: {{post.owner}}</h3>
-                              </div>
-                      </v-overlay>
-                  </v-expand-transition>	
-                  </v-img>
-                </v-card>
-          </v-hover>
-        </template>
-      </div>
+                  <v-btn
+                    text
+                    large
+                    color="white"
+                    class="div_product"
+                    :to="`/news/${post.id}`"
+                  >
+                    Leer Mas
+                  </v-btn>
+                </div>
+                <v-overlay
+                  :absolute="true"
+                  :value="true"
+                  :opacity="0.46"
+                  color="#001A33"
+                  :style="items[i].style"
+                >
+                  <div>
+                    <h3 class="text-uppercase">
+                      {{ post.title }}
+                    </h3>
+                    <h3>{{ post.abstract }}</h3>
+                    <h3>Autor: {{ post.owner }}</h3>
+                  </div>
+                </v-overlay>
+              </v-expand-transition>
+            </v-img>
+          </v-card>
+        </v-hover>
+      </template>
+    </div>
 
-      <v-pagination
+    <v-pagination
       v-model="page"
       :length="pagination_length"
       circle
-      @paginate="paginate"
       color="red"
+      @paginate="paginate"
     />
-    </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -55,19 +69,19 @@
     props: {
       limit: {
         type: Number,
-        default: 10
+        default: 10,
       },
       detail: {
         type: Boolean,
-        default: false
+        default: false,
       },
-      post_id: {
+      postId: {
         type: Number,
-        default: -1
+        default: -1,
       },
       start: {
         type: Number,
-        default: 0
+        default: 0,
       },
     },
     data () {
@@ -75,12 +89,13 @@
         page: 1,
         items: [
           // 275px
-          { class: 'item-0', style: "height:141px; left: 0px; top: 67%;" },
-          { class: 'item-1', style: "height:141px; left: 0px; top: 40%;" },
-          { class: 'item-2', style: "height:141px; left: 0px; top: 40%;" },
+          { class: 'item-0', style: 'height:141px; left: 0px; top: 67%;' },
+          { class: 'item-1', style: 'height:141px; left: 0px; top: 40%;' },
+          { class: 'item-2', style: 'height:141px; left: 0px; top: 40%;' },
         ],
         posts: [],
         count_post: 0,
+        baseUrl: process.env.BASE_URL,
       }
     },
     computed: {
@@ -95,7 +110,7 @@
       },
       postId () {
         return this.post_id
-      }
+      },
     },
     watch: {
       async page (value) {
@@ -128,7 +143,6 @@
   }
 </script>
 
-
 <style scoped>
 .v-card--reveal {
   align-items: center;
@@ -154,7 +168,7 @@ div img{
 	width:80%;
 }
 
-.grid div{	
+.grid div{
 	overflow:hidden;
 }
 
