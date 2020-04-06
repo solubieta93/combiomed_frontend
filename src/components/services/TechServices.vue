@@ -56,7 +56,6 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar'
   import Images from '@/components/services/Images.vue'
   import Footer from '@/components/footer'
   import Form from '@/components/Form'
@@ -64,7 +63,6 @@
 
   export default {
     components: {
-      Navbar,
       Images,
       Footer,
       Form,

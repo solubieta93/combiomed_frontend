@@ -1,6 +1,5 @@
 <template>
     <v-container fluid class="white_back">
-        <navbar/>
         
         <v-img
             src="../../../public/servAut0.png" style="top:0px"/>
@@ -175,7 +174,6 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar'
   import Images from '@/components/services/Images.vue'
   import Footer from '@/components/footer'
   import Form from '@/components/Form'
@@ -183,7 +181,6 @@
 
   export default {
     components: {
-      Navbar,
       Images,
       Footer,
       Form,
