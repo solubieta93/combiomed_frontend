@@ -74,7 +74,7 @@
   import MyFooter from '@/components/footer'
   import Form from '@/components/Form'
   import Product_d from '@/components/product/Product_d'
-  import Services from '@/components/servicios/Services'
+  import Services from '@/components/services/Services'
 
   export default {
     components: {
