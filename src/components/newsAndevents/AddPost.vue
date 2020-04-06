@@ -35,7 +35,8 @@
         />
         <v-btn
           class="red white--text"
-          @click="saveNews()"
+          @click="saveNews"
+          :loading="loading"
         >
           Save news
         </v-btn>
@@ -72,6 +73,7 @@
         rules: {
           required: value => !!value || 'Required.',
         },
+        loading: false
       }
     },
     computed: {
@@ -81,16 +83,24 @@
       },
     },
     methods: {
-      saveNews: async function () {
+      saveNews: function () {
+        this.loading = true
         const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
         this.saveError = ''
-        const res = await this.$store.dispatch(actionToDo, this.post)
-        if (!res.success) {
-          this.saveError = 'Please fill the required fields'
-        } else {
-          this.mode = 'show'
-          if (this.onSave) this.onSave()
-        }
+        this.$store.dispatch(actionToDo, this.post).then(res => {
+          if (!res.success) {
+            this.saveError = res.detail
+            this.loading = false
+          } else {
+            this.mode = 'show'
+            if (this.onSave) this.onSave()
+            this.loading = false
+          }
+        }).catch(e => {
+          console.log(e, 'error asdsd')
+          this.saveError = e.message
+          this.loading = false
+        })
       },
     },
   }
