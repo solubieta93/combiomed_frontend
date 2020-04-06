@@ -8,6 +8,7 @@ import NewsAndEventsDetail from './components/newsAndevents/NewsAndEventsDetail.
 import InitialPage from './components/InitialPage'
 import Services from './components/services/Services.vue'
 import AutoServices from './components/services/AutoServices.vue'
+import TechServices from './components/services/TechServices.vue'
 import AppLayout from './components/Home/App_Layout'
 import Product from './components/product/Products'
 import ProductDescription from './components/product/Product_description'
@@ -58,6 +59,10 @@ const router = new Router({
         {
           path: 'automatizacion',
           component: AutoServices,
+        },
+        {
+          path: 'tecnicos',
+          component: TechServices,
         }
       ],
     },

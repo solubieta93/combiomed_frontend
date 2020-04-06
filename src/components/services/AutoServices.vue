@@ -3,7 +3,7 @@
         <navbar/>
         
         <v-img
-            src="../../../public/ampa- (1).png" style="top:0px"/>
+            src="../../../public/servAut0.png" style="top:0px"/>
         <v-img 
             src="../../../public/web-combiomed-historia-03.png" style="top:-40px"/>
 
