@@ -7,11 +7,12 @@ import Blog from './components/blog/Blog.vue'
 import BlogItem from './components/blog/BlogItem.vue'
 import News from './components/news/News.vue'
 import NewsItem from './components/news/NewsItem.vue'
+import NewsAndEvents from './components/newsAndevents/NewsAndEvents.vue'
+import NewsAndEventsDetail from './components/newsAndevents/NewsAndEventsDetail.vue'
 import InitialPage from './components/InitialPage'
 import AppLayout from './components/Home/App_Layout'
 import Product from './components/product/Products'
-import Product_description from './components/product/Product_description'
-
+import ProductDescription from './components/product/Product_description'
 
 Vue.use(Router)
 
@@ -21,16 +22,17 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: AppLayout,
-      children: [{
-        path: '',
-        component: InitialPage,
-      }],
+      component: InitialPage,
+      // children: [{
+      //   path: '',
+      //   component: InitialPage,
+      // }],
     },
     {
       path: '/login',
       component: Login,
-    }, {
+    }, 
+    {
       path: '/product',
       component: Product,
     },
@@ -40,7 +42,7 @@ const router = new Router({
     },
     {
       path: '/product_description',
-      component: Product_description,
+      component: ProductDescription,
     },
     {
       path: '/dashboard',
@@ -55,49 +57,30 @@ const router = new Router({
       path: '/news',
       // name: 'news',
       component: AppLayout,
-      children: [{
-        path: '',
-        component: News,
-      }],
+      children: [
+        {
+          path: '',
+          component: NewsAndEvents,
+        },
+        {
+          path: ':postId',
+          component: NewsAndEventsDetail,
+        },
+      ],
     },
-    {
-      path: '/blog/',
-      // name: 'blog',
-      component: AppLayout,
-      children: [{
-        path: '',
-        component: Blog,
-      }],
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/news',
-      component: AppLayout,
-      children: [{
-        name: 'newsItem',
-        path: '/newsItem/:post/comments/:comments_post/mode/:mode',
-        component: NewsItem,
-        props: true,
-      }],
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/blog',
-      component: AppLayout,
-      children: [{
-        name: 'blogItem',
-        path: '/blogItem/:post/comments/:comments_post/mode/:mode',
-        component: BlogItem,
-        props: true,
-      }],
-      meta: {
-        requiresAuth: true,
-      },
-    },
+    // {
+    //   path: '/blog',
+    //   name: 'blog',
+    //   component: AppLayout,
+    //   children: [{
+    //     path: '/:postId',
+    //     component: NewsAndEventsDetail,
+    //     props: true,
+    //   }],
+    //   meta: {
+    //     requiresAuth: true,
+    //   },
+    // },
     {
       path: '*',
       redirect: '/',

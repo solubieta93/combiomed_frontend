@@ -65,7 +65,7 @@ export default {
 </script>
 <style scoped>
 
-div_product{
+.div_product{
 	font-family: helvetica;
 	font-size: 18px;
 }
