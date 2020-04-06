@@ -6,7 +6,7 @@
           :key="card.title"
           :cols="4"
         >
-            <v-img src="../../../public/ampa- (1).png">
+            <v-img :src="card.image ? card.image : `${baseUrl}ampa- (1).png`">
                 <v-overlay :absolute="true" :value="true" :opacity="0.46" color="#001A33"  style="height:141px; left: 0px; top: 60px;">
                         <div>
                     <h3 class="text-uppercase">{{card.title}}</h3>
@@ -53,6 +53,7 @@
     data () {
       return {
         page: 1,
+        baseUrl: process.env.BASE_URL,
       }
     },
     computed: {

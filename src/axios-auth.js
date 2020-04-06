@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { apiURI } from './globalConstants'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: apiURI,
 })
 
 // instance.defaults.headers.common['SOMETHING'] = 'something'
