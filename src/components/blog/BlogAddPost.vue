@@ -53,7 +53,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import axios from '../../axios-auth'
+  import axios from '../../utils/axios-auth'
 
   export default {
     props: {
