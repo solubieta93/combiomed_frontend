@@ -70,7 +70,7 @@
 <script>
   // import firebase from 'firebase'
   import { mapGetters } from 'vuex'
-  import { api } from '../../globalConstants'
+  import { api } from '../../utils/globalConstants'
   // import * as axios from 'axios'
 
   export default {

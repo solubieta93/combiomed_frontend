@@ -1,5 +1,5 @@
-import axios from '../../axios-auth'
-import { apiURI } from '../../globalConstants'
+import axios from '../../utils/axios-auth'
+import { apiURI } from '../../utils/globalConstants'
 
 const state = {
     fileUploaded: null,

@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-content class="pa-0">
+    <v-content class="pa-0 ma-0">
       <v-container
         fluid
-        class="pa-0"
+        class="pa-0 ma-0"
       >
         <my-navbar />
         <router-view />
@@ -31,9 +31,3 @@
     },
   }
 </script>
-
-<style>
-/*.my {
-  padding: 0px 0px 0px;
-}*/
-</style>

@@ -1,18 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './components/auth/Login.vue'
-import Dashboard from './views/Dashboard.vue'
-import LoginSuccess from './views/LoginSuccess'
-import Blog from './components/blog/Blog.vue'
-import BlogItem from './components/blog/BlogItem.vue'
-import News from './components/news/News.vue'
-import NewsItem from './components/news/NewsItem.vue'
-import NewsAndEvents from './components/newsAndevents/NewsAndEvents.vue'
-import NewsAndEventsDetail from './components/newsAndevents/NewsAndEventsDetail.vue'
-import InitialPage from './components/InitialPage'
-import AppLayout from './components/Home/App_Layout'
-import Product from './components/product/Products'
-import ProductDescription from './components/product/Product_description'
+import Login from '../components/auth/Login.vue'
+import Dashboard from '../views/Dashboard.vue'
+import LoginSuccess from '../views/LoginSuccess'
+import NewsAndEvents from '../components/newsAndevents/NewsAndEvents.vue'
+import NewsAndEventsDetail from '../components/newsAndevents/NewsAndEventsDetail.vue'
+import InitialPage from '../components/InitialPage'
+import AppLayout from '../components/layouts/App_Layout'
+import Product from '../components/product/Products'
+import ProductDescription from '../components/product/Product_description'
 
 Vue.use(Router)
 
@@ -31,7 +27,7 @@ const router = new Router({
     {
       path: '/login',
       component: Login,
-    }, 
+    },
     {
       path: '/product',
       component: Product,
