@@ -90,7 +90,7 @@
         links: [
           { text: 'Nosotros', route: '/dashboard', roles: [] },
           { text: 'Productos', route: '/dashboard', roles: [] },
-          { text: 'Servicios', route: '/blog', roles: ['User'] },
+          { text: 'Servicios', route: '/services', roles: [] },
           { text: 'Noticias y Eventos', route: '/news' },
           { text: 'Contactos', route: '/clients' },
         ],

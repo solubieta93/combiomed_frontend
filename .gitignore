@@ -9,3 +9,7 @@ dist/
 .vs/
 
 .idea/
+
+public/servicesAuto/
+
+public/
