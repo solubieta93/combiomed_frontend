@@ -68,10 +68,7 @@
 </template>
 
 <script>
-  // import firebase from 'firebase'
   import { mapGetters } from 'vuex'
-  import { api } from '../../globalConstants'
-  // import * as axios from 'axios'
 
   export default {
     name: 'Login',

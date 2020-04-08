@@ -1,4 +1,4 @@
-import axios from '../../axios-auth'
+import axios from '../../utils/axios-auth'
 // import router from '../../router'
 
 const state = {

@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './components/auth/Login.vue'
-import Dashboard from './views/Dashboard.vue'
-import LoginSuccess from './views/LoginSuccess'
-import NewsAndEvents from './components/newsAndevents/NewsAndEvents.vue'
-import NewsAndEventsDetail from './components/newsAndevents/NewsAndEventsDetail.vue'
-import InitialPage from './components/InitialPage'
-import Services from './components/services/Services.vue'
-import AutoServices from './components/services/AutoServices.vue'
-import TechServices from './components/services/TechServices.vue'
-import AppLayout from './components/Home/App_Layout'
-import Product from './components/product/Products'
-import ProductDescription from './components/product/Product_description'
+import Login from '@/views/Login.vue'
+import Dashboard from '@/views/Dashboard.vue'
+import NewsAndEvents from '@/views/news/NewsAndEvents.vue'
+import NewsAndEventsDetail from '@/views/news/NewsAndEventsDetail.vue'
+import AutoServices from '@/views/services/AutoServices.vue'
+import TechServices from '@/views/services/TechServices.vue'
+// import AppLayout from '@/components/layouts/App_Layout.vue'
+import Products from '@/views/products/Products.vue'
+import ProductDescription from '@/views/products/ProductDescription.vue'
+import Home from '@/views/Home.vue'
+import Services from '@/components/services/Services'
+const AppLayout = () => import('@/components/layouts/App_Layout.vue')
 
 Vue.use(Router)
 
@@ -21,23 +21,29 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: InitialPage,
+      component: AppLayout,
+      children: [{
+        path: '',
+        component: Home,
+      }],
     },
     {
       path: '/login',
       component: Login,
-    }, 
-    {
-      path: '/product',
-      component: Product,
     },
     {
-      path: '/login/success/:jwt',
-      component: LoginSuccess,
-    },
-    {
-      path: '/product_description',
-      component: ProductDescription,
+      path: '/products',
+      component: AppLayout,
+      children: [
+        {
+          path: '',
+          component: Products,
+        },
+        {
+          path: ':productId',
+          component: ProductDescription,
+        },
+      ],
     },
     {
       path: '/dashboard',
@@ -57,13 +63,13 @@ const router = new Router({
           component: Services,
         },
         {
-          path: 'automatizacion',
-          component: AutoServices,
+          path: 'tech',
+          component: TechServices,
         },
         {
-          path: 'tecnicos',
-          component: TechServices,
-        }
+          path: 'auto',
+          component: AutoServices,
+        },
       ],
     },
     {

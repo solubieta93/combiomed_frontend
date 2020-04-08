@@ -89,7 +89,7 @@
         drawer: null,
         links: [
           { text: 'Nosotros', route: '/dashboard', roles: [] },
-          { text: 'Productos', route: '/dashboard', roles: [] },
+          { text: 'Productos', route: '/products', roles: [] },
           { text: 'Servicios', route: '/services', roles: [] },
           { text: 'Noticias y Eventos', route: '/news' },
           { text: 'Contactos', route: '/clients' },
@@ -108,26 +108,10 @@
         await this.$store.dispatch('signOut')
         this.$router.push('/dashboard')
       },
-      /* hasPermission (roles) {
-        if (!roles.length) return true
-        const res = roles.some(r => (r === 'User' && !!this.user) || (r === 'Admin' && !!this.user && this.user.is_superuser))
-        return res
-      }, */
-      // getLinksHasPermission () {
-      //  return this.links.filter(x => this.hasPermission(x.roles))
-      // },
     },
   }
 </script>
 <style>
-  .semi-transparent {
-   background-color: #838282 !important;
-   opacity: 0.75;
- }
-.semi-transparent-blue {
-   background-color: transparent !important;
-   solid-color: gray;
- }
  .fill {
    width: 100vw;
    height: 128px;
