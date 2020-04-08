@@ -1,5 +1,6 @@
 <template>
-  <v-container fluid>
+  <!-- <v-container fluid> -->
+  <div class="mycontainer3">
     <div class="grid">
       <template v-for="(post,i) in posts">
         <v-hover
@@ -59,7 +60,8 @@
       color="red"
       @paginate="paginate"
     />
-  </v-container>
+  </div>
+  <!-- </v-container> -->
 </template>
 
 <script>
@@ -153,6 +155,11 @@
   width: 100%;
 }
 
+.mycontainer3 {
+  margin: auto;
+	width:65%;
+  background-color: white !important;
+}
 .div_news{
 	font-family: helvetica;
 	font-size: 18px;
