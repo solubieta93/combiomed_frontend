@@ -1,17 +1,15 @@
 <template>
   <v-container
     fluid
-    class="white_back"
+    class="white_back pa-0 ma-0"
   >
-    <navbar />
-
     <v-img
-      src="../../../public/ampa- (1).png"
-      style="top:0px"
+      src="ampa- (1).png"
+      height="80vh"
     />
     <v-img
-      src="../../../public/web-combiomed-historia-03.png"
-      style="top:-40px"
+      src="web-combiomed-historia-03.png"
+      style="top:-46px"
     />
 
     <!-- TITLE -->
@@ -102,7 +100,7 @@
     <div>
       <img
         class="fill-height"
-        src="../../../public/news_middle_image.png"
+        src="news_middle_image.png"
         style="margin-top: 100px; margin-bottom: 50px;"
       >
     </div>
@@ -143,14 +141,12 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar'
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import AddPost from '@/components/newsAndevents/AddPost'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      Navbar,
       NewsAndEventsItems,
       AddPost,
     },

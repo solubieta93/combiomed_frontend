@@ -15,9 +15,9 @@
 </template>
 
 <script>
-  import MyNavbar from '../Navbar'
-  import MyFooter from '../footer'
-  import MyForm from '../Form'
+  import MyNavbar from '@/components/utils/Navbar'
+  import MyFooter from '@/components/utils/Footer'
+  import MyForm from '@/components/utils/Form'
 
   export default {
     components: {

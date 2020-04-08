@@ -1,11 +1,11 @@
 import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 import Vue from 'vue'
-import vuetify from './plugins/vuetify'
-import App from './App.vue'
-import router from './utils/router'
-import './utils/registerServiceWorker'
+import vuetify from '@/plugins/vuetify'
+import App from '@/App.vue'
+import router from '@/utils/router'
+import '@/utils/registerServiceWorker'
 import { store } from '@/store/store'
-import FormAlert from './components/shared/FormAlert'
+import FormAlert from '@/components/utils/FormAlert'
 
 // Register Global Component
 Vue.component('form-alert', FormAlert)

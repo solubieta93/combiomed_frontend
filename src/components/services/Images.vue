@@ -1,62 +1,59 @@
 <template>
-    <div class="container">
-        <div class='grid'>
-            <template v-for="(item,i) in imagesClients">
-                <v-card
-                    :key="item"
-                    :elevation="0"
-                    tile
-                    :class="`item-${i}`"
-                >
-                <img :src="`${baseUrl}${item}`">
-                </v-card>
-            </template>             
-        </div>
-	</div>    
+  <div class="mycontainer">
+    <div class="mygrid">
+      <template v-for="(item,i) in imagesClients">
+        <v-card
+          :key="item"
+          :elevation="0"
+          tile
+          :class="`item-${i}`"
+        >
+          <v-img
+            class="myimg"
+            :src="`${baseUrl}${item}`"
+          />
+        </v-card>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script>
   export default {
     data () {
-        return {
-            baseUrl: process.env.BASE_URL,
-            imagesClients: [
-                'servicesAuto/client1.jpg',
-                'servicesAuto/client2.jfif',
-                'servicesAuto/client3.png',
-                'servicesAuto/client4.jpg',
-                'ampa- (1).png'
-            ]
-        }
-    }
+      return {
+        baseUrl: process.env.BASE_URL,
+        imagesClients: [
+          'servicesAuto/client1.jpg',
+          'servicesAuto/client2.jfif',
+          'servicesAuto/client3.png',
+          'servicesAuto/client4.jpg',
+          'ampa- (1).png',
+        ],
+      }
+    },
   }
 </script>
 
 <style scoped>
-
-.div_product{
-	font-family: helvetica;
-	font-size: 18px;
-}
-
-div img{
+.myimg{
 	width:100%;
 	height:100%;
 }
 
-.container {
+.mycontainer {
 	margin:auto;
 	width:60%;
 }
 
-.grid{
+.mygrid{
 	display:grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 18px;
 	grid-auto-rows:200px;
 }
 
-.grid div{	
+.mygrid div{
 	overflow:hidden;
 }
 

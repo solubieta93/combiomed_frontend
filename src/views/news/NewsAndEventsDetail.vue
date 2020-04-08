@@ -75,24 +75,14 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar'
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
-  import AddPost from '@/components/newsAndevents/AddPost'
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
-  import ShowPostOnCard from '@/components/newsAndevents/ShowPostOnCard'
-  import Footer from '@/components/footer'
-  import Form from '@/components/Form'
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      Navbar,
       NewsAndEventsItems,
-      AddPost,
       ShowPostDetail,
-      ShowPostOnCard,
-      Footer,
-      Form,
     },
     data () {
       return {
