@@ -19,7 +19,7 @@
 
 <script>
   import Vue from 'vue'
-  import Products from '@/components/product/Products'
+  import Products from '@/views/products/Products'
   import Loading from 'vue-loading-overlay'
   // Import stylesheet
   import 'vue-loading-overlay/dist/vue-loading.css'

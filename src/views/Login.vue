@@ -23,11 +23,11 @@
           <img
             style="margin-left: 25%"
             width="43%"
-            src="/ananda_icon.svg"
+            src="/Símbolo - Contracción - Fondo blanco.svg"
           >
           <v-text-field
             v-model="unique"
-            label="Email or UserName"
+            label="UserName"
             :rules="[rules.required]"
             clearable
           />
@@ -51,37 +51,13 @@
                 md="4"
               >
                 <v-btn
-                  round
+                  rounded
                   color="primary"
                   dark
                   @click="login"
                 >
                   Sign in
                 </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="12"
-              >
-                <p>
-                  or Sign In with Google
-                  <br>
-                  <button
-                    class="social-button"
-                    :href="socialLogin.google"
-                  >
-                    <img
-                      width="100%"
-                      alt="Google Logo"
-                      src="/google.png"
-                    >
-                  </button>
-                </p>
               </v-col>
             </v-row>
           </v-container>
@@ -95,14 +71,24 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'LoginSuccess',
+    name: 'Login',
     data () {
       return {
-        jwt: this.$route.params.jwt,
+        unique: '',
+        show1: false,
+        show2: true,
+        show3: false,
+        show4: false,
+        password: '',
+        rules: {
+          required: value => !!value || 'Required.',
+          min: v => v.length >= 6 || 'Min 6 characters',
+          emailMatch: () => "The email and password you entered don't match",
+        },
       }
     },
     computed: {
-      ...mapGetters(['authError', 'user', 'token']),
+      ...mapGetters(['authError', 'user']),
     },
     watch: {
       user (value) {
@@ -112,20 +98,44 @@
         }
       },
     },
-    created () {
-      if (this.$route.params.jwt) {
-        localStorage.setItem('token', this.$route.params.jwt)
-        this.$store.dispatch('setToken', this.$route.params.jwt)
-        this.$router.push('/dashboard')
-      } else {
-        this.$store.dispatch('setAuthError', localStorage.getItem('authError'))
-        this.$router.push('/login')
-      }
+    mounted () {
+      this.setLayout('simple-layout')
     },
     methods: {
+      login: async function () {
+        await this.$store.dispatch('signinUser', {
+          username: this.unique,
+          password: this.password,
+        })
+      },
       setLayout (layout) {
         this.$store.commit('SET_LAYOUT', layout)
       },
     },
   }
 </script>
+
+<style scoped>
+/* "scoped" attribute limit the CSS to this component only */
+.login {
+  margin-top: 40px;
+}
+input {
+  margin: 10px 0;
+  width: 20%;
+  padding: 15px;
+}
+button {
+  margin-top: 20px;
+  width: 10%;
+  cursor: pointer;
+}
+p {
+  margin-top: 40px;
+  font-size: 13px;
+}
+p a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>

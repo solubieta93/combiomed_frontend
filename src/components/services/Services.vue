@@ -1,8 +1,9 @@
 <template>
   <v-img
-    src="../../../public/ampa- (1).png"
-    style="top:-93px;z-index: 1;"
+    src="ampa- (1).png"
   >
+  <!--style="top:-93px;z-index: 1;"-->
+<!--    >-->
     <v-col cols="12">
       <v-row
         justify="center"
