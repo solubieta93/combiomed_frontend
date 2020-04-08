@@ -4,6 +4,8 @@
     class="pa-0 ma-0 white_back"
   >
     <carousel-portada />
+
+    <!-- QUIENES SOMOS -->
     <v-img
         src="web-combiomed-historia-03.png"
         style="top:-46px"
@@ -32,7 +34,6 @@
         </v-col>
       </v-row>
     </v-col>
-
     <v-row
       justify="center"
       style=" color: grey; margin-bottom:1%;"
@@ -53,15 +54,75 @@
         </p>
       </v-col>
     </v-row>
-
     <v-row justify="center" style="margin-bottom:2%;">
       <v-btn text>
         Leer mas
       </v-btn>
     </v-row>
 
+    <!-- PRODUCTOS -->
     <product-d />
+
+    <!-- SERVICIOS -->
     <services />
+
+    <!-- NOTICIAS Y EVENTOS -->
+    <v-img
+        src="web-combiomed-productos-noticias&eventos-04.png"
+        style="top:-195px; z-index:2;"
+    >
+
+      <v-row style="margin-top:120px;">
+        <v-col cols="12">
+          <v-row
+            justify="center"
+            style="height: 50px; color: grey;"
+          >
+            <v-col md="3">
+              <hr>
+            </v-col>
+            <v-col md="2">
+              <h3
+                class="text-uppercase"
+                style="margin-top: -14px; margin-left: 16px;"
+              >
+                Noticias y Eventos
+                <br>
+              </h3>
+            </v-col>
+            <v-col md="3">
+              <hr>
+            </v-col>
+          </v-row>
+        </v-col>
+        <principal-news-and-events/>
+      </v-row>
+    </v-img>
+
+     <v-col cols="12">
+      <v-row
+        justify="center"
+        style="height: 50px; color: grey;"
+      >
+        <v-col md="3">
+          <hr>
+        </v-col>
+        <v-col md="2">
+          <v-row justify="center">
+          <h3
+            class="text-uppercase"
+            style="margin-top: -14px; margin-left: 16px;"
+          >
+            contactos
+            <br>
+          </h3>
+          </v-row>
+        </v-col>
+        <v-col md="3">
+          <hr>
+        </v-col>
+      </v-row>
+    </v-col>
   </v-container>
 </template>
 
@@ -69,10 +130,12 @@
   import CarouselPortada from '@/components/utils/CarouselPortada'
   import ProductD from '@/components/product/Product_d'
   import Services from '@/components/services/Services'
+  import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
 
   export default {
     components: {
       CarouselPortada,
+      PrincipalNewsAndEvents,
       ProductD,
       Services,
     },

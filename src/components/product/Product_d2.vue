@@ -2,7 +2,54 @@
     <div class="mycontainer2">
     <div class="mygrid">
       <template v-for="(item,i) in imagesClients">
-        <v-card 
+		<v-hover
+          :key="i"
+          v-slot:default="{ hover }"
+        >
+		<!-- items[i].class" -->
+          <v-card
+            :elevation="hover ? 12 : 2"
+            :class="`item-${i}`"
+          >
+            <v-img
+              :src="item.src"
+              class="fill-height"
+            >
+              <v-expand-transition>
+                <div
+                  v-if="hover"
+                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
+                  style="height: 100%"
+                >
+				<!-- :to="`/news/${post.id}`" -->
+                  <v-btn
+                    text
+                    large
+                    color="white"
+                    class="div_product"
+                  >
+                    Leer Mas
+                  </v-btn>
+                </div>
+                <v-overlay
+                  :absolute="true"
+                  :value="true"
+                  :opacity="0.46"
+                  color="#001A33"
+                  style="height:141px; left: 0px; top: 67%;"
+                >
+                  <div>
+                    <h3 class="text-uppercase">
+                      {{ item.text }}
+                    </h3>
+                  </div>
+                </v-overlay>
+              </v-expand-transition>
+            </v-img>
+          </v-card>
+        </v-hover>
+
+        <!-- <v-card 
           :key="item"
           :elevation="0"
           tile
@@ -13,7 +60,7 @@
 			fill-height
             :src="`${baseUrl}${item}`"
           />
-        </v-card>
+        </v-card> -->
       </template>
     </div>
   </div>
@@ -35,9 +82,9 @@
 	    overlay:true,
         baseUrl: process.env.BASE_URL,
         imagesClients: [
-          'productImages/product3.png',
-          'productImages/product4.png',
-          'productImages/product5.png',
+          {src:'productImages/product3.png',text: "Estimulación Eléctrica"},
+			{src:'productImages/product4.png',text: "Diagnóstico de Enfermedades Respiratorias Crónicas"},
+			{src:'productImages/product5.png',text: "Soluciones para la Atención Primaria de Salud"}
         ],
         imagesMachine: [
 
@@ -49,6 +96,15 @@
 </script>
 
 <style scoped>
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+}
+
 .myimg{
 	width:100%;
 	height:100%;
