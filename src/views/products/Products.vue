@@ -2,6 +2,7 @@
   <v-container
     class="pa-0 ma-0 align-center justify-center"
     fluid
+    style="background-color: white"
   >
     <v-img
       :src="`${baseUrl}doctus VIII.png`"
@@ -12,16 +13,6 @@
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-46px"
     />
-    <v-row justify="center">
-      <v-col cols="3">
-        <query-search
-          :loading="loading"
-          @search:text="appliedSearch"
-          :onKeyUp="true"
-        ></query-search>
-      </v-col>
-    </v-row>
-    <v-divider />
     <v-row
       justify="center"
       align="center"
@@ -29,13 +20,55 @@
       <v-row
         justify="center"
         align="center"
-        style="max-width: 60vw"
+        style="max-width: 50vw"
+      >
+        <v-col class="mr-0">
+          <query-search
+            :loading="loading"
+            @search:text="appliedSearch"
+            :onKeyUp="true"
+          ></query-search>
+        </v-col>
+        <v-col>
+          <v-row
+            justify="start"
+            align="start"
+            class="ml-0"
+          >
+            <v-text-field
+              v-model="limit"
+              class="mx-auto"
+              type="number"
+              :min="0"
+              :max="count"
+              :disabled="!count"
+              label="Cantidad"
+              style="width: 50px; max-width: 50px"
+            />
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-row>
+    <v-row
+      align="center"
+      justify="center"
+    >
+      <v-col class="px-6">
+        <v-divider />
+      </v-col>
+    </v-row>
+    <v-row
+      justify="center"
+      align="center"
+    >
+      <v-row
+        justify="center"
+        align="center"
+        style="max-width: 80vw"
       >
         <v-col
           v-for="(item, i) in productsItems"
           :key="i"
-          cols="4"
-          align-self="center"
         >
           <item-preview
             :item="item.item"
@@ -70,6 +103,12 @@
     },
     async mounted () {
       await this.filterProducts()
+    },
+    watch: {
+      async limit (value) {
+        this.page = 1
+        await this.filterProducts()
+      },
     },
     computed: {
       countPages () {
