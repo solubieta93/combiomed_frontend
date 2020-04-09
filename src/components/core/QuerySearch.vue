@@ -50,6 +50,10 @@
         type: Boolean,
         default: false,
       },
+      onKeyUpFunction: {
+        type: Function,
+        default: (text) => {},
+      },
     },
     data () {
       return {
@@ -58,10 +62,12 @@
     },
     watch: {
       text (value) {
-        if (this.onKeyUp) {
-          console.log('key up')
-          this.$emit('search:text', this.text)
-        }
+        // if (this.onKeyUp) {
+        //   console.log(value, 'key up')
+        //   // this.$emit('search:text', value)
+        // }
+        console.log(value, 'key up')
+        this.onKeyUpFunction(value)
       },
     },
     methods: {
