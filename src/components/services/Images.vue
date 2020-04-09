@@ -20,6 +20,12 @@
 
 <script>
   export default {
+    props :{
+      currentView: {
+        type: String,
+        default: "auto"
+      }
+    },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
@@ -30,6 +36,10 @@
           'servicesAuto/client4.jpg',
           'ampa- (1).png',
         ],
+        imagesMachine: [
+
+        ],
+        // currentImages: currentView === "auto"?  this.imagesClients : this.imagesMachine
       }
     },
   }
@@ -51,6 +61,8 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 18px;
 	grid-auto-rows:200px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 .mygrid div{

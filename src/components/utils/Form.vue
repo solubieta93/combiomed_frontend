@@ -1,7 +1,8 @@
 <template>
   <v-img
     class="back"
-    src="web-combiomed-futer-04-04.png"
+    :src="`${baseUrl}web-combiomed-futer-04-04.png`"
+    style="z-index:1; margin-bottom: -35px;"
   >
     <v-row
       justify="center"
@@ -86,6 +87,7 @@
     },
     data () {
       return {
+        baseUrl: process.env.BASE_URL,
       }
     },
   }

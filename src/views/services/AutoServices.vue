@@ -11,7 +11,7 @@
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-48px"
     />
-
+    
     <!-- TITLE -->
     <v-col cols="12">
       <v-row
@@ -62,6 +62,7 @@
       </v-col>
     </v-row>
 
+
     <div
       fill-height
       style="min-height: 500px;"
@@ -72,6 +73,7 @@
         :src="`${baseUrl}servAut2.jpg`"
       />
     </div>
+    
 
     <div class="div_description">
       <div class="my_container">
@@ -139,6 +141,16 @@
               </v-card-text>
             </v-card>
           </div>
+          <div class="item-2">
+            <v-img class="fill-height"
+               :src="`${baseUrl}servAut4.jpeg`"
+            />
+          </div>
+          <div class="item-3">
+            <v-img class="fill-height"
+               :src="`${baseUrl}servAut5.png`"
+            />
+          </div> 
         </div>
       </div>
     </div>
@@ -255,10 +267,6 @@
     width:70%;
     min-height: 900px;
 }
-.my_container2 {
-    margin:auto;
-    width:70%;
-}
 
 .div_description{
     font-family: helvetica;
@@ -272,7 +280,7 @@
     /* grid-template-rows: repeat(5, 1fr); */
     grid-gap: 5px;
     column-gap: 16px;
-    grid-auto-rows:200px;
+    grid-auto-rows:50px;
 }
 
 .grid div{
@@ -280,51 +288,25 @@
 }
 
 .item-0{
-	grid-row: 1/4;
+	grid-row: 2/9;
     grid-column: 1/2;
 	height: 100%;
 }
 .item-1{
-	grid-row: 3/5;
+	grid-row: 10/17;
     grid-column: 1/2;
 	height: 100%;
 }
 
-.div_clients{
-	font-family: helvetica;
-	font-size: 16px;
+.item-2{
+	grid-row: 2/12;
+  grid-column: 2/5;
+	height: 100%;
 }
-
-.gridother{
-	display:grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-gap: 24px;
-	grid-auto-rows:200px;
-}
-
-.item1-0{
-	grid-row: 1/2;
-    grid-column: 1/2;
-	/* height: 100%; */
-}
-.item1-1{
-	grid-row: 1/2;
-    grid-column: 2/3;
-	/* height: 100%; */
-}
-.item1-2{
-	grid-row: 1/2;
-    grid-column: 3/4;
-	/* height: 100%; */
-}
-.item1-3{
-	grid-row: 2/3;
-    grid-column: 1/2;
-	/* height: 100%; */
-}
-.item1-4{
-	grid-row: 2/3;
+.item-3{
+	grid-row: 12/19;
     grid-column: 2/4;
-	/* height: 100%; */
+	height: 100%;
 }
+
 </style>

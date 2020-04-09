@@ -25,6 +25,7 @@
     </paginate-items>
   </v-container>
 </template>
+
 <script>
   // import ItemPreview from '@/components/core/ItemPreview'
   // import QuerySearch from '@/components/core/QuerySearch'
