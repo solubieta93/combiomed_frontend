@@ -25,6 +25,7 @@
     </paginate-items>
   </v-container>
 </template>
+
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
   export default {

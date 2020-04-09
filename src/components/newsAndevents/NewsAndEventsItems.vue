@@ -1,5 +1,14 @@
 <template>
-  <v-container fluid>
+  <div class="mycontainer3">
+
+    <!-- <v-row justify="center">
+      <v-col cols="3">
+        <query-search
+          @search:text="paginateSearch"
+          :loading="loading"
+        ></query-search></v-col>
+    </v-row>
+
     <div class="grid">
       <template v-for="(post,i) in posts">
         <v-hover
@@ -57,15 +66,89 @@
       :length="pagination_length"
       circle
       color="red"
-      @paginate="paginate"
-    />
-  </v-container>
+      @paginate="paginateSearch"
+    /> -->
+
+    <v-row
+      justify="center"
+      align="center"
+    >
+      <v-row
+        justify="center"
+        align="center"
+        style="max-width: 50vw"
+      >
+        <v-col class="mr-0">
+          <query-search
+            :loading="loading"
+            @search:text="appliedSearch"
+            :onKeyUp="true"
+          ></query-search>
+        </v-col>
+        <v-col>
+          <v-row
+            justify="start"
+            align="start"
+            class="ml-0"
+          >
+            <v-text-field
+              v-model="limit"
+              class="mx-auto"
+              type="number"
+              :min="0"
+              :max="count_post"
+              :disabled="!count_post"
+              label="Cantidad"
+              style="width: 50px; max-width: 50px"
+            />
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-row>
+    
+    <v-row
+      align="center"
+      justify="center"
+    >
+      <v-col class="px-6">
+        <v-divider />
+      </v-col>
+    </v-row>
+
+    <v-row
+      justify="center"
+      align="center"
+    >
+      <v-row
+        justify="center"
+        align="center"
+        style="max-width: 80vw"
+      >
+        <v-col
+          v-for="(item, i) in newsItems"
+          :key="i"
+        >
+          <item-preview
+            :item="item.item"
+            :pathTo="item.pathTo"
+          ></item-preview>
+        </v-col>
+      </v-row>
+    </v-row>
+
+  </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import ItemPreview from '@/components/core/ItemPreview'
+  import QuerySearch from '@/components/core/QuerySearch'
 
   export default {
+    components: {
+      ItemPreview,
+      QuerySearch,
+    },
     props: {
       limit: {
         type: Number,
@@ -96,6 +179,8 @@
         posts: [],
         count_post: 0,
         baseUrl: process.env.BASE_URL,
+        loading: false,
+        text: '',
       }
     },
     computed: {
@@ -111,34 +196,76 @@
       postId () {
         return this.post_id
       },
+      newsItems () {
+        return this.posts.map(x => this.buildItem(x))
+      },
     },
     watch: {
       async page (value) {
         if (value) {
-          await this.paginate()
+          await this.filterNews()
         }
       },
       async postId (value) {
         if (value) {
-          await this.paginate()
+          await this.filterNews()
         }
       },
     },
     mounted: async function () {
-      await this.paginate()
+      await this.filterNews()
     },
     methods: {
-      async paginate () {
-        console.log(this.start, 'start')
-        console.log(this.limit, 'limit')
-        const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
+      async appliedSearch (text) {
+        this.page = 1
+        this.text = text
+        this.start = 0
+        await this.filterNews()
+      },
+      async filterNews () {
+        this.loading = true
+        const result = await this.$store.dispatch('getPaginateBlog', {
           offset: this.start + (this.page - 1) * this.limit,
           limit: this.limit,
-          id_distinct: this.post_id,
+          search: this.text,
         })
+        console.log(result, 'filterNews')
+        const { posts, count } = result
         this.posts = posts
         this.count_post = count
+        this.loading = false
       },
+      buildItem (news) {
+        return {
+          item: {
+            id: news.id,
+            title: news.title,
+            description: news.abstract,
+            image: news.image,
+            owner: news.owner,
+          },
+          pathTo: `/news/${news.id}`,
+        }
+      },
+      // async paginate () {
+      //   const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
+      //     offset: this.start + (this.page - 1) * this.limit,
+      //     limit: this.limit,
+      //     id_distinct: this.post_id,
+      //   })
+      //   this.posts = posts
+      //   this.count_post = count
+      // },
+      // async paginateSearch (text = '') {
+      //   this.page = 1
+      //   const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
+      //     offset: (this.page - 1),
+      //     limit: this.limit,
+      //     search: text,
+      //   })
+      //   this.posts = posts
+      //   this.count_post = count
+      // },
     },
   }
 </script>
@@ -153,6 +280,11 @@
   width: 100%;
 }
 
+.mycontainer3 {
+  margin: auto;
+	width:65%;
+  background-color: white !important;
+}
 .div_news{
 	font-family: helvetica;
 	font-size: 18px;
