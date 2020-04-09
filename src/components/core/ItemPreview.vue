@@ -4,10 +4,11 @@
     v-slot:default="{ hover }"
   >
     <v-card
-      :elevation="hover ? 12 : 2"
+      :elevation="hover ? 10 : 2"
       height="350"
-      max-width="350"
+      max-width="100%"
       min-width="250"
+      class="mx-auto"
     >
       <v-img
         :src="item.image ? item.image : `${baseUrl}ampa- (1).png`"
@@ -15,35 +16,50 @@
         :aspect-ratio="16/9"
       >
         <v-expand-transition>
-          <div
-            v-if="hover"
-            class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-            style="height: 50%"
-          >
-            <v-btn
-              text
-              large
-              color="white"
-              class="div_product"
-              :to="pathTo"
-            >
-              Leer Mas
-            </v-btn>
-          </div>
+          <!--          <div-->
+          <!--            v-if="hover"-->
+          <!--            class="d-flex transition-fast-in-fast-out orange darken-2 v-card&#45;&#45;reveal display-3 white&#45;&#45;text"-->
+          <!--            style="height: 50%"-->
+          <!--          >-->
+          <!--            <v-btn-->
+          <!--              text-->
+          <!--              large-->
+          <!--              color="white"-->
+          <!--              class="div_product"-->
+          <!--              :to="pathTo"-->
+          <!--            >-->
+          <!--              Leer Mas-->
+          <!--            </v-btn>-->
+          <!--          </div>-->
           <v-overlay
             :absolute="true"
             :value="true"
             :opacity="0.46"
             color="#001A33"
-            :style="style"
+            class="d-flex transition-fast-in-fast-out v-card--reveal justify-start"
+            :style="`height:${hover ? 50 : 18}%; top: ${hover ? 50 : 82}%;`"
           >
-            <div>
-              <h3 class="text-uppercase">
+            <v-col>
+              <h4 class="text-uppercase pl-2">
                 {{ item.title }}
-              </h3>
-              <h3>{{ item.description }}</h3>
-              <h3 v-if="item.owner">Autor: {{ item.owner }}</h3>}
-            </div>
+              </h4>
+              <v-divider
+                v-if="hover"
+                style="width: 100%"
+              />
+              <h5
+                v-if="item.owner && hover"
+                class="justify-start pl-2"
+              >
+                Autor: {{ item.owner }}
+              </h5>
+              <h6
+                v-if="hover"
+                class="justify-start pl-2"
+              >
+                {{ item.description }}
+              </h6>
+            </v-col>
           </v-overlay>
         </v-expand-transition>
       </v-img>
