@@ -35,74 +35,8 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-row justify="center">
-      <v-col cols="3">
-        <query-search
-          @search:text="paginate"
-          :loading="loading"
-        ></query-search></v-col>
-    </v-row>
-
-    <!-- FOUR FIRST NEWS -->
-    <div class="div_product">
-      <div class="my_container">
-        <div class="grid">
-          <!-- <div class='item-0'> -->
-          <template v-for="(item,i) in items">
-            <v-hover
-              :key="item"
-              v-slot:default="{ hover }"
-            >
-              <v-card
-                :elevation="hover ? 12 : 2"
-                :class="item.class"
-              >
-                <v-img
-                  :src="postFixed[i].image ? postFixed[i].image : `${baseUrl}ampa- (1).png`"
-                  class="fill-height"
-                  :aspect-ratio="16/9"
-                >
-                  <v-expand-transition>
-                    <div
-                      v-if="hover"
-                      class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                      style="height: 100%"
-                    >
-                      <!-- to='/dashboard' -->
-                      <v-btn
-                        text
-                        large
-                        color="white"
-                        class="div_product"
-                        :to="`/news/${postFixed[i].id}`"
-                      >
-                        Leer Mas
-                      </v-btn>
-                    </div>
-                    <v-overlay
-                      :absolute="true"
-                      :value="true"
-                      :opacity="0.46"
-                      color="#001A33"
-                      :style="item.style"
-                    >
-                      <!-- "height:141px; left: 0px; top: 275px;"> -->
-                      <div>
-                        <h3 class="text-uppercase">
-                          {{ postFixed[i].title }}
-                        </h3>
-                        <h3>{{ postFixed[i].abstract }}</h3>
-                        <h3>Autor: {{ postFixed[i].owner }}</h3>
-                      </div>
-                    </v-overlay>
-                  </v-expand-transition>
-                </v-img>
-              </v-card>
-            </v-hover>
-          </template>
-        </div>
-      </div>
-    </div>
+  
+    <principal-news-and-events/>
 
     <div>
       <img
@@ -127,6 +61,7 @@
         :onSave="() => { addPost = false; paginate() }"
       />
     </v-dialog>
+    
     <v-card-text
       v-if="isAdmin"
       style="height: 100px; position: relative"
@@ -148,6 +83,7 @@
 
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
+  import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
   import AddPost from '@/components/newsAndevents/AddPost'
   import QuerySearch from '@/components/core/QuerySearch'
   import { mapGetters } from 'vuex'
@@ -155,6 +91,7 @@
   export default {
     components: {
       NewsAndEventsItems,
+      PrincipalNewsAndEvents,
       AddPost,
       QuerySearch,
     },
