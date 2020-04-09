@@ -1,10 +1,9 @@
 <template>
 <v-container>
     <!-- FOUR FIRST NEWS -->
-    <div class="div_product">
+    <!-- <div class="div_product">
       <div class="my_container">
         <div class="grid">
-          <!-- <div class='item-0'> -->
           <template v-for="(item,i) in items">
             <v-hover
               :key="item"
@@ -22,10 +21,9 @@
                   <v-expand-transition>
                     <div
                       v-if="hover"
-                      class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                      style="height: 100%"
+                      class="d-flex transition-fast-in-fast-out v-card--reveal justify-start"
+                      :style="`height:${hover ? 50 : 18}%; top: ${hover ? 50 : 82}%;`"
                     >
-                      <!-- to='/dashboard' -->
                       <v-btn
                         text
                         large
@@ -41,9 +39,10 @@
                       :value="true"
                       :opacity="0.46"
                       color="#001A33"
-                      :style="item.style"
+                      class="d-flex transition-fast-in-fast-out v-card--reveal justify-start"
+                      :style="`height:${hover ? 50 : 18}%; top: ${hover ? 50 : 82}%;`"
+          
                     >
-                      <!-- "height:141px; left: 0px; top: 275px;"> -->
                       <div>
                         <h3 class="text-uppercase">
                           {{ postFixed[i].title }}
@@ -59,25 +58,38 @@
           </template>
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <v-row
+      justify="center"
+      align="center"
+    >
+      <v-row
+        justify="center"
+        align="center"
+        style="max-width: 80vw"
+      >
+        <v-col
+          v-for="(item, i) in newsItems"
+          :key="i"
+        >
+          <item-preview
+            :item="item.item"
+            :pathTo="item.pathTo"
+          ></item-preview>
+        </v-col>
+      </v-row>
+    </v-row>
 </v-container>
 </template>
 
 <script>
-  import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
-  import AddPost from '@/components/newsAndevents/AddPost'
+  import ItemPreview from '@/components/core/ItemPreview'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      NewsAndEventsItems,
-      AddPost,
-    },
-    props: {
-      showSearch: {
-        type: Boolean,
-        default: false
-      }
+      ItemPreview,
     },
     data () {
       return {
@@ -89,49 +101,41 @@
           { class: 'item-3', style: 'height:141px; left: 0px; top: 67%;' },
         ],
         postFixed: [],
-        newPost: null,
-        addPost: false,
         baseUrl: process.env.BASE_URL,
-        loading: false,
       }
     },
     computed: {
-      ...mapGetters(['user']),
-      isAdmin: function () {
-        return this.user && this.user.is_superuser
-      },
-    },
-    watch: {
-      showSearch (value) {
-        console.log(value, 'showSearch')
+      newsItems () {
+        return this.postFixed.map(x => this.buildItem(x))
       },
     },
     mounted: async function () {
       await this.paginate()
     },
     methods: {
-       async paginate (text = '') {
+       async paginate () {
+         console.log('estoy en paginate')
         this.loading = true
         const { posts } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
           limit: 4,
-          search: text,
         })
         this.postFixed = posts
+        console.log(this.postFixed, 'postFixed')
         this.loading = false
       },
-      async showAddNewsDialog () {
-        this.newPost = await this.$store.dispatch('getNewPost')
-        console.log(this.newPost, 'new post')
-        this.addPost = true
-      },
-      async submit () {
-        const res = await this.$store.dispatch('postPost', this.newPost)
-        if (!res.success) {
-          this.saveError = res.message
-          return
+      buildItem (news) {
+        console.log('estoy en buildItem')
+        return {
+          item: {
+            id: news.id,
+            title: news.title,
+            description: news.abstract,
+            image: news.image,
+            owner: news.owner,
+          },
+          pathTo: `/news/${news.id}`,
         }
-        this.addPost = false
       },
     },
   }
@@ -139,14 +143,14 @@
 
 
 <style scoped>
-.v-card--reveal {
+/* .v-card--reveal {
   align-items: center;
   bottom: 0;
   justify-content: center;
   opacity: .5;
   position: absolute;
   width: 100%;
-}
+} */
 
 .white_back {
     background-color: white !important;

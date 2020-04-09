@@ -9,6 +9,7 @@
       max-width="100%"
       min-width="250"
       class="mx-auto"
+      :to="pathTo"
     >
       <v-img
         :src="item.image ? item.image : `${baseUrl}ampa- (1).png`"
