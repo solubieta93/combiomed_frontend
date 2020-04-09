@@ -1,6 +1,9 @@
 <template>
   <v-toolbar
     dense
+    min-width="200px"
+    max-width="300px"
+    class="mx-auto"
   >
     <v-text-field
       v-model="text"
@@ -10,6 +13,7 @@
       :disabled="loading"
       :loading="loading"
       rounded
+      clearable
       @keydown.enter="search"
     ></v-text-field>
     <v-btn
