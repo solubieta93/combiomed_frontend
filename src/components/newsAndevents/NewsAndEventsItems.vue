@@ -1,6 +1,14 @@
 <template>
   <!-- <v-container fluid> -->
   <div class="mycontainer3">
+    <v-row justify="center">
+      <v-col cols="3">
+        <query-search
+          @search:text="paginateSearch"
+          :loading="loading"
+        ></query-search></v-col>
+    </v-row>
+
     <div class="grid">
       <template v-for="(post,i) in posts">
         <v-hover
@@ -58,7 +66,7 @@
       :length="pagination_length"
       circle
       color="red"
-      @paginate="paginate"
+      @paginate="paginateSearch"
     />
   </div>
   <!-- </v-container> -->
@@ -66,8 +74,12 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import QuerySearch from '@/components/core/QuerySearch'
 
   export default {
+    components: {
+      QuerySearch,
+    },
     props: {
       limit: {
         type: Number,
@@ -98,6 +110,7 @@
         posts: [],
         count_post: 0,
         baseUrl: process.env.BASE_URL,
+        loading: false,
       }
     },
     computed: {
@@ -131,12 +144,20 @@
     },
     methods: {
       async paginate () {
-        console.log(this.start, 'start')
-        console.log(this.limit, 'limit')
         const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
           offset: this.start + (this.page - 1) * this.limit,
           limit: this.limit,
           id_distinct: this.post_id,
+        })
+        this.posts = posts
+        this.count_post = count
+      },
+      async paginateSearch (text = '') {
+        this.page = 1
+        const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
+          offset: (this.page - 1),
+          limit: this.limit,
+          search: text,
         })
         this.posts = posts
         this.count_post = count

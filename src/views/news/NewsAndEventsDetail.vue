@@ -44,8 +44,6 @@
       </div>
     </div>
     
-    
-
     <!-- TO SHOW OTHER TWO NEWS -->
     <v-row
       v-for="(card, i) in this.twoposts"
@@ -127,7 +125,7 @@
     },
     methods: {
       async paginate (offset = 0, limit = 2) {
-        const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
+        const { count, posts } = await this.$store.dispatch('getPaginateBlogDistinct', {
           offset,
           limit,
           id_distinct: this.$route.params.postId,

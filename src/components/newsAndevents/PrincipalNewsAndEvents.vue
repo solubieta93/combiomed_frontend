@@ -73,6 +73,12 @@
       NewsAndEventsItems,
       AddPost,
     },
+    props: {
+      showSearch: {
+        type: Boolean,
+        default: false
+      }
+    },
     data () {
       return {
         items: [
@@ -86,6 +92,7 @@
         newPost: null,
         addPost: false,
         baseUrl: process.env.BASE_URL,
+        loading: false,
       }
     },
     computed: {
@@ -94,16 +101,24 @@
         return this.user && this.user.is_superuser
       },
     },
+    watch: {
+      showSearch (value) {
+        console.log(value, 'showSearch')
+      },
+    },
     mounted: async function () {
       await this.paginate()
     },
     methods: {
-      async paginate () {
+       async paginate (text = '') {
+        this.loading = true
         const { posts } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
           limit: 4,
+          search: text,
         })
         this.postFixed = posts
+        this.loading = false
       },
       async showAddNewsDialog () {
         this.newPost = await this.$store.dispatch('getNewPost')

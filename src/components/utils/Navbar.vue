@@ -87,6 +87,7 @@
               </v-tab>
               <v-menu
                 v-else
+                style="background-color:transparent"
               >
                 <template v-slot:activator="{ on }">
                   <v-tab
@@ -138,7 +139,7 @@
           { text: 'Servicios',
             items: [
               { text: 'TÉCNICOS', route: '/services/auto', roles: [] },
-              { text: 'MECÁNICA', roles: [] }, //, route: '/auto', roles: [] },
+              { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
               { text: 'AUTOMÁTICA', route: '/services/tech', roles: [] },
             ],
             roles: [],

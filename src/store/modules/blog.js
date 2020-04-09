@@ -99,18 +99,35 @@ const actions = {
             }
         }
     },
-    getPaginateNews: async ({ commit }, payload) => {
-        commit('SET_BLOG', [])
-
-        await axios.get(`/blog/news?offset=${payload.offset}`)
-        .then(res => {
-            if (res.data.success) {
-                commit('SET_COUNT_POST', res.data.data.count)
-                commit('SET_BLOG', res.data.data.news.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })))
-            } else {
-                commit('SET_PRODUCT_ERROR', res.data.message)
+    getPaginateBlogDistinct: async ({ commit }, params) => {
+        try {
+            console.log('DISTINT')
+            await commit('SET_BLOG', [])
+            const res = await axios.get(`/blog/blog`, {params})
+            if (res.status === 200) {
+                console.log('OKKKKKK 200')
+                console.log(res, 'print res distinct')
+                await commit('SET_COUNT_POST', res.data.data.count)
+                await commit('SET_BLOG', res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
+                return {
+                    posts: res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    count: res.data.data.count,
+                }
+            }else {
+                await commit('SET_PRODUCT_ERROR', res.data.message)
+                return {
+                    posts: [],
+                    count: 0,
+                }
             }
-        })
+        }
+        catch (e) {
+            console.log(e)
+            return {
+                posts: [],
+                count: 0,
+            }
+        }
     },
     getPaginateComment: async ({ commit }, payload) => {
         commit('SET_COMMENT', [])

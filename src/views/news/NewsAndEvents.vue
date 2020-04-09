@@ -35,14 +35,7 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-row justify="center">
-      <v-col cols="3">
-        <query-search
-          @search:text="paginate"
-          :loading="loading"
-        ></query-search></v-col>
-    </v-row>
-
+  
     <principal-news-and-events/>
 
     <div>
@@ -68,6 +61,7 @@
         :onSave="() => { addPost = false; paginate() }"
       />
     </v-dialog>
+    
     <v-card-text
       v-if="isAdmin"
       style="height: 100px; position: relative"
