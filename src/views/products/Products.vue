@@ -20,15 +20,13 @@
       :show-divider="true"
       :show-limit="true"
       :show-search-text="true"
-      :update-on-change-text="true"
+      :update-on-change-text="false"
     >
     </paginate-items>
   </v-container>
 </template>
 <script>
-  // import ItemPreview from '@/components/core/ItemPreview'
-  // import QuerySearch from '@/components/core/QuerySearch'
-  import PaginateItems from '../../components/core/PaginateItems'
+  import PaginateItems from '@/components/core/PaginateItems'
   export default {
     components: {
       // ItemPreview,

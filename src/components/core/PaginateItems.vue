@@ -13,9 +13,8 @@
           <query-search
             v-if="showSearchText"
             :loading="loading"
-            :on-key-up="updateOnChangeText"
-            :on-key-up-function="appliedSearch"
-            @search:text="appliedSearch"
+            :on-key-up-function="updateOnChangeText ? appliedSearch : null"
+            :search-text="appliedSearch"
           ></query-search>
         </v-col>
         <v-col>
