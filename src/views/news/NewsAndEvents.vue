@@ -45,6 +45,7 @@
         style="margin-top: 100px; margin-bottom: 50px;"
       >
     </div>
+
     <news-and-events-items
       :start="4"
       :limit="3"
@@ -85,7 +86,6 @@
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
   import AddPost from '@/components/newsAndevents/AddPost'
-  import QuerySearch from '@/components/core/QuerySearch'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -93,7 +93,6 @@
       NewsAndEventsItems,
       PrincipalNewsAndEvents,
       AddPost,
-      QuerySearch,
     },
     data () {
       return {

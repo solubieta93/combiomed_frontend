@@ -61,7 +61,8 @@
     </v-row>
 
     <!-- PRODUCTOS -->
-    <product-d />
+    <!-- <product-d /> -->
+    <line-products/>
 
     <!-- SERVICIOS -->
     <services />
@@ -71,35 +72,39 @@
         src="web-combiomed-productos-noticias&eventos-04.png"
         style="top:-195px; z-index:2;"
     >
-
-      <v-row style="margin-top:120px;">
-        <v-col cols="12">
-          <v-row
-            justify="center"
-            style="height: 50px; color: grey;"
-          >
-            <v-col md="3">
-              <hr>
-            </v-col>
-            <v-col md="2">
-              <h3
-                class="text-uppercase"
-                style="margin-top: -14px; margin-left: 16px;"
-              >
-                Noticias y Eventos
-                <br>
-              </h3>
-            </v-col>
-            <v-col md="3">
-              <hr>
-            </v-col>
-          </v-row>
-        </v-col>
+      <v-col justify-self="center">
+        <v-row style="margin-top:120px;">
+          <v-col cols="12">
+            <v-row
+              justify="center"
+              style="height: 50px; color: grey;"
+            >
+              <v-col md="3">
+                <hr>
+              </v-col>
+              <v-col md="2">
+                <h3
+                  class="text-uppercase"
+                  style="margin-top: -14px; margin-left: 16px;"
+                >
+                  Noticias y Eventos
+                  <br>
+                </h3>
+              </v-col>
+              <v-col md="3">
+                <hr>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-col>
+      <div class="mycontainer">
         <principal-news-and-events/>
-      </v-row>
+      </div>
     </v-img>
 
-     <v-col cols="12">
+    <!-- CONTACTOS -->
+    <v-col cols="12">
       <v-row
         justify="center"
         style="height: 50px; color: grey;"
@@ -128,16 +133,16 @@
 
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
-  import ProductD from '@/components/product/Product_d'
   import Services from '@/components/services/Services'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
+  import LineProducts from '@/components/product/LineProducts'
 
   export default {
     components: {
       CarouselPortada,
       PrincipalNewsAndEvents,
-      ProductD,
       Services,
+      LineProducts
     },
     data () {
       return {
@@ -150,5 +155,9 @@
 <style scoped>
 .white_back {
   background-color: white !important;
+}
+.mycontainer {
+	margin:auto;
+	width:60%;
 }
 </style>

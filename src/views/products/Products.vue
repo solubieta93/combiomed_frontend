@@ -49,6 +49,7 @@
         </v-col>
       </v-row>
     </v-row>
+    
     <v-row
       align="center"
       justify="center"
@@ -79,6 +80,7 @@
     </v-row>
   </v-container>
 </template>
+
 <script>
   import ItemPreview from '@/components/core/ItemPreview'
   import QuerySearch from '@/components/core/QuerySearch'

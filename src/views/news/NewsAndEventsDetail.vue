@@ -108,9 +108,6 @@
     },
     computed: {
       ...mapGetters(['user', 'post']),
-      isAdmin: function () {
-        return this.user && this.user.is_superuser
-      },
       postId () {
         return this.$route.params.postId
       },
@@ -141,6 +138,7 @@
     },
   }
 </script>
+
 <style scoped>
 .white_back {
   background-color: white !important;
