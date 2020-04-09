@@ -56,25 +56,69 @@
             style="width: 100vw"
             color="white"
           />
+          <!--          <template v-slot:extension>-->
           <v-tabs
+            v-model="tab"
             :align-with-title="false"
             background-color="transparent"
             color="white"
-            slider-color="#8b0000"
             :hide-slider="this.$route.path === '/'"
             centered
             show-arrows
+            class="white--text"
           >
-            <v-tab
-              v-for="i in links"
-              :key="i.text"
-              :to="i.route"
-              background-color="transparent"
-              class="white--text"
+            <v-tabs-slider
+              v-model="slider"
+              color="#8b0000"
+            ></v-tabs-slider>
+            <v-item
+              v-for="(link, i) in links"
+              :key="link.text"
+              :value="i"
             >
-              {{ i.text }}
-            </v-tab>
+              <v-tab
+                v-if="!link.items"
+                background-color="transparent"
+                class="white--text"
+                :to="link.route ? link.route : null"
+                :disabled="!link.route"
+              >
+                {{ link.text }}
+              </v-tab>
+              <v-menu
+                v-else
+              >
+                <template v-slot:activator="{ on }">
+                  <v-tab
+                    background-color="transparent"
+                    class="white--text fill-height"
+                    color="white"
+                    v-on="on"
+                  >
+                    {{ link.text }}
+                    <v-icon right>
+                      mdi-menu-down
+                    </v-icon>
+                  </v-tab>
+                </template>
+                <v-list
+                  background-color="transparent"
+                  class="white--text"
+                >
+                  <v-list-item
+                    v-for="item in link.items"
+                    :key="item.text"
+                    :inactive="!item.route"
+                    :disabled="!item.route"
+                    @click="() => pushRoute(i, item.route)"
+                  >
+                    {{ item.text }}
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-item>
           </v-tabs>
+          <!--          </template>-->
         </v-col>
       </v-row>
     </v-overlay>
@@ -87,14 +131,23 @@
     data () {
       return {
         drawer: null,
+        slider: 3,
         links: [
           { text: 'Nosotros', route: '/dashboard', roles: [] },
           { text: 'Productos', route: '/products', roles: [] },
-          { text: 'Servicios', route: '/services', roles: [] },
+          { text: 'Servicios',
+            items: [
+              { text: 'TÉCNICOS', route: '/services/auto', roles: [] },
+              { text: 'MECÁNICA', roles: [] }, //, route: '/auto', roles: [] },
+              { text: 'AUTOMÁTICA', route: '/services/tech', roles: [] },
+            ],
+            roles: [],
+          },
           { text: 'Noticias y Eventos', route: '/news' },
-          { text: 'Contactos', route: '/clients' },
+          { text: 'Contactos' }, // route: '/clients' },
         ],
         baseUrl: process.env.BASE_URL,
+        tab: null,
       }
     },
     computed: {
@@ -103,10 +156,20 @@
         return this.$store.getters.user
       },
     },
+    watch: {
+      slider (value) {
+        console.log(value)
+      },
+    },
     methods: {
       logout: async function () {
         await this.$store.dispatch('signOut')
         this.$router.push('/dashboard')
+      },
+      pushRoute (i, path) {
+        console.log(path, 'path')
+        this.tab = i
+        if (path) this.$router.push({ path })
       },
     },
   }

@@ -1,104 +1,118 @@
 <template>
-  <v-img
-    src="web-combiomed-historia-04.png"
-    style="z-index: 2;"
+  <v-container
+    class="pa-0 ma-0 align-center justify-center"
+    fluid
   >
-    <v-col cols="12">
+    <v-img
+      :src="`${baseUrl}doctus VIII.png`"
+      height="80vh"
+      width="100vw"
+    />
+    <v-img
+      :src="`${baseUrl}web-combiomed-historia-03.png`"
+      style="top:-46px"
+    />
+    <v-row justify="center">
+      <v-col cols="3">
+        <query-search
+          :loading="loading"
+          @search:text="appliedSearch"
+          :onKeyUp="true"
+        ></query-search>
+      </v-col>
+    </v-row>
+    <v-divider />
+    <v-row
+      justify="center"
+      align="center"
+    >
       <v-row
         justify="center"
-        style="height: 50px; margin-top: 135px; color: blue;"
+        align="center"
+        style="max-width: 60vw"
       >
-        <v-col md="3">
-          <hr>
-        </v-col>
-        <v-col md="2">
-          <h4
-            class="text-uppercase"
-            style="margin-top: -14px;"
-          >
-            Líneas de Productos
-            <br>
-          </h4>
-        </v-col>
-        <v-col md="3">
-          <hr>
+        <v-col
+          v-for="(item, i) in productsItems"
+          :key="i"
+          cols="4"
+          align-self="center"
+        >
+          <item-preview
+            :item="item.item"
+            :pathTo="item.pathTo"
+          ></item-preview>
         </v-col>
       </v-row>
-    </v-col>
-    <div class="div_product">
-      <div class="container">
-        <div class="grid">
-          <div class="item-0">
-            <v-img
-              src="ampa- (1).png"
-              @click="goToProduct"
-            >
-              <v-overlay
-                :absolute="absolute"
-                :value="overlay"
-                :opacity="opacity"
-                color="#001A33"
-                style="height: 141px; width:275px;left: 0px; top: 45px;"
-              >
-                <div style="margin-top: 15px;">
-                  <h4 class="text-uppercase">
-                    Lorem Ipsum
-                  </h4>
-                  <p>Scingelit, sed diam nonummy nibh euismod tincidunt ut laoree dolore magna ali....</p>
-                  <p> 12.04.2020</p>
-                </div>
-              </v-overlay>
-            </v-img>
-          </div>
-          <div class="item-1">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-2">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-3">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-4">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-5">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-6">
-            <img src="ampa- (1).png">
-          </div>
-
-          <div class="item-7">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-8">
-            <img src="ampa- (1).png">
-          </div>
-          <div class="item-9">
-            <img src="ampa- (1).png">
-          </div>
-        </div>
-      </div>
-    </div>
-  </v-img>
+    </v-row>
+  </v-container>
 </template>
 <script>
+  import ItemPreview from '@/components/core/ItemPreview'
+  import QuerySearch from '@/components/core/QuerySearch'
   export default {
+    components: {
+      ItemPreview,
+      QuerySearch,
+    },
     data () {
       return {
         absolute: true,
         opacity: 0.46,
         overlay: true,
-
+        baseUrl: process.env.BASE_URL,
+        loading: false,
+        products: [],
+        count: 0,
+        page: 1,
+        limit: 10,
+        text: '',
       }
     },
-    methods: {
-      goToProduct: function () {
-        this.$router.push('/product_description')
-        console.log('Esto es una prueba')
+    async mounted () {
+      await this.filterProducts()
+    },
+    computed: {
+      countPages () {
+        return this.count / this.limit
       },
-
+      paginationLength () {
+        return Number.parseInt(this.count % this.limit > 0 ? (this.count / this.limit) + 1 : this.count / this.limit)
+      },
+      productsItems () {
+        return this.products.map(x => this.buildItem(x))
+      },
+    },
+    methods: {
+      async appliedSearch (text) {
+        this.page = 1
+        this.text = text
+        await this.filterProducts()
+      },
+      async filterProducts () {
+        this.loading = true
+        const result = await this.$store.dispatch('getProducts', {
+          offset: (this.page - 1) * this.limit,
+          limit: this.limit,
+          search: this.text,
+        })
+        console.log(result, 'filterProducts')
+        const { products, count } = result
+        this.products = products
+        this.count = count
+        this.loading = false
+      },
+      buildItem (product) {
+        return {
+          item: {
+            id: product.id,
+            title: product.name,
+            description: product.description,
+            image: product.image,
+            owner: product.owner,
+          },
+          pathTo: `/products/${product.id}`,
+        }
+      },
     },
   }
 </script>

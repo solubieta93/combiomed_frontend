@@ -35,6 +35,13 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-row justify="center">
+      <v-col cols="3">
+        <query-search
+          @search:text="paginate"
+          :loading="loading"
+        ></query-search></v-col>
+    </v-row>
 
     <!-- FOUR FIRST NEWS -->
     <div class="div_product">
@@ -104,7 +111,6 @@
         style="margin-top: 100px; margin-bottom: 50px;"
       >
     </div>
-
     <news-and-events-items
       :start="4"
       :limit="3"
@@ -143,12 +149,14 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import AddPost from '@/components/newsAndevents/AddPost'
+  import QuerySearch from '@/components/core/QuerySearch'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       AddPost,
+      QuerySearch,
     },
     data () {
       return {
@@ -163,6 +171,7 @@
         newPost: null,
         addPost: false,
         baseUrl: process.env.BASE_URL,
+        loading: false,
       }
     },
     computed: {
@@ -175,12 +184,15 @@
       await this.paginate()
     },
     methods: {
-      async paginate () {
+      async paginate (text = '') {
+        this.loading = true
         const { posts } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
           limit: 4,
+          search: text,
         })
         this.postFixed = posts
+        this.loading = false
       },
       async showAddNewsDialog () {
         this.newPost = await this.$store.dispatch('getNewPost')

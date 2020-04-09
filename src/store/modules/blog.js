@@ -75,13 +75,14 @@ const actions = {
     getPaginateBlog: async ({ commit }, params) => {
         try {
             await commit('SET_BLOG', [])
-            const res = await axios.get(`/blog/blog`,{params})
-            if (res.data.success) {
-                await commit('SET_COUNT_POST', res.data.data.count)
-                await commit('SET_BLOG', res.data.data.posts)
+            const res = await axios.get(`/blog`, { params })
+            if (res.status === 200) {
+                console.log('ooooookkkkk')
+                await commit('SET_COUNT_POST', res.data.count)
+                await commit('SET_BLOG', res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
-                    posts: res.data.data.posts.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
-                    count: res.data.data.count,
+                    posts: res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    count: res.data.count,
                 }
             } else {
                 await commit('SET_PRODUCT_ERROR', res.data.message)
