@@ -60,7 +60,7 @@
       </div>
     </div> -->
 
-    <v-row
+    <!-- <v-row
       justify="center"
       align="center"
     >
@@ -79,17 +79,31 @@
           ></item-preview>
         </v-col>
       </v-row>
-    </v-row>
+    </v-row> -->
+  <paginate-items
+    :can-change-limit="true"
+    :default-limit="10"
+    :filter-items="filterItems"
+    :show-divider="true"
+    :show-limit="true"
+    :show-search-text="true"
+    :update-on-change-text="true"
+  />
 </v-container>
 </template>
 
 <script>
   import ItemPreview from '@/components/core/ItemPreview'
+  import ResponsiveItems from '@/components/core/ResponsiveItems'
+  import PaginateItems from '@/components/core/PaginateItems'
+  
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       ItemPreview,
+      ResponsiveItems,
+      PaginateItems,
     },
     data () {
       return {
@@ -137,6 +151,19 @@
           pathTo: `/news/${news.id}`,
         }
       },
+      async filterItems(search, offset, limit) {
+        this.loading = true
+        const { posts, count } = await this.$store.dispatch('getPaginateBlog', {
+          offset,
+          limit, search,
+        })
+        this.postFixed = posts
+        this.loading = false
+        return {
+          items: this.postFixed.map(x => this.buildItem(x)),
+          count,
+        }
+      }
     },
   }
 </script>
