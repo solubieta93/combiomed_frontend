@@ -1,15 +1,20 @@
-import axios from '../../axios-auth'
+import axios from '@/utils/axios-auth'
+import {apiURI} from "../../utils/globalConstants";
 
 const state = {
     product: [],
     productError: null,
     count_products: 0,
     showNewProduct: false,
+    productsTypes: [],
 }
 
 const mutations = {
     SET_PRODUCT (state, payload) {
         state.product = payload
+    },
+    SET_PRODUCTS_TYPES (state, payload) {
+        state.productsTypes = payload
     },
     SET_PRODUCT_ERROR: (state, payload) => {
         state.productError = payload
@@ -61,22 +66,33 @@ const actions = {
             console.log(error.message)
         })
     },
-    getProducts: async ({ commit }) => {
-        // clear token to prevent errors (if malformed)
-        commit('SET_PRODUCT', [])
-        commit('SET_PRODUCT_ERROR', null)
-
-        console.log('stoy en get product')
-
-        axios.get('/api/products/')
-        .then(res => {
-            console.log('stoy en then')
-            console.log(res.data)
-            commit('SET_PRODUCT', res.data.results)
-        }).catch(error => {
-            commit('SET_PRODUCT_ERROR', error.message)
-            console.log(error.message)
-        })
+    getProducts: async ({ commit }, params) => {
+      try {
+        const result = await axios.get('/api/products/', { params })
+        if (result.status === 200) {
+          console.log(result.data, 'getProducts action')
+          return {
+              success: true,
+              message: 'ok',
+              products: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
+              count: result.data.count,
+          }
+        } else {
+          return {
+            success: false,
+            message: result.data.detail,
+            products: [],
+            count: 0,
+          }
+        }
+      } catch (e) {
+        return {
+          success: false,
+          message: e.message,
+          products: [],
+          count: 0,
+        }
+      }
     },
     getPaginateProducts: async ({ commit }, payload) => {
         commit('SET_PRODUCT', [])
@@ -190,6 +206,35 @@ const actions = {
             description: '',
         })
     },
+    getProductsTypes: async ({ commit }, params) => {
+      try {
+        commit('SET_PRODUCTS_TYPES', [])
+        const result = await axios.get('/api/types/products/', { params })
+        if (result.status === 200) {
+          commit('SET_PRODUCTS_TYPES', result.data.results)
+          return {
+              success: true,
+              message: 'ok',
+              types: result.data.results,
+              count: result.data.count,
+          }
+        } else {
+          return {
+            success: false,
+            message: result.data.detail,
+            types: [],
+            count: 0,
+          }
+        }
+      } catch (e) {
+        return {
+          success: false,
+          message: e.message,
+          types: [],
+          count: 0,
+        }
+      }
+    },
 }
 
 const getters = {
@@ -204,6 +249,9 @@ const getters = {
     },
     showNewProduct (state) {
         return state.showNewProduct
+    },
+    productsTypes (state) {
+      return state.productsTypes
     },
 }
 

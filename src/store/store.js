@@ -3,8 +3,22 @@ import Vuex from 'vuex'
 import auth from './modules/auth'
 import product from './modules/product'
 import blog from './modules/blog'
+import file from './modules/file'
+import query from './modules/query'
+
+import queryNames from './names/query'
 
 Vue.use(Vuex)
+
+export const buildPrefix = (x, prefix) => {
+  switch (x) {
+    case 0: return `${prefix}state/`
+    case 1: return `${prefix}actions/`
+    case 2: return `${prefix}getters/`
+    case 3: return `${prefix}mutations/`
+    default: return `${prefix}`
+  }
+}
 
 export const store = new Vuex.Store({
   state: {
@@ -39,5 +53,9 @@ export const store = new Vuex.Store({
     auth,
     product,
     blog,
+    file,
+    query,
   },
 })
+
+export const QueryNamesStore = queryNames
