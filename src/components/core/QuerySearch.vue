@@ -46,9 +46,9 @@
         type: String,
         default: 'Buscar',
       },
-      onKeyUp: {
-        type: Boolean,
-        default: false,
+      searchText: {
+        type: Function,
+        default: (text) => {},
       },
       onKeyUpFunction: {
         type: Function,
@@ -62,17 +62,12 @@
     },
     watch: {
       text (value) {
-        // if (this.onKeyUp) {
-        //   console.log(value, 'key up')
-        //   // this.$emit('search:text', value)
-        // }
-        console.log(value, 'key up')
         this.onKeyUpFunction(value)
       },
     },
     methods: {
       search () {
-        this.$emit('search:text', this.text)
+        this.searchText(this.text)
       },
     },
   }

@@ -1,5 +1,6 @@
 <template>
   <v-container
+    v-if="productsTypes && productsTypes.length"
     class="pa-0 ma-0 align-center justify-center"
     fluid
     style="background-color: white"
@@ -13,23 +14,49 @@
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-46px"
     />
+    <v-row>
+
+    </v-row>
     <paginate-items
       :can-change-limit="true"
-      :default-limit="10"
+      :default-limit="limit"
       :filter-items="filterItems"
       :show-divider="true"
       :show-limit="true"
       :show-search-text="true"
-      :update-on-change-text="true"
+      :update-on-change-text="false"
+      :refresh="refresh"
     >
+      <v-row
+        justify="center"
+        align="center"
+      >
+        <v-col align-self="center">
+          <v-row
+            align="center"
+            justify="center"
+          >
+            <v-select
+              v-model="selectedType"
+              :items="selectProductsTypes"
+              style="width: 200px; max-width: 200px"
+              persistent-hint
+              hint="Linea de productos"
+              clearable
+              solo
+              color="#8b0000"
+              :loading="loading"
+            ></v-select>
+          </v-row>
+        </v-col>
+      </v-row>
     </paginate-items>
   </v-container>
 </template>
 
 <script>
-  // import ItemPreview from '@/components/core/ItemPreview'
-  // import QuerySearch from '@/components/core/QuerySearch'
-  import PaginateItems from '../../components/core/PaginateItems'
+  import PaginateItems from '@/components/core/PaginateItems'
+  import { mapGetters } from 'vuex'
   export default {
     components: {
       // ItemPreview,
@@ -38,9 +65,6 @@
     },
     data () {
       return {
-        absolute: true,
-        opacity: 0.46,
-        overlay: true,
         baseUrl: process.env.BASE_URL,
         loading: false,
         products: [],
@@ -48,47 +72,46 @@
         page: 1,
         limit: 10,
         text: '',
+        typeId: null,
+        refresh: false,
+        selectedType: undefined,
       }
     },
     computed: {
-      countPages () {
-        return this.count / this.limit
+      ...mapGetters(['productsTypes']),
+      selectProductsTypes () {
+        return this.productsTypes.map(x => x.title)
       },
-      paginationLength () {
-        return Number.parseInt(this.count % this.limit > 0 ? (this.count / this.limit) + 1 : this.count / this.limit)
-      },
-      productsItems () {
-        return this.products.map(x => this.buildItem(x))
+      routeType () {
+        return this.$route.params['type'] && this.productsTypes.some(x => x.id === this.$route.params['type'])
+          ? this.$route.params['type'] : null
       },
     },
     watch: {
-      async limit (value) {
-        this.page = 1
-        await this.filterProducts()
+      selectedType (value) {
+        this.typeId = value && this.productsTypes.(x => x.title === value)
+        console.log(this.typeId, 'watch type')
+        this.refresh = true
       },
     },
-    async mounted () {
-      await this.filterProducts()
+    created () {
+      this.text = this.$route.query['search'] || this.text
+      this.limit = this.$route.query['limit'] || this.limit
+      this.typeId = this.routeType
+      const temp = this.productsTypes.filter(x => x.id === this.typeId)
+      this.selectedType = 'Type 1'
+      if (this.typeId && temp) {
+        this.selectedType = temp[0].title
+      }
     },
+    // mounted () {
+    //   const temp = this.productsTypes.filter(x => x.id === this.typeId)
+    //   this.selectedType = 'Type 1'
+    //   if (this.typeId && temp) {
+    //     this.selectedType = temp[0].title
+    //   }
+    // },
     methods: {
-      async appliedSearch (text) {
-        this.page = 1
-        this.text = text
-        await this.filterProducts()
-      },
-      async filterProducts () {
-        this.loading = true
-        const result = await this.$store.dispatch('getProducts', {
-          offset: (this.page - 1) * this.limit,
-          limit: this.limit,
-          search: this.text,
-        })
-        console.log(result, 'filterProducts')
-        const { products, count } = result
-        this.products = products
-        this.count = count
-        this.loading = false
-      },
       buildItem (product) {
         return {
           item: {
@@ -102,12 +125,20 @@
         }
       },
       async filterItems (search, offset, limit) {
-        console.log(search, 'text')
-        this.loading = true
-        const result = await this.$store.dispatch('getProducts', {
+        this.refresh = false
+        const params = {
           offset, limit, search,
-        })
-        console.log(result, 'filterProducts')
+        }
+        if (!this.productsTypes) {
+          return {
+            items: [],
+            count: 0,
+          }
+        }
+        this.loading = true
+        if (this.typeId && this.productsTypes.some(x => x.id.toString() === this.typeId.toString()))
+          params['typeId'] = this.typeId
+        const result = await this.$store.dispatch('getProducts', params)
         const { products, count } = result
         this.products = products
         this.count = count
@@ -116,6 +147,16 @@
           items: this.products.map(x => this.buildItem(x)),
           count,
         }
+      },
+      async getTypes () {
+        this.loading = true
+        await this.$store.dispatch('getProductsTypes').then(result => {
+          // this.productTypes = result.types
+          this.loading = false
+        }).catch(e => {
+          console.log(e, 'error getTypes')
+          this.loading = false
+        })
       },
     },
   }
