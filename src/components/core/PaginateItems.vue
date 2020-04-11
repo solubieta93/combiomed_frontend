@@ -1,5 +1,6 @@
 <template>
   <v-col>
+    <slot @update:items="updateItems"></slot>
     <v-row
       justify="center"
       align="center"
@@ -123,6 +124,7 @@
         type: Boolean,
         default: true,
       },
+      refresh: Boolean,
     },
     data: () => ({
       items: [],
@@ -142,21 +144,24 @@
         this.page = 1
         await this.updateItems()
       },
-      // async page (value) {
-      //   this.limit = Number.parseInt(value) || Math.min(1, this.count)
-      //   this.page = 1
-      //   await this.updateItems()
-      // },
+      async defaultLimit (value) {
+        this.limit = Number.parseInt(value) || Math.min(1, this.count)
+        this.page = 1
+        await this.updateItems()
+      },
+      async refresh (value) {
+        if (value) {
+          await this.updateItems()
+        }
+      },
     },
-    async mounted () {
-      console.log('mounted')
+    mounted () {
+      console.log('paginated mounted')
       this.limit = this.defaultLimit
-      await this.updateItems()
+      // await this.updateItems()
     },
     methods: {
       async appliedSearch (text) {
-        console.log(this.text, 'prev text')
-        console.log(text, 'next text')
         this.page = 1
         this.text = text
         await this.updateItems()

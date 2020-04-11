@@ -6,11 +6,15 @@ const state = {
     productError: null,
     count_products: 0,
     showNewProduct: false,
+    productsTypes: [],
 }
 
 const mutations = {
     SET_PRODUCT (state, payload) {
         state.product = payload
+    },
+    SET_PRODUCTS_TYPES (state, payload) {
+        state.productsTypes = payload
     },
     SET_PRODUCT_ERROR: (state, payload) => {
         state.productError = payload
@@ -66,7 +70,7 @@ const actions = {
       try {
         const result = await axios.get('/api/products/', { params })
         if (result.status === 200) {
-          console.log(result, 'result action')
+          console.log(result.data, 'getProducts action')
           return {
               success: true,
               message: 'ok',
@@ -89,27 +93,6 @@ const actions = {
           count: 0,
         }
       }
-      //   .then(result => {
-      //     console.log(result, 'result action')
-      //     if (result.status === 200) {
-      //       return {
-      //           success: true,
-      //           message: 'ok',
-      //           products: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
-      //           count: result.data.count,
-      //       }
-      //     }
-      //     return {
-      //       success: false,
-      //       message: result.data.detail,
-      //     }
-      //   })
-      //   .catch(e => {
-      //     return {
-      //         success: false,
-      //         message: e.message,
-      //     }
-      // })
     },
     getPaginateProducts: async ({ commit }, payload) => {
         commit('SET_PRODUCT', [])
@@ -223,6 +206,35 @@ const actions = {
             description: '',
         })
     },
+    getProductsTypes: async ({ commit }, params) => {
+      try {
+        commit('SET_PRODUCTS_TYPES', [])
+        const result = await axios.get('/api/types/products/', { params })
+        if (result.status === 200) {
+          commit('SET_PRODUCTS_TYPES', result.data.results)
+          return {
+              success: true,
+              message: 'ok',
+              types: result.data.results,
+              count: result.data.count,
+          }
+        } else {
+          return {
+            success: false,
+            message: result.data.detail,
+            types: [],
+            count: 0,
+          }
+        }
+      } catch (e) {
+        return {
+          success: false,
+          message: e.message,
+          types: [],
+          count: 0,
+        }
+      }
+    },
 }
 
 const getters = {
@@ -237,6 +249,9 @@ const getters = {
     },
     showNewProduct (state) {
         return state.showNewProduct
+    },
+    productsTypes (state) {
+      return state.productsTypes
     },
 }
 
