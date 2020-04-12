@@ -64,7 +64,7 @@
         </div>
       </v-expand-transition>
 
-      <v-row justify="center" style="margin-bottom:2%;">
+      <v-row justify="center" style="margin-bottom:1%;">
           <v-btn
             text
             @click="readless = !readless"

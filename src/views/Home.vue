@@ -11,7 +11,7 @@
     />
 
     <!-- QUIENES SOMOS -->
-    <acordeon/>
+    <accordion/>
     
 
     <!-- PRODUCTOS -->
@@ -57,31 +57,8 @@
       </div>
     </v-img>
 
-    <!-- CONTACTOS -->
-    <v-col cols="12">
-      <v-row
-        justify="center"
-        style="height: 50px; color: grey;"
-      >
-        <v-col md="3">
-          <hr>
-        </v-col>
-        <v-col md="2">
-          <v-row justify="center">
-          <h3
-            class="text-uppercase"
-            style="margin-top: -14px; margin-left: 16px;"
-          >
-            contactos
-            <br>
-          </h3>
-          </v-row>
-        </v-col>
-        <v-col md="3">
-          <hr>
-        </v-col>
-      </v-row>
-    </v-col>
+    <!-- CONTACTOS -->    
+    <contact/>
   </v-container>
 </template>
 
@@ -91,16 +68,18 @@
   import ServicesDay from '@/components/services/ServicesDay'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
   import LineProducts from '@/components/product/LineProducts'
-  import Acordeon from '@/components/utils/Acordeon'
+  import Accordion from '@/components/utils/Accordion'
+  import Contact from '@/components/utils/Contact'
 
   export default {
     components: {
       CarouselPortada,
-      Acordeon,
+      Accordion,
       PrincipalNewsAndEvents,
       Services,
       ServicesDay,
-      LineProducts
+      LineProducts,
+      Contact
     },
     data () {
       return {

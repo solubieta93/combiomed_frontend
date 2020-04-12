@@ -1,22 +1,35 @@
 <template>
-     <div id="mycontainer">
-     
-            <v-col cols="12">
-        <v-row  justify="center" >
-         <v-col  md="3">
-            <hr>
-         </v-col>
-       <v-col  md="2" >
-           <h4 class="text-uppercase" style="margin-top: -14px;" @mouseover="mouse_over_contact" @click="click_contact">
-         Contactos
-            <br>
-          </h4>
+    <v-container 
+        fluid 
+        class="white_back"
+    >
+    <div id="mycontainer" style="margin-top: -13%; margin-bottom: 1%;">
+        <v-col cols="12">
+            <v-row
+                justify="center"
+                style="height: 50px; color: grey;"
+            >
+                <v-col md="3">
+                    <hr>
+                </v-col>
+                <v-col md="2">
+                    <v-row justify="center">
+                        <h4
+                            class="text-uppercase" 
+                            style="margin-top: -14px;" 
+                            @mouseover="mouse_over_contact" 
+                            @click="click_contact"
+                        >
+                            contactos
+                            <br>
+                        </h4>
+                    </v-row>
+                </v-col>
+                <v-col md="3">
+                    <hr>
+                </v-col>
+            </v-row>
         </v-col>
-        <v-col  md="3">
-         <hr>
-        </v-col>
-        </v-row>
-     </v-col>
 
         <div id="contacts"> 
             <div class="contactos">
@@ -38,17 +51,18 @@
                 <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
             </div>
         </div>
-        </div>
-    
+    </div>
+</v-container>
 </template>
 <script>
 export default {
     data () {
       return {
           style_d:"height: 50px;",
-	   show:false
+	        show:false
       }
-    }, methods:{
+    }, 
+    methods:{
       my:function(){
          var button = document.getElementById("contacts");
         if(this.show==false){
@@ -62,73 +76,76 @@ export default {
       }  ,
        mouse_over_contact:function(){
            this.style_d="height: 490px;"
-         var button = document.getElementById("contacts");
+            var button = document.getElementById("contacts");
            button.className = "show";  
         } , 
        click_contact:function () {
            this.style_d="height: 50px;"
-         var button = document.getElementById("contacts");
-          button.className = "shownull";
+            var button = document.getElementById("contacts");
+            button.className = "shownull";
        } 
     },
 }
 </script>
 <style scoped>
+.white_back {
+  background-color: white !important;
+}
 .mycontainer {
 	margin:auto;
-  margin-bottom: 10%;
+    margin-bottom: 10%;
 	width:60%;
 }
-        body {
-            background-repeat: no-repeat;
-            background-position-y: -25px;
-            background-position-x: -50px;
-            background-color: bisque;
-        }
-        #contacts {
-            margin-top: 50px;
-            display: flex;
+body {
+    background-repeat: no-repeat;
+    background-position-y: -25px;
+    background-position-x: -50px;
+    background-color: bisque;
+}
+#contacts {
+    /* margin-top: 50px; */
+    display: flex;
 
-            text-align: center;
-            justify-content: center;
-            align-content: center;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
 
-            /* opacity: 0; */
-            overflow: hidden;
-            height: 400;
-        }
+    /* opacity: 0; */
+    overflow: hidden;
+    /* height: 400; */
+}
 
-        .contactos {
-            flex-basis: 25%;
-        }
+.contactos {
+    flex-basis: 22%;
+}
 
-        #container, 
-        #p1,
-        #p2,
-        #p3 {
-            border-radius: 150px;
-        }
+#container, 
+#p1,
+#p2,
+#p3 {
+    border-radius: 155px;
+}
 
-        i.small  { font-size: 0.8rem; }
-        i.medium  { font-size: 1rem; }
-        i.large  { font-size: 1.2rem; }
+i.small  { font-size: 0.8rem; }
+i.medium  { font-size: 1rem; }
+i.large  { font-size: 1.2rem; }
 
-        .show {
-            animation:acordeon 2s;
-            animation-fill-mode:forwards;
-            overflow: none;       
-        }
+.show {
+animation:acordeon 2s;
+animation-fill-mode:forwards;
+overflow: none;       
+}
 
-        @keyframes acordeon {
-            0% {
-                height:0;
-                opacity: 0;
-            }
+@keyframes acordeon {
+0% {
+    height:0;
+    opacity: 0;
+}
 
-            100% {
-                height:400px;
-                opacity: 1;
-            }
-        }
+100% {
+    height:400px;
+    opacity: 1;
+}
+}
 
 </style>
