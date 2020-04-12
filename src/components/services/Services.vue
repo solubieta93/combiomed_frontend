@@ -7,8 +7,8 @@
         justify="center"
         style="height: 50px; margin-top: 135px;"
       >
-        <v-col md="3" style="color:white">
-          <hr style="color:white">
+        <v-col md="3" style="color:#FCFCFC;">
+          <hr style="color:#FCFCFC;">
         </v-col>
         <v-col md="2">
           <h3
@@ -19,8 +19,8 @@
             <br>
           </h3>
         </v-col>
-        <v-col md="3" style="color:white">
-          <hr style="color:white">
+        <v-col md="3" style="color:#FCFCFC;">
+          <hr style="color:#FCFCFC;">
         </v-col>
       </v-row>
     </v-col>
@@ -38,8 +38,8 @@
           class="mybutton" 
           @click="() => pushRoute('/services/tech')"
         >
-          <!-- <img src="../../../public/ICONOS/icono-servicio-tecnico-02.png"> -->
-          <img src="../../../public/ampa- (1).png" style="height: 66px;">
+          <img src="../../../public/ICONOS/icono-servicio-tecnico-02.png" style="height: 66px;">
+          <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
           <h4 class="text-uppercase" >Servicios Técnicos</h4>
         </button>
       </v-col>
@@ -53,8 +53,8 @@
           class="mybutton" 
           @click="() => pushRoute('/services/mec')"
         >
-          <!-- <img src="../../../public/ICONOS/icono-servicio-mecanica-02.png" style="height: 66px;"> -->
-          <img src="../../../public/ampa- (1).png" style="height: 66px;">
+          <img src="../../../public/ICONOS/icono-servicio-mecanica-02.png" style="height: 66px;">
+          <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
           <h4 class="text-uppercase" >Servicios Mecánica</h4>
          </button>
       </v-col>
@@ -67,8 +67,8 @@
           class="mybutton" 
           @click="() => pushRoute('/services/auto')"
         >
-          <!-- <img src="../../../public/ICONOS/icono-automatizacion-02.png" style="height: 66px;"> -->
-          <img src="../../../public/ampa- (1).png" style="height: 66px;">
+          <img src="../../../public/ICONOS/icono-automatizacion-02.png" style="height: 66px;">
+          <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
           <h4 class="text-uppercase">Servicios Automática</h4>
         </button>
       </v-col>

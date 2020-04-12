@@ -137,7 +137,7 @@ height:100%;
 }
 .item-2{
   grid-row: 2/3;
-	grid-column: 3/4;
+	grid-column: 3/5;
 	height: 100%;
   z-index: 2;
 }

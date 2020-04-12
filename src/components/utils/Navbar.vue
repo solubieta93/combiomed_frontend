@@ -148,9 +148,9 @@
           { text: 'Productos', route: '/products', roles: [] },
           { text: 'Servicios', active: false, style: 'min-width:150px', 
             items: [
-              { text: 'TÉCNICOS', route: '/services/auto', roles: [] },
+              { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
               { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
-              { text: 'AUTOMÁTICA', route: '/services/tech', roles: [] },
+              { text: 'AUTOMÁTICA', route: '/services/auto', roles: [] },
             ],
             roles: [],
           },

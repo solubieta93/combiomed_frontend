@@ -31,22 +31,22 @@
           <v-col cols="12">
             <v-row
               justify="center"
-              style="height: 50px; color: grey;"
+              style="height: 50px; color:#293D66;"
             >
               <v-col md="3">
-                <hr>
+                <hr style="color:#293D66;">
               </v-col>
               <v-col md="2">
                 <h3
                   class="text-uppercase"
-                  style="margin-top: -14px; margin-left: 16px;"
+                  style="margin-top: -14px; margin-left: 16px; "
                 >
                   Noticias y Eventos
                   <br>
                 </h3>
               </v-col>
               <v-col md="3">
-                <hr>
+                <hr style="color:#293D66;">
               </v-col>
             </v-row>
           </v-col>
@@ -55,6 +55,14 @@
       <div class="mycontainer">
         <principal-news-and-events/>
       </div>
+      <v-row justify="center" style="margin-bottom:1%;">
+          <v-btn
+            text
+            to='/news'
+          >
+            <p style="color:#293D66;"> Ver todas las noticias </p>
+          </v-btn>
+      </v-row>
     </v-img>
 
     <!-- CONTACTOS -->    

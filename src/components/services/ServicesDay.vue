@@ -22,16 +22,16 @@
      
         <v-col  md="4" class="text-uppercase"   >
           <button style="z-index:5" class="button_mecanica" @click="serviciosTecnicos">
-             <!-- <img src="../../../public/ICONOS/icono-servicio-tecnico-02.png"> -->
-             <img src="../../../public/ampa- (1).png" style="height: 66px;">
+             <img src="../../../public/ICONOS/icono-servicio-tecnico-02.png">
+             <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
           <h4 class="text-uppercase" >Servicios Técnicos</h4>
           </button>
         </v-col>
        
        <v-col  md="4"> 
          <button style="z-index:5" class="button_mecanica" @click="serviciosTecnicos">
-             <!-- <img src="../../../public/ICONOS/icono-servicio-mecanica-02.png" style="height: 66px;"> -->
-             <img src="../../../public/ampa- (1).png" style="height: 66px;">
+             <img src="../../../public/ICONOS/icono-servicio-mecanica-02.png" style="height: 66px;">
+             <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
        <h4 class="text-uppercase" >Servicios Mecánica</h4>
       
          </button>
@@ -40,8 +40,8 @@
      
      <v-col  md="4" class="text-uppercase" > 
      <button style="z-index:5" class="button_mecanica" @click="serviciosTecnicos">
-             <!-- <img src="../../../public/ICONOS/icono-automatizacion-02.png" style="height: 66px;"> -->
-             <img src="../../../public/ampa- (1).png" style="height: 66px;">
+             <img src="../../../public/ICONOS/icono-automatizacion-02.png" style="height: 66px;">
+             <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
         <h4 class="text-uppercase">Servicios Automática</h4>
         </button>
     </v-col>

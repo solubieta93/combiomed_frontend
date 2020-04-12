@@ -4,16 +4,16 @@
       <v-col cols="12">
         <v-row
             justify="center"
-            style="height: 50px; color: grey;"
+            style="height: 50px; color:#818080;"
         >
           <v-col md="3">
-          <hr>
+          <hr style="color:#818080;">
           </v-col>
           <v-col md="2">
             <v-row justify="center">
               <h3
                   class="text-uppercase"
-                  style="margin-top: -14px; margin-left: 16px;"
+                  style="margin-top: -14px; margin-left: 16px; "
               >
                   quienes somos
                   <br>
@@ -21,7 +21,7 @@
             </v-row>
           </v-col>
           <v-col md="3">
-            <hr>
+            <hr style="color:#818080;">
           </v-col>
         </v-row>
       </v-col>

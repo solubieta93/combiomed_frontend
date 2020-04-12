@@ -3,87 +3,88 @@
         fluid 
         class="white_back"
     >
-    <div id="mycontainer" style="margin-top: -13%; margin-bottom: 1%;">
-        <v-col cols="12">
-            <v-row
-                justify="center"
-                style="height: 50px; color: grey;"
-            >
-                <v-col md="3">
-                    <hr>
-                </v-col>
-                <v-col md="2">
-                    <v-row justify="center">
-                        <h4
-                            class="text-uppercase" 
-                            style="margin-top: -14px;" 
-                            @mouseover="mouse_over_contact" 
-                            @click="click_contact"
-                        >
-                            contactos
-                            <br>
-                        </h4>
-                    </v-row>
-                </v-col>
-                <v-col md="3">
-                    <hr>
-                </v-col>
-            </v-row>
-        </v-col>
+        <div id="mycontainer" style="margin-top: -13%; margin-bottom: 1%;">
+            <v-col cols="12">
+                <v-row
+                    justify="center"
+                    style="height: 50px; color:#818080;"
+                >
+                    <v-col md="3">
+                        <hr style="color:#818080;">
+                    </v-col>
+                    <v-col md="2">
+                        <v-row justify="center">
+                            <h4
+                                class="text-uppercase" 
+                                style="margin-top: -14px; color:#818080;" 
+                                @mouseover="mouse_over_contact" 
+                                @click="click_contact"
+                            >
+                                contactos
+                                <br>
+                            </h4>
+                        </v-row>
+                    </v-col>
+                    <v-col md="3">
+                        <hr style="color:#818080;">
+                    </v-col>
+                </v-row>
+            </v-col>
 
-        <div id="contacts"> 
-            <div class="contactos">
-                <img src="../../../public/CONTACTOS/raider (4)a.png" alt="" width="250" height="260" id="p1">
-                <h4>Ing. Raider Figueras Texidor </h4>
-                <h4>JEFE DE AUTOMÁTICA</h4>
-                <h5><i class="fi-mail large"></i>  raider@icid.cu</h5>
-            </div>
-            <div class="contactos">
-                <img src="../../../public/CONTACTOS/norka (11).png" alt="" width="250" height="260" id="p2">
-                <h4>Ing. Norka Gonzáles </h4>
-                <h4>DIRECTORA COMERCIAL</h4>
-                <h5><i class="fi-mail large"></i>  nglopez@icid.cu</h5>
-            </div>
-            <div class="contactos">
-                <img src="../../../public/CONTACTOS/abdel (2).png" alt="" width="280" height="260" id="p3">
-                <h4>Ing. Abdel Rodriguez Hernández </h4>
-                <h4>JEFE DE SERVICIO TÉCNICO</h4>
-                <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
+            <div id="contacts"> 
+                <div class="contactos">
+                    <img src="../../../public/CONTACTOS/raider (4)a.png" alt="" width="250" height="260" id="p1">
+                    <h4>Ing. Raider Figueras Texidor </h4>
+                    <h4>JEFE DE AUTOMÁTICA</h4>
+                    <h5><i class="fi-mail large"></i>  raider@icid.cu</h5>
+                </div>
+                <div class="contactos">
+                    <img src="../../../public/CONTACTOS/norka (11).png" alt="" width="250" height="260" id="p2">
+                    <h4>Ing. Norka Gonzáles </h4>
+                    <h4>DIRECTORA COMERCIAL</h4>
+                    <h5><i class="fi-mail large"></i>  nglopez@icid.cu</h5>
+                </div>
+                <div class="contactos">
+                    <img src="../../../public/CONTACTOS/abdel (2).png" alt="" width="280" height="260" id="p3">
+                    <h4>Ing. Abdel Rodriguez Hernández </h4>
+                    <h4>JEFE DE SERVICIO TÉCNICO</h4>
+                    <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
+                </div>
             </div>
         </div>
-    </div>
-</v-container>
+    </v-container>
 </template>
+
 <script>
 export default {
     data () {
       return {
-          style_d:"height: 50px;",
+            style_d:"height: 50px;",
 	        show:false
       }
     }, 
     methods:{
-      my:function(){
-         var button = document.getElementById("contacts");
-        if(this.show==false){
-           this.show=true;
-           button.className = "show";  
-        }   
-        else{
-          button.className = "shownull";
-          this.show=false;
-        }
-      }  ,
-       mouse_over_contact:function(){
-           this.style_d="height: 490px;"
+        my:function(){
             var button = document.getElementById("contacts");
-           button.className = "show";  
-        } , 
-       click_contact:function () {
-           this.style_d="height: 50px;"
+            if(this.show==false){
+            this.show=true;
+            button.className = "show";  
+            }   
+            else{
+            button.className = "shownull";
+            this.show=false;
+            }
+        }  ,
+        mouse_over_contact:function(){
+            this.style_d="height: 490px;"
+            var button = document.getElementById("contacts");
+            button.className = "show";  
+            } , 
+        click_contact:function () {
+            this.style_d="height: 50px;"
             var button = document.getElementById("contacts");
             button.className = "shownull";
-       } 
+        } 
     },
 }
 </script>
