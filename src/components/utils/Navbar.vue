@@ -88,6 +88,7 @@
               <v-menu
                 v-else
                 v-model="link.active"
+                offset-y
                 style="background-color:transparent"
               >
                 <template v-slot:activator="{ on }">
@@ -98,7 +99,7 @@
                     v-on="on"
                     :style="link.style"
                   >
-                    {{ link.active ? '' : link.text }}
+                    {{ link.text }}
                     <v-icon right>
                       mdi-menu-down
                     </v-icon>
