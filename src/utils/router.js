@@ -7,11 +7,12 @@ import NewsAndEventsDetail from '@/views/news/NewsAndEventsDetail.vue'
 import AutoServices from '@/views/services/AutoServices.vue'
 import TechServices from '@/views/services/TechServices.vue'
 import MecServices from '@/views/services/MecServices.vue'
-// import AppLayout from '@/components/layouts/App_Layout.vue'
 import Products from '@/views/products/Products.vue'
 import ProductDescription from '@/views/products/ProductDescription.vue'
 import Home from '@/views/Home.vue'
+import InitialPage from '@/views/InitialPage.vue'
 import Services from '@/components/services/Services'
+import Contact from '@/components/utils/Contact'
 const AppLayout = () => import('@/components/layouts/App_Layout.vue')
 
 Vue.use(Router)
@@ -88,6 +89,16 @@ const router = new Router({
         {
           path: ':postId',
           component: NewsAndEventsDetail,
+        },
+      ],
+    },
+    {
+      path: '/contacts',
+      component: AppLayout,
+      children: [
+        {
+          path: '',
+          component: Contact,
         },
       ],
     },

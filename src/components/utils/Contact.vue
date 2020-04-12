@@ -1,0 +1,134 @@
+<template>
+     <div id="mycontainer">
+     
+            <v-col cols="12">
+        <v-row  justify="center" >
+         <v-col  md="3">
+            <hr>
+         </v-col>
+       <v-col  md="2" >
+           <h4 class="text-uppercase" style="margin-top: -14px;" @mouseover="mouse_over_contact" @click="click_contact">
+         Contactos
+            <br>
+          </h4>
+        </v-col>
+        <v-col  md="3">
+         <hr>
+        </v-col>
+        </v-row>
+     </v-col>
+
+        <div id="contacts"> 
+            <div class="contactos">
+                <img src="../../../public/CONTACTOS/raider (4)a.png" alt="" width="250" height="260" id="p1">
+                <h4>Ing. Raider Figueras Texidor </h4>
+                <h4>JEFE DE AUTOMÁTICA</h4>
+                <h5><i class="fi-mail large"></i>  raider@icid.cu</h5>
+            </div>
+            <div class="contactos">
+                <img src="../../../public/CONTACTOS/norka (11).png" alt="" width="250" height="260" id="p2">
+                <h4>Ing. Norka Gonzáles </h4>
+                <h4>DIRECTORA COMERCIAL</h4>
+                <h5><i class="fi-mail large"></i>  nglopez@icid.cu</h5>
+            </div>
+            <div class="contactos">
+                <img src="../../../public/CONTACTOS/abdel (2).png" alt="" width="280" height="260" id="p3">
+                <h4>Ing. Abdel Rodriguez Hernández </h4>
+                <h4>JEFE DE SERVICIO TÉCNICO</h4>
+                <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
+            </div>
+        </div>
+        </div>
+    
+</template>
+<script>
+export default {
+    data () {
+      return {
+          style_d:"height: 50px;",
+	   show:false
+      }
+    }, methods:{
+      my:function(){
+         var button = document.getElementById("contacts");
+        if(this.show==false){
+           this.show=true;
+           button.className = "show";  
+        }   
+        else{
+          button.className = "shownull";
+          this.show=false;
+        }
+      }  ,
+       mouse_over_contact:function(){
+           this.style_d="height: 490px;"
+         var button = document.getElementById("contacts");
+           button.className = "show";  
+        } , 
+       click_contact:function () {
+           this.style_d="height: 50px;"
+         var button = document.getElementById("contacts");
+          button.className = "shownull";
+       } 
+    },
+}
+</script>
+<style scoped>
+.mycontainer {
+	margin:auto;
+  margin-bottom: 10%;
+	width:60%;
+}
+        body {
+            background-repeat: no-repeat;
+            background-position-y: -25px;
+            background-position-x: -50px;
+            background-color: bisque;
+        }
+        #contacts {
+            margin-top: 50px;
+            display: flex;
+
+            text-align: center;
+            justify-content: center;
+            align-content: center;
+
+            /* opacity: 0; */
+            overflow: hidden;
+            height: 400;
+        }
+
+        .contactos {
+            flex-basis: 25%;
+        }
+
+        #container, 
+        #p1,
+        #p2,
+        #p3 {
+            border-radius: 150px;
+        }
+
+        i.small  { font-size: 0.8rem; }
+        i.medium  { font-size: 1rem; }
+        i.large  { font-size: 1.2rem; }
+
+        .show {
+            animation:acordeon 2s;
+            animation-fill-mode:forwards;
+            overflow: none;       
+        }
+
+        @keyframes acordeon {
+            0% {
+                height:0;
+                opacity: 0;
+            }
+
+            100% {
+                height:400px;
+                opacity: 1;
+            }
+        }
+
+</style>
