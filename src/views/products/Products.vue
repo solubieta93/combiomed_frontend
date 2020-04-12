@@ -89,7 +89,7 @@
     },
     watch: {
       selectedType (value) {
-        this.typeId = value && this.productsTypes.some(x => x.title === value) ? this.productsTypes.filter(x => x.title === value)[0].id : null
+        // this.typeId = value && this.productsTypes.(x => x.title === value)
         console.log(this.typeId, 'watch type')
         this.refresh = true
       },
