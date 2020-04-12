@@ -9,16 +9,19 @@
       style="margin-top: 135px;"
     >
       <v-col md="2">
+        <img src="../../../public/ICONOS/map-marker.png" >
         <p class="body-2 font-italic font-weight-bold">
           Calle 202 No.1704 entre 17 y 19. Siboney. Playa. La Habana. Cuba
         </p>
       </v-col>
       <v-col md="2">
+        <img src="../../../public/ICONOS/email.png" >
         <p class="caption font-italic font-weight-bold">
           E-mail: combio@icid.cu
         </p>
       </v-col>
       <v-col md="2">
+        <img src="../../../public/ICONOS/phone.png" >
         <p class="caption font-italic font-weight-bold">
           Telf:(+53) 7 2739088, (+53)7 2719132
         </p>

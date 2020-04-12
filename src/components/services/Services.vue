@@ -7,70 +7,70 @@
         justify="center"
         style="height: 50px; margin-top: 135px;"
       >
-        <v-col md="3" style="color:white">
-          <hr style="color:white">
+        <v-col md="3" style="color:#FCFCFC;">
+          <hr style="color:#FCFCFC;">
         </v-col>
         <v-col md="2">
           <h3
             class="text-uppercase"
             style="margin-top: -14px; margin-left: 16px; color:white;"
           >
-            Quienes somos
+            Servicios
             <br>
           </h3>
         </v-col>
-        <v-col md="3" style="color:white">
-          <hr style="color:white">
+        <v-col md="3" style="color:#FCFCFC;">
+          <hr style="color:#FCFCFC;">
         </v-col>
       </v-row>
     </v-col>
 
     <v-row
       justify="center"
-      style="height: 100px; "
+      style="height: 100%; "
     >
       <v-col
         md="2"
         class="text-uppercase"
       >
-        <blockquote
-          elevation="0"
-          style=" height: 145px; width:145px;"
-          color="transparent"
+        <button 
+          style="z-index:5" 
+          class="mybutton" 
+          @click="() => pushRoute('/services/tech')"
         >
-          <h4>Servicios</h4>
-          <h4>Técnicos</h4>
-        </blockquote>
+          <img src="../../../public/ICONOS/icono-servicio-tecnico-02.png" style="height: 66px;">
+          <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
+          <h4 class="text-uppercase" >Servicios Técnicos</h4>
+        </button>
       </v-col>
 
       <v-col
         md="2"
         class="text-uppercase"
       >
-        <blockquote
-          style=" height: 145px; width:145px"
-          color="transparent"
+        <button 
+          style="z-index:5" 
+          class="mybutton" 
+          @click="() => pushRoute('/services/mec')"
         >
-          <h4>Servicios</h4>
-          <h4> de Mecánica</h4>
-        </blockquote>
+          <img src="../../../public/ICONOS/icono-servicio-mecanica-02.png" style="height: 66px;">
+          <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
+          <h4 class="text-uppercase" >Servicios Mecánica</h4>
+         </button>
       </v-col>
       <v-col
         md="2"
         class="text-uppercase"
       >
-        <blockquote
-          style=" height: 145px; width:145px"
-          color="transparent"
+        <button 
+          style="z-index:5" 
+          class="mybutton" 
+          @click="() => pushRoute('/services/auto')"
         >
-        <v-btn 
-        to="services/auto" 
-        text>
-        <h4>Servicios</h4>
-          <h3> de Automática</h3>
-        </v-btn>
-          
-        </blockquote>
+          <img src="../../../public/ICONOS/icono-automatizacion-02.png" style="height: 66px;">
+          <!-- <img src="../../../public/ampa- (1).png" style="height: 66px;"> -->
+          <h4 class="text-uppercase">Servicios Automática</h4>
+        </button>
       </v-col>
     </v-row>
   </v-img>
@@ -86,6 +86,13 @@
         baseUrl: process.env.BASE_URL,
       }
     },
+    methods:{
+      pushRoute:function(path){
+        console.log("Esto es una prueba    ", path)
+        if (path) this.$router.push({ path })
+        
+      }
+    },
   }
 </script>
 
@@ -93,6 +100,16 @@
 blockquote {
   padding: 3px 10px;
   border: red 3px solid;
+  border-radius: 0px;
+}
+.mybutton{
+  padding: 30px 70px; 
+  border-radius: 0px;
+  width: 225px;
+  height: 225px;
+}
+.mybutton:hover{
+  border: red 3px solid; 
   border-radius: 0px;
 }
 </style>

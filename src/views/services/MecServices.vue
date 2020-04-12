@@ -4,16 +4,19 @@
     class="white_back pa-0 ma-0"
   >
     <v-img
-      :src="`${baseUrl}servMec0.jpg`"
+      :src="`${baseUrl}servicesMec/servMec0.png`"
       height="80vh"
     />
-    <v-img
+    <!-- <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-48px"
-    />
-    
+    /> -->
+    <v-img
+      :src="`${baseUrl}web-combiomed-servicios-mecanica&automatizacion.png`"
+      style="margin-top:-5%; z-index:2; "
+    >
     <!-- TITLE -->
-    <v-col cols="12">
+    <v-col cols="12" style="margin-top:10%;">
       <v-row
         justify="center"
         style="height: 50px; color: grey;"
@@ -75,16 +78,15 @@
         </p>
       </v-col>
     </v-row>
-
+    </v-img>
 
     <div
       fill-height
-      style="min-height: 500px;"
+      style="max-height: 800px; z-index: 1; margin-top:-10%;"
     >
       <v-img
-        max-height="500"
         width="auto"
-        :src="`${baseUrl}servAut2.jpg`"
+        :src="`${baseUrl}servicesMec/servMec1.png`"
       />
     </div>
     <v-img
@@ -173,7 +175,7 @@
     </div>
 
     <!-- AQUI DEBEN IR 5 IMAGENES DE LAS 5 MAQUINAS -->
-    <images :currentView="mec"/>
+    <images :images="imagesMachine"/>
   </v-container>
 </template>
 
@@ -187,6 +189,11 @@
     data () {
       return {
         baseUrl: process.env.BASE_URL,
+        imagesMachine: [
+          'servicesMec/mecanica1.png',
+          'servicesMec/mecanica2.png',
+          'servicesMec/mecanica3.png',
+        ],
       }
     },
   }
