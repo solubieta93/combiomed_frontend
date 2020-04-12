@@ -146,7 +146,9 @@
         links: [
           { text: 'Nosotros', route: '/dashboard', roles: [] },
           { text: 'Productos', route: '/products', roles: [] },
-          { text: 'Servicios', active: false, style: 'min-width:150px', 
+          { text: 'Servicios', 
+            active: false, 
+            style: 'min-width:150px',
             items: [
               { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
               { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
