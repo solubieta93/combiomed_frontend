@@ -20,7 +20,7 @@ new Vue({
     // execute getCurrentUser query
     if (this.$store.getters.token) {
       this.$store.dispatch('verifyToken')
-      this.$store.dispatch('getProductsTypes')
+      // this.$store.dispatch('getProductsTypes')
     }
   },
   render: h => h(App),
