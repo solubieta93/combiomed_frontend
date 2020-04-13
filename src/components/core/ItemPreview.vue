@@ -13,8 +13,7 @@
     >
       <v-img
         :src="item.image ? item.image : `${baseUrl}ampa- (1).png`"
-        min-height="350"
-        class="mx-auto"
+        class="fill-height"
         :aspect-ratio="16/9"
       >
         <v-expand-transition>
