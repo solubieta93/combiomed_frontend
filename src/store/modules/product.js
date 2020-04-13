@@ -1,6 +1,12 @@
 import axios from '@/utils/axios-auth'
 import {apiURI} from "../../utils/globalConstants";
 
+const unzipProduct = x => ({
+    ...x,
+    image: x.image ? apiURI + x.image : null,
+    files: x.files ? x.files.map(y => apiURI + y) : [],
+})
+
 const state = {
     product: [],
     productError: null,
@@ -50,24 +56,39 @@ const mutations = {
 }
 
 const actions = {
-    getCurrentProduct: async ({ commit }, payload) => {
+    getProduct: async ({ commit }, id) => {
         console.log('getcurrenProduct')
-        commit('SET_PRODUCT', [])
-        commit('SET_PRODUCT_ERROR', null)
-
-        axios.get('/api/products', {
-            id: payload.id,
-        },
-        {
-            headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
-        })
-        .then(res => {
-            commit('SET_PRODUCT', res.data.results)
-        })
-        .catch(error => {
-            commit('SET_PRODUCT_ERROR', error.message)
-            console.log(error.message)
-        })
+        // commit('SET_PRODUCT', [])
+        // commit('SET_PRODUCT_ERROR', null)
+        // .then(res => {
+        try {
+            const res = await axios.get(`/api/products/${id}`)
+            console.log(res, 'result')
+            if (res.status === 200) {
+                return {
+                    success: true,
+                    message: 'ok',
+                    product: unzipProduct(res.data),
+                    notFound: false,
+                }
+            }
+            return {
+                success: false,
+                message: res.data[Object.keys(res.data)[0]],
+                product: null,
+                notFound: res.status === 404,
+            }
+        } catch (error) {
+            console.log(error.message, 'error fetch product')
+            const split = error.message.toString().split('status code ')
+            const notFound = split.length > 1 && split[1].substr(0, 3) === '404'
+            return {
+                success: false,
+                message: error,
+                product: null,
+                notFound,
+            }
+        }
     },
     getProducts: async ({ commit }, params) => {
       try {
