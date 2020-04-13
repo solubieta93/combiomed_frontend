@@ -63,14 +63,47 @@
         </v-col>
       </v-row>
     </paginate-items>
+
+    <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
+    <v-dialog
+      v-model="addLineProduct"
+      max-width="600px"
+    >
+      <add-line-product
+        :line="newLineProduct"
+        :mode="'creating'"
+        :onSave="() => { addLineProduct = false; paginate() }"
+      />
+    </v-dialog>
+    
+    <v-card-text
+      v-if="isAdmin"
+      style="height: 100px; position: relative"
+    >
+      <v-btn
+        absolute
+        dark
+        fab
+        right
+        small
+        color="pink"
+        @click="showAddLineProductDialog"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-card-text>
   </v-container>
 </template>
 
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
+  import AddLineProduct from '@/components/product/AddLineProduct'
+  import { mapGetters } from 'vuex'
+  
   export default {
     components: {
       PaginateItems,
+      AddLineProduct,
     },
     data () {
       return {
@@ -85,9 +118,15 @@
         refresh: false,
         selectedType: undefined,
         hasCreated: false,
+        addLineProduct: false,
+        newLineProduct: [],
       }
     },
     computed: {
+      ...mapGetters(['user']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
       selectProductsTypes () {
         return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
       },
@@ -169,6 +208,11 @@
       onUpdateSelected () {
         this.typeId = this.selectedType ? typeof (this.selectedType) === 'object' ? this.selectedType.value : this.selectedType : null
         this.refresh = true
+      },
+      async showAddLineProductDialog () {
+        this.newLineProduct = await this.$store.dispatch('getNewLineProduct')
+        console.log(this.newLineProduct, 'newLineProduct')
+        this.addLineProduct = true
       },
     },
   }
