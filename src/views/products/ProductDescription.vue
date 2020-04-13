@@ -1,23 +1,66 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+    class="pa-0 ma-0"
+    style="background-color: white"
+  >
     <carousel-portada />
 
     <v-img
-      src="web-combiomed-historia-04.png"
-      style=" height:348px;"
+      :src="`${baseUrl}web-combiomed-historia-03.png`"
+      style="margin-top: -46px"
     />
+    <v-row
+      justify="center"
+      align="center"
+    >
+      <v-progress-circular
+        v-if="loading"
+        :size="70"
+        :width="7"
+        color="primary"
+        indeterminate
+      />
+      <v-snackbar
+        v-model="snackbar"
+        color="red"
+        :timeout="6000"
+        top
+      >
+        {{ error }}
+        <v-btn
+          dark
+          text
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
+      <v-alert
+        v-if="!loading && !snackbar && error"
+        outlined
+        type="error"
+        color="primary"
+        dense
+      >
+        {{ error }}
+      </v-alert>
+    </v-row>
 
-    <v-col cols="12">
+    <v-col
+      v-if="!loading && product"
+      cols="12"
+    >
       <v-row justify="center">
         <v-col md="8">
           <h1 style=" color: #C80000 ;  ">
-            Cardiocid D200A
+            {{ product.name }}
           </h1>
           <p
             style="color:grey"
             class="text-uppercase"
           >
-            Electrocardiografo de 12 canales. Modelo:A5121
+            {{ product.description }}
           </p>
         </v-col>
       </v-row>
@@ -26,13 +69,16 @@
         <v-col md="8">
           <v-img
             class="io"
-            src="ampa- (1).png"
+            :src="product.image ? product.image : `${baseUrl}ampa- (1).png`"
             style=" height:348px;  border: red 2px solid; border-radius: 0px, 0px, 0px;"
           />
         </v-col>
       </v-row>
     </v-col>
-    <v-row justify="center">
+    <v-row
+      v-if="!loading && product"
+      justify="center"
+    >
       <v-col md="8">
         <h1>Descripcion del producto </h1>
         <p>Electrocardiografo para la realizacion de electrocardiograma estandar de 12 dereivaciones </p>
@@ -57,19 +103,44 @@
     data () {
       return {
         baseUrl: process.env.BASE_URL,
-        absolute: true,
-        opacity: 0.46,
-        overlay: true,
-
+        // absolute: true,
+        // opacity: 0.46,
+        // overlay: true,
+        loading: false,
+        product: null,
+        error: null,
+        snackbar: false,
       }
     },
+    created () {
+      this.getProduct()
+    },
     methods: {
-      goToProduct: function () {
-        this.$router.push('/product')
-        console.log('Esto es una prueba')
-        // JSON.stringify()
+      getProduct: function () {
+        this.loading = true
+        this.error = null
+        this.snackbar = false
+        const id = this.$route.params['productId']
+        this.$store.dispatch('getProduct', id)
+          .then(res => {
+            if (res.success) {
+              this.product = res.product
+              console.log(this.product, 'product fetched')
+            } else if (res.notFound) {
+              this.$router.push('/')
+            } else {
+              this.error = res.message
+              this.snackbar = true
+            }
+          })
+          .catch(e => {
+            console.log(e)
+            this.error = e
+            this.snackbar = true
+          }).finally(() => {
+            this.loading = false
+          })
       },
-
     },
 
   }
