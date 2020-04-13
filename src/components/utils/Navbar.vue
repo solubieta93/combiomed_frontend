@@ -87,6 +87,8 @@
               </v-tab>
               <v-menu
                 v-else
+                v-model="link.active"
+                offset-y
                 style="background-color:transparent"
               >
                 <template v-slot:activator="{ on }">
@@ -95,6 +97,7 @@
                     class="white--text fill-height"
                     color="white"
                     v-on="on"
+                    :style="link.style"
                   >
                     {{ link.text }}
                     <v-icon right>
@@ -102,11 +105,18 @@
                     </v-icon>
                   </v-tab>
                 </template>
-                <v-list
-                  background-color="transparent"
-                  class="white--text"
+
+                <v-tabs 
+                  vertical
+                  class="semitransparent white--text"
                 >
-                  <v-list-item
+                  <v-tabs-slider
+                    v-model="slider"
+                    color="#8b0000"
+                  ></v-tabs-slider>
+                  <v-tab
+                    class="semitransparent white--text"
+                    style="min-width: 150px"
                     v-for="item in link.items"
                     :key="item.text"
                     :inactive="!item.route"
@@ -114,12 +124,12 @@
                     @click="() => pushRoute(i, item.route)"
                   >
                     {{ item.text }}
-                  </v-list-item>
-                </v-list>
+                  </v-tab>
+                </v-tabs>
+
               </v-menu>
             </v-item>
           </v-tabs>
-          <!--          </template>-->
         </v-col>
       </v-row>
     </v-overlay>
@@ -136,16 +146,18 @@
         links: [
           { text: 'Nosotros', route: '/dashboard', roles: [] },
           { text: 'Productos', route: '/products', roles: [] },
-          { text: 'Servicios',
+          { text: 'Servicios', 
+            active: false, 
+            style: 'min-width:150px',
             items: [
-              { text: 'TÉCNICOS', route: '/services/auto', roles: [] },
+              { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
               { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
-              { text: 'AUTOMÁTICA', route: '/services/tech', roles: [] },
+              { text: 'AUTOMÁTICA', route: '/services/auto', roles: [] },
             ],
             roles: [],
           },
           { text: 'Noticias y Eventos', route: '/news' },
-          { text: 'Contactos' }, // route: '/clients' },
+          { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
         ],
         baseUrl: process.env.BASE_URL,
         tab: null,
@@ -179,5 +191,9 @@
  .fill {
    width: 100vw;
    height: 128px;
+ }
+ .semitransparent {
+   background-color: #001A33 !important;
+   opacity: 0.68;
  }
 </style>

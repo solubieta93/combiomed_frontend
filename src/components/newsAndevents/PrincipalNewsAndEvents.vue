@@ -1,105 +1,21 @@
 <template>
 <v-container>
-    <!-- FOUR FIRST NEWS -->
-    <!-- <div class="div_product">
-      <div class="my_container">
-        <div class="grid">
-          <template v-for="(item,i) in items">
-            <v-hover
-              :key="item"
-              v-slot:default="{ hover }"
-            >
-              <v-card
-                :elevation="hover ? 12 : 2"
-                :class="item.class"
-              >
-                <v-img
-                  :src="postFixed[i].image ? postFixed[i].image : `${baseUrl}ampa- (1).png`"
-                  class="fill-height"
-                  :aspect-ratio="16/9"
-                >
-                  <v-expand-transition>
-                    <div
-                      v-if="hover"
-                      class="d-flex transition-fast-in-fast-out v-card--reveal justify-start"
-                      :style="`height:${hover ? 50 : 18}%; top: ${hover ? 50 : 82}%;`"
-                    >
-                      <v-btn
-                        text
-                        large
-                        color="white"
-                        class="div_product"
-                        :to="`/news/${postFixed[i].id}`"
-                      >
-                        Leer Mas
-                      </v-btn>
-                    </div>
-                    <v-overlay
-                      :absolute="true"
-                      :value="true"
-                      :opacity="0.46"
-                      color="#001A33"
-                      class="d-flex transition-fast-in-fast-out v-card--reveal justify-start"
-                      :style="`height:${hover ? 50 : 18}%; top: ${hover ? 50 : 82}%;`"
-          
-                    >
-                      <div>
-                        <h3 class="text-uppercase">
-                          {{ postFixed[i].title }}
-                        </h3>
-                        <h3>{{ postFixed[i].abstract }}</h3>
-                        <h3>Autor: {{ postFixed[i].owner }}</h3>
-                      </div>
-                    </v-overlay>
-                  </v-expand-transition>
-                </v-img>
-              </v-card>
-            </v-hover>
-          </template>
-        </div>
-      </div>
-    </div> -->
-
-    <v-row
-      justify="center"
-      align="center"
-    >
-      <v-row
-        justify="center"
-        align="center"
-        style="max-width: 80vw"
-      >
-        <v-col
-          v-for="(item, i) in newsItems"
-          :key="i"
-        >
-          <item-preview
-            :item="item.item"
-            :pathTo="item.pathTo"
-          ></item-preview>
-        </v-col>
-      </v-row>
-    </v-row>
+  <responsive-items
+    :items="newsItems"
+  />
 </v-container>
 </template>
 
 <script>
-  import ItemPreview from '@/components/core/ItemPreview'
+  import ResponsiveItems from '@/components/core/ResponsiveItems'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      ItemPreview,
+      ResponsiveItems,
     },
     data () {
       return {
-        items: [
-          // 275px
-          { class: 'item-0', style: 'height:141px; left: 0px; top: 67%;' },
-          { class: 'item-1', style: 'height:141px; left: 0px; top: 67%;' },
-          { class: 'item-2', style: 'height:141px; left: 0px; top: 83.6%;' },
-          { class: 'item-3', style: 'height:141px; left: 0px; top: 67%;' },
-        ],
         postFixed: [],
         baseUrl: process.env.BASE_URL,
       }
@@ -137,6 +53,21 @@
           pathTo: `/news/${news.id}`,
         }
       },
+      async filterItems() {
+        console.log('estoy en principal news')
+        this.loading = true
+        const { posts, count } = await this.$store.dispatch('getPaginateBlog', {
+          offset: 0,
+          limit: 4,
+        })
+        this.postFixed = posts
+        this.loading = false
+        console.log('posts', postFixed)
+        return {
+          items: this.postFixed.map(x => this.buildItem(x)),
+          count,
+        }
+      }
     },
   }
 </script>

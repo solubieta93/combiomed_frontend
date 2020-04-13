@@ -1,7 +1,7 @@
 <template>
   <div class="mycontainer">
     <div class="mygrid">
-      <template v-for="(item,i) in imagesClients">
+      <template v-for="(item,i) in images">
         <v-card
           :key="item"
           :elevation="0"
@@ -24,7 +24,11 @@
       currentView: {
         type: String,
         default: "auto"
-      }
+      },
+      images: {
+        type: Object,
+        required: true,
+      },
     },
     data () {
       return {
@@ -34,7 +38,7 @@
           'servicesAuto/client2.jfif',
           'servicesAuto/client3.png',
           'servicesAuto/client4.jpg',
-          'ampa- (1).png',
+          'servicesAuto/client5.png',
         ],
         imagesMachine: [
 
@@ -54,6 +58,7 @@
 .mycontainer {
 	margin:auto;
 	width:60%;
+  margin-bottom: 5%;
 }
 
 .mygrid{

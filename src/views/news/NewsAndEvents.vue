@@ -48,7 +48,7 @@
 
     <news-and-events-items
       :start="4"
-      :limit="3"
+      :limit="10"
     />
 
     <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
