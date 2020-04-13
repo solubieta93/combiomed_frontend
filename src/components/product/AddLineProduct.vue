@@ -7,12 +7,12 @@
     <v-card-title
       v-if="mode==='creating'"
     >
-      <h2>Add a New Line Product</h2>
+      <h2>Agregar Línea de Producto</h2>
     </v-card-title>
     <v-card-title
       v-if="mode==='editing'"
     >
-      <h2>Edit Line Product</h2>
+      <h2>Editar Línea de Producto</h2>
     </v-card-title>
     <v-window v-model="step">
       <v-window-item :value="1">
@@ -25,12 +25,12 @@
             <v-text-field
               v-model="line.title"
               :rules="[rules.required]"
-              label="Title"
+              label="Título"
             />
             <v-textarea
               v-model="line.description"
               :rules="[rules.required]"
-              label="Description"
+              label="Descripción"
               prepend-icon="edit"
             />
           </v-form>
@@ -60,7 +60,7 @@
         text
         @click="step--"
       >
-        Atras
+        Atrás
       </v-btn>
       <v-spacer />
       <v-btn
@@ -79,7 +79,7 @@
         :loading="loading"
         @click="saveLine"
       >
-        Save Line
+        Salvar
       </v-btn>
     </v-card-actions>
   </v-card>

@@ -7,12 +7,12 @@
     <v-card-title
       v-if="mode==='creating'"
     >
-      <h2>Add a New News</h2>
+      <h2>Agregar una noticia</h2>
     </v-card-title>
     <v-card-title
       v-if="mode==='editing'"
     >
-      <h2>Edit News</h2>
+      <h2>Editar noticia</h2>
     </v-card-title>
     <v-window v-model="step">
       <v-window-item :value="1">
@@ -25,18 +25,18 @@
             <v-text-field
               v-model="post.title"
               :rules="[rules.required]"
-              label="Title"
+              label="Título"
             />
             <v-textarea
               v-model="post.abstract"
               :rules="[rules.required]"
-              label="Abstract"
+              label="Descripción"
               prepend-icon="edit"
             />
             <v-textarea
               v-model="post.context"
               :rules="[rules.required]"
-              label="Content"
+              label="Contenido"
               prepend-icon="edit"
             />
           </v-form>
@@ -66,7 +66,7 @@
         text
         @click="step--"
       >
-        Atras
+        Atrás
       </v-btn>
       <v-spacer />
       <v-btn
@@ -85,7 +85,7 @@
         :loading="loading"
         @click="saveNews"
       >
-        Save news
+        Salvar
       </v-btn>
     </v-card-actions>
   </v-card>

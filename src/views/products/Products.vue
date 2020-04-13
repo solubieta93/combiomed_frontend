@@ -157,6 +157,7 @@
     },
     methods: {
       buildItem (product) {
+        console.log('products')
         return {
           item: {
             id: product.id,
@@ -164,6 +165,7 @@
             description: product.description,
             image: product.image,
             owner: product.owner,
+            files: product.files
           },
           pathTo: `/products/${product.id}`,
         }

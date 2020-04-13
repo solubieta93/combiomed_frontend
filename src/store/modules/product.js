@@ -106,7 +106,7 @@ const actions = {
           return {
               success: true,
               message: 'ok',
-              products: unzipProduct(res.data),
+              products: result.data.results.map(unzipProduct),
               count: result.data.count,
           }
         } else {
