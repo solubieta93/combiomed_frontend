@@ -151,14 +151,13 @@
       },
       async refresh (value) {
         if (value) {
+          this.page = 1
           await this.updateItems()
         }
       },
     },
     mounted () {
-      console.log('paginated mounted')
       this.limit = this.defaultLimit
-      // await this.updateItems()
     },
     methods: {
       async appliedSearch (text) {

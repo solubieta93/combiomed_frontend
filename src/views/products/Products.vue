@@ -14,9 +14,6 @@
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-46px"
     />
-    <v-row>
-
-    </v-row>
     <paginate-items
       :can-change-limit="true"
       :default-limit="limit"
@@ -36,17 +33,32 @@
             align="center"
             justify="center"
           >
-            <v-select
-              v-model="selectedType"
-              :items="selectProductsTypes"
-              style="width: 200px; max-width: 200px"
-              persistent-hint
-              hint="Linea de productos"
-              clearable
-              solo
-              color="#8b0000"
-              :loading="loading"
-            ></v-select>
+            <v-spacer />
+            <v-divider />
+            <v-col
+              cols="8"
+              sm="8"
+              md="6"
+              lg="4"
+              xl="3"
+            >
+              <v-select
+                v-model="selectedType"
+                :items="selectProductsTypes"
+                hide-details
+                clearable
+                solo
+                flat
+                dense
+                color="#8b0000"
+                :loading="loading"
+                :label="selectedType ? null : 'Todos'"
+                @click:clear="onUpdateSelected"
+                @change="onUpdateSelected"
+              />
+            </v-col>
+            <v-divider />
+            <v-spacer />
           </v-row>
         </v-col>
       </v-row>
@@ -56,18 +68,15 @@
 
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
-  import { mapGetters } from 'vuex'
   export default {
     components: {
-      // ItemPreview,
-      // QuerySearch,
       PaginateItems,
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
         loading: false,
-        products: [],
+        productsTypes: [],
         count: 0,
         page: 1,
         limit: 10,
@@ -75,42 +84,38 @@
         typeId: null,
         refresh: false,
         selectedType: undefined,
+        hasCreated: false,
       }
     },
     computed: {
-      ...mapGetters(['productsTypes']),
       selectProductsTypes () {
-        return this.productsTypes.map(x => x.title)
+        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
       },
       routeType () {
-        return this.$route.params['type'] && this.productsTypes.some(x => x.id === this.$route.params['type'])
-          ? this.$route.params['type'] : null
+        return this.$route.query['type'] && this.selectProductsTypes.some(x => x.value === this.$route.query['type'])
+          ? this.$route.query['type'] : null
       },
     },
-    watch: {
-      selectedType (value) {
-        // this.typeId = value && this.productsTypes.(x => x.title === value)
-        console.log(this.typeId, 'watch type')
-        this.refresh = true
-      },
-    },
-    created () {
+    async created () {
+      this.loading = true
       this.text = this.$route.query['search'] || this.text
-      this.limit = this.$route.query['limit'] || this.limit
-      this.typeId = this.routeType
-      const temp = this.productsTypes.filter(x => x.id === this.typeId)
-      this.selectedType = 'Type 1'
-      if (this.typeId && temp) {
-        this.selectedType = temp[0].title
-      }
+      this.limit = Number.parseInt(this.$route.query['limit']) || this.limit
+      await this.getTypes()
+        .then(_ => {
+          this.typeId = this.routeType
+          const temp = this.selectProductsTypes.filter(x => x.value === this.typeId)
+          if (this.typeId && temp) {
+            this.selectedType = temp[0]
+          }
+          this.hasCreated = true
+          this.refresh = true
+          this.loading = false
+        })
+        .catch(e => {
+          console.log(e)
+          this.loading = false
+        })
     },
-    // mounted () {
-    //   const temp = this.productsTypes.filter(x => x.id === this.typeId)
-    //   this.selectedType = 'Type 1'
-    //   if (this.typeId && temp) {
-    //     this.selectedType = temp[0].title
-    //   }
-    // },
     methods: {
       buildItem (product) {
         return {
@@ -129,15 +134,16 @@
         const params = {
           offset, limit, search,
         }
-        if (!this.productsTypes) {
+        if (!this.productsTypes || this.loading || !this.hasCreated) {
           return {
             items: [],
             count: 0,
           }
         }
         this.loading = true
-        if (this.typeId && this.productsTypes.some(x => x.id.toString() === this.typeId.toString()))
+        if (this.typeId) {
           params['typeId'] = this.typeId
+        }
         const result = await this.$store.dispatch('getProducts', params)
         const { products, count } = result
         this.products = products
@@ -151,12 +157,18 @@
       async getTypes () {
         this.loading = true
         await this.$store.dispatch('getProductsTypes').then(result => {
-          // this.productTypes = result.types
+          this.productsTypes = result.types
           this.loading = false
+          return result.types
         }).catch(e => {
           console.log(e, 'error getTypes')
           this.loading = false
+          return []
         })
+      },
+      onUpdateSelected () {
+        this.typeId = this.selectedType ? typeof (this.selectedType) === 'object' ? this.selectedType.value : this.selectedType : null
+        this.refresh = true
       },
     },
   }
