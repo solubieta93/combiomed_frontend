@@ -4,8 +4,8 @@
     class="white_back pa-0 ma-0"
   >
     <v-img
-      :src="`${baseUrl}servTech00.jpg`"
-      max-height="80vh"
+      :src="`${baseUrl}servTech0.png`"
+      max-height="90vh"
       width="100vw"
     />
     <v-img

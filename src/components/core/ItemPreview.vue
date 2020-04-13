@@ -13,25 +13,11 @@
     >
       <v-img
         :src="item.image ? item.image : `${baseUrl}ampa- (1).png`"
-        class="fill-height"
+        min-height="350"
+        class="mx-auto"
         :aspect-ratio="16/9"
       >
         <v-expand-transition>
-          <!--          <div-->
-          <!--            v-if="hover"-->
-          <!--            class="d-flex transition-fast-in-fast-out orange darken-2 v-card&#45;&#45;reveal display-3 white&#45;&#45;text"-->
-          <!--            style="height: 50%"-->
-          <!--          >-->
-          <!--            <v-btn-->
-          <!--              text-->
-          <!--              large-->
-          <!--              color="white"-->
-          <!--              class="div_product"-->
-          <!--              :to="pathTo"-->
-          <!--            >-->
-          <!--              Leer Mas-->
-          <!--            </v-btn>-->
-          <!--          </div>-->
           <v-overlay
             :absolute="true"
             :value="true"

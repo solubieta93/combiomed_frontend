@@ -67,6 +67,7 @@
       goToProduct: function () {
         this.$router.push('/product')
         console.log('Esto es una prueba')
+        // JSON.stringify()
       },
 
     },

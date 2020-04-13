@@ -5,15 +5,19 @@
   >
     <v-img
       :src="`${baseUrl}servAut0.png`"
-      height="80vh"
+      height="90vh"
     />
-    <v-img
+    <!-- <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-48px"
-    />
+    /> -->
+    <v-img
+      :src="`${baseUrl}web-combiomed-servicios-mecanica&automatizacion.png`"
+      style="margin-top:-5%; z-index:2; "
+    >
     
     <!-- TITLE -->
-    <v-col cols="12">
+    <v-col cols="12" style="margin-top:12%;">
       <v-row
         justify="center"
         style="height: 50px; color: grey;"
@@ -35,6 +39,7 @@
         </v-col>
       </v-row>
     </v-col>
+    
 
     <v-row
       justify="center"
@@ -61,22 +66,25 @@
         </p>
       </v-col>
     </v-row>
+    </v-img>
 
 
     <div
       fill-height
-      style="min-height: 500px;"
+      style="max-height: 800px; z-index: 1; margin-top:-16%;"
     >
       <v-img
-        max-height="500"
         width="auto"
         :src="`${baseUrl}servAut2.jpg`"
       />
     </div>
     
-
+<v-img 
+:src="`${baseUrl}web-combiomed-servicios-automatizacion-gris-04.png`" 
+ style="margin-top:-7%; z-index: 2;"> 
     <div class="div_description">
       <div class="my_container">
+        
         <div class="grid">
           <div class="item-0">
             <v-card
@@ -143,7 +151,7 @@
           </div>
           <div class="item-2">
             <v-img class="fill-height"
-               :src="`${baseUrl}servAut4.jpeg`"
+               :src="`${baseUrl}servAut4.png`"
             />
           </div>
           <div class="item-3">
@@ -152,10 +160,12 @@
             />
           </div> 
         </div>
+        
       </div>
     </div>
+    </v-img>
 
-    <div style="height: 700px">
+    <div style="height: 700px; margin-top: -6%;">
       <v-img
         class="fill-height"
         :src="`${baseUrl}servAut3.png`"
@@ -218,7 +228,7 @@
       </v-col>
     </div>
 
-    <images />
+    <images :images="imagesClients" />
   </v-container>
 </template>
 
@@ -246,6 +256,13 @@
           'Centros de Biotecnología y Laboratorios de Fabricación de Medicamentos. ',
           'Centro Nacional de Biopreparados (BioCen), AICA, Laboratorios MEDSOL, Centro Ingeniería Genética y Biotecnología (CIGB) y Centro de Neurociencias de Cuba (CNEURO).',
         ],
+        imagesClients: [
+          'servicesAuto/client1.jpg',
+          'servicesAuto/client2.jfif',
+          'servicesAuto/client3.png',
+          'servicesAuto/client4.jpg',
+          'servicesAuto/client5.png',
+        ],
       }
     },
   }
@@ -271,7 +288,7 @@
 .div_description{
     font-family: helvetica;
     font-size: 16px;
-    background-color: grey !important;
+    margin-top: 7%;
 }
 
 .grid{

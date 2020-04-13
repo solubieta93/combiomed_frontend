@@ -12,13 +12,13 @@
         style="color: grey;"
       >
         <v-col md="3">
-          <hr>
+          <hr style="color:#293D66;">
         </v-col>
         <v-col md="2">
           <v-row justify="center">
             <h3
               class="text-uppercase"
-              style=" margin-top:-5%;margin-left: 16px;"
+              style=" margin-top:-5%;margin-left: 16px; color:#293D66;"
             >
               líneas de productos
               <br>
@@ -26,7 +26,7 @@
           </v-row>
         </v-col>
         <v-col md="3">
-          <hr>
+          <hr style="color:#293D66;">
         </v-col>
       </v-row>
     </v-col>
