@@ -1,10 +1,18 @@
 import axios from '@/utils/axios-auth'
-import {apiURI} from "../../utils/globalConstants";
+import { apiURI } from '@/utils/globalConstants'
 
 const unzipProduct = x => ({
     ...x,
     image: x.image ? apiURI + x.image : null,
-    files: x.files ? x.files.map(y => apiURI + y) : [],
+    files: x.files
+      ? x.files.map(y => ({
+          ...y,
+          src: apiURI + y.src,
+      }))
+      : [],
+    details: x.details && x.details.details
+      ? x.details.details
+      : [],
 })
 
 const state = {
@@ -62,7 +70,7 @@ const actions = {
         // commit('SET_PRODUCT_ERROR', null)
         // .then(res => {
         try {
-            const res = await axios.get(`/api/products/${id}`)
+            const res = await axios.get(`/api/products/${id}/`)
             console.log(res, 'result')
             if (res.status === 200) {
                 return {

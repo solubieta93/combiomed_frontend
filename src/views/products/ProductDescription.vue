@@ -49,7 +49,6 @@
 
     <v-col
       v-if="!loading && product"
-      cols="12"
     >
       <v-row justify="center">
         <v-col md="8">
@@ -70,24 +69,25 @@
           <v-img
             class="io"
             :src="product.image ? product.image : `${baseUrl}ampa- (1).png`"
-            style=" height:348px;  border: red 2px solid; border-radius: 0px, 0px, 0px;"
+            style="min-height:350px; max-height: 500px; border: red 2px solid; border-radius: 0;"
           />
         </v-col>
       </v-row>
     </v-col>
     <v-row
-      v-if="!loading && product"
+      v-for="(item, i) in !loading && product ? product.details : []"
+      :key="i"
       justify="center"
+      align="center"
     >
-      <v-col md="8">
-        <h1>Descripcion del producto </h1>
-        <p>Electrocardiografo para la realizacion de electrocardiograma estandar de 12 dereivaciones </p>
-      </v-col>
-      <v-col md="8">
-        <p>
-          Electrocardiógrafo para la realización del electrocardiograma estándar
-          de 12 derivaciones en condiciones de reposo a pacientes de cualquier edad.
-        </p>
+      <v-col
+        cols="8"
+      >
+        <h2>{{ item.text }}</h2>
+        <li
+          v-for="(value, index) in item.items"
+          :key="index"
+        >{{value}}</li>
       </v-col>
     </v-row>
   </v-container>
