@@ -31,41 +31,25 @@
       </v-row>
     </v-col>
     <v-container>
-      <v-row
-        justify="center"
-        align="center"
-      >
-        <v-row
-          justify="center"
-          align="center"
-          style="max-width: 80vw"
-        >
-          <v-col
-            v-for="(item, i) in productsLine"
-            :key="i"
-          >
-            <item-preview
-              :item="item.item"
-              :path-to="item.pathTo"
-            />
-          </v-col>
-        </v-row>
-      </v-row>
+      <responsive-items
+        :items="productsLine"
+      />
     </v-container>
   </v-img>
 </template>
 
 <script>
-  import ItemPreview from '@/components/core/ItemPreview'
+  import ResponsiveItems from '@/components/core/ResponsiveItems'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      ItemPreview,
+      ResponsiveItems
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
+        productsTypes: [],
         imagesClients: [
           {
             name: 'Diagnóstico y Rehabilitacion Cardiovascular',
@@ -96,20 +80,33 @@
     computed: {
       productsLine () {
         console.log('estoy en b')
-        return this.imagesClients.map(x => this.buildItem(x))
+        return this.productsTypes.map(x => this.buildItem(x))
       },
     },
+    mounted: async function () {
+      await this.getTypes()
+    },
     methods: {
-      buildItem (product) {
+      async getTypes () {
+        this.loading = true
+        await this.$store.dispatch('getProductsTypes').then(result => {
+          this.productsTypes = result.types
+          return result.types
+        }).catch(e => {
+          console.log(e, 'error getTypes')
+          return []
+        })
+      },
+      buildItem (productType) {
         return {
           item: {
-            id: 0,
-            title: product.name,
-            description: '',
-            image: product.image,
+            id: productType.id ,
+            title: productType.title,
+            description: productType.description,
+            image: productType.image,
             owner: '',
           },
-          pathTo: '/products' + (product.typeId ? `?type=${product.typeId}` : ''),
+          pathTo: '/products' + (productType.id ? `?type=${productType.id}` : ''),
         }
       },
     },

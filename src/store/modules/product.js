@@ -50,6 +50,9 @@ const mutations = {
     SET_ADD_PRODUCT: (state, payload) => {
         state.product.push(payload)
     },
+    SET_ADD_PRODUCT_TYPE: (state, payload) => {
+        state.productsTypes.push(payload)
+    },
 }
 
 const actions = {
@@ -159,6 +162,39 @@ const actions = {
             }
         }
     },
+    postTypeProduct: async ({ commit }, payload) => {
+        try {
+            const res = await axios.post('/api/types/products/', {
+                title: payload.title,
+                description: payload.description,
+                image: payload.image
+            },
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            commit('SET_ADD_PRODUCT_TYPE', res.data)
+            return {
+                success: true,
+                message: 'ok',
+            }
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
+    },
     patchProduct: async ({ commit }, payload) => {
         try {
             await axios.patch('/api/products/' + payload.id + '/', {
@@ -227,6 +263,12 @@ const actions = {
             description: '',
         })
     },
+    getNewLineProduct: () => {
+        return Object({
+            title: '',
+            description: '',
+        })
+    },
     getProductsTypes: async ({ commit }, params) => {
       try {
         commit('SET_PRODUCTS_TYPES', [])
@@ -236,7 +278,7 @@ const actions = {
           return {
               success: true,
               message: 'ok',
-              types: result.data.results,
+              types: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
               count: result.data.count,
           }
         } else {
