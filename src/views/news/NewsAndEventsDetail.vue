@@ -5,7 +5,7 @@
   >
     <v-img
       v-if="!post.image"
-      :src="`${baseUrl}public/ampa- (1).png`"
+      :src="`${baseUrl}ampa- (1).png`"
       style="top:0px"
       max-height="80vh"
     />
@@ -103,7 +103,6 @@
         baseUrl: process.env.BASE_URL,
         twoposts: [],
         plaf: null,
-        baseUrl: process.env.BASE_URL,
       }
     },
     computed: {

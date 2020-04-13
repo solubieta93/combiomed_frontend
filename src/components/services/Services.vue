@@ -35,7 +35,7 @@
       >
         <button 
           style="z-index:5" 
-          class="mybutton" 
+          class="mybutton"
           @click="() => pushRoute('/services/tech')"
         >
           <img src="../../../public/ICONOS/icono-servicio-tecnico-02.png" style="height: 66px;">

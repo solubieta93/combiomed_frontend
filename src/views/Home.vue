@@ -13,14 +13,12 @@
     <!-- QUIENES SOMOS -->
     <accordion/>
     
-
     <!-- PRODUCTOS -->
     <line-products/>
 
     <!-- SERVICIOS -->
     <services />
-    <!-- <services-day/> -->
-    
+
     <!-- NOTICIAS Y EVENTOS -->
     <v-img
         src="web-combiomed-productos-noticias&eventos-04.png"
@@ -73,7 +71,6 @@
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
   import Services from '@/components/services/Services'
-  import ServicesDay from '@/components/services/ServicesDay'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
   import LineProducts from '@/components/product/LineProducts'
   import Accordion from '@/components/utils/Accordion'
@@ -85,7 +82,6 @@
       Accordion,
       PrincipalNewsAndEvents,
       Services,
-      ServicesDay,
       LineProducts,
       Contact
     },

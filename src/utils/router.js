@@ -10,7 +10,6 @@ import MecServices from '@/views/services/MecServices.vue'
 import Products from '@/views/products/Products.vue'
 import ProductDescription from '@/views/products/ProductDescription.vue'
 import Home from '@/views/Home.vue'
-import InitialPage from '@/views/InitialPage.vue'
 import Services from '@/components/services/Services'
 import Contact from '@/components/utils/Contact'
 const AppLayout = () => import('@/components/layouts/App_Layout.vue')
