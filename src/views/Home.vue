@@ -11,7 +11,7 @@
     />
 
     <!-- QUIENES SOMOS -->
-    <accordion/>
+    <accordion id="us"/>
     
     <!-- PRODUCTOS -->
     <line-products/>
@@ -63,8 +63,10 @@
       </v-row>
     </v-img>
 
-    <!-- CONTACTOS -->    
-    <contact/>
+    <!-- CONTACTOS -->  
+    <div id="contacts">  
+    <contact />
+    </div>
   </v-container>
 </template>
 

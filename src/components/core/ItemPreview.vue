@@ -58,13 +58,6 @@
     name: 'ItemPreview',
     props: {
       item: {
-        // type: {
-        //   id: Number | String,
-        //   image: String,
-        //   title: String,
-        //   description: String,
-        //   owner: Object,
-        // },
         type: Object,
         required: true,
       },
