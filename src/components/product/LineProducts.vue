@@ -50,31 +50,6 @@
       return {
         baseUrl: process.env.BASE_URL,
         productsTypes: [],
-        imagesClients: [
-          {
-            name: 'Diagnóstico y Rehabilitacion Cardiovascular',
-            image: 'productImages/product1.png',
-            typeId: 1,
-          },
-          {
-            image: 'productImages/product2.png',
-            name: 'Monitorización de Pacientes y Soporte de Vida',
-            typeId: 2,
-          },
-          {
-            image: 'productImages/product5.png',
-            name: 'Soluciones para la Atención Primaria de Salud',
-            typeId: 3,
-          },
-          {
-            image: 'productImages/product3.png',
-            name: 'Estimulación Eléctrica',
-          },
-          {
-            image: 'productImages/product4.png',
-            name: 'Diagnóstico de Enfermedades Respiratorias Crónicas',
-          },
-        ],
       }
     },
     computed: {
