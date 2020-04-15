@@ -13,10 +13,10 @@
     /> -->
     <v-img
       :src="`${baseUrl}web-combiomed-servicios-mecanica&automatizacion.png`"
-      style="margin-top:-5%; z-index:2; "
+      style="margin-top:-7%; z-index:2; "
     >
     <!-- TITLE -->
-    <v-col cols="12" style="margin-top:10%;">
+    <v-col cols="12" style="margin-top:10%; ">
       <v-row
         justify="center"
         style="height: 50px; color: grey;"
@@ -27,7 +27,7 @@
         <v-col md="3">
           <h3
             class="text-uppercase"
-            style="margin-top: -14px; margin-left: 16px;"
+            style="margin-top: -20px; margin-left: 16px;"
           >
             Servicio de Mecánica
             <br>
@@ -41,40 +41,47 @@
 
     <v-row
       justify="center"
-      style=" color: grey; margin-bottom:75px;"
+      style=" color: grey; margin-bottom:10%;"
     >
       <v-col md="7">
         <p class="text-justify">
           COMBIOMED Tecnología Médica Digital incluye facilidades para la producción electromecánica, 
           soportado por décadas de experiencia con las más modernas tecnologías para la fabricación de
-          partes mecánicas de alta calidad para equipos médicos y otros. La PPM de la empresa COMBIOMED 
-          Tecnología Médica Digital brinda los siguientes servicios:
+          partes mecánicas de alta calidad para equipos médicos y otros. 
           <br>
+        </p>
+        <p class="text-justify">
+          La PPM de la empresa COMBIOMED Tecnología Médica Digital brinda los siguientes servicios:
         </p>
         <h4 class="text-justify text-uppercase" style="color= grey;">
           CONFORMADO EN FRÍO 
           <br>
         </h4>
         <p class="text-justify">
-          Es un proceso que se trabaja solo en chapas de diferentes materiales, entre ellos: 
-          metales como aluminio, acero y acero inoxidable y horiblen. Se utiliza para la producción de soportes,
-          estructuras metálicas, rejas, medios de protección, etc.
+          Es un proceso que se trabaja en chapas de diferentes materiales, entre ellos: 
+          metales como aluminio, acero y acero inoxidable,horiblen, siendo materiales que proporciona nuestra empresa,
+          además de tener en cuenta la solicituud del cliente en la utilización de otro tipo de material como
+          chapas, cobre y latón. Se emplea para la producción de soportes, estructuras metálicas, rejas, medios de protección,
+          y cualquier otro tipo de proceso que necesite doblado, punzonado y soldadura.
         </p>
         <p class="text-justify">
           Para el conformado en frío la maquinaria es la siguiente:   
           <br>
         </p>
         <p class="text-justify">
-            - Cizalla para cortar chapas de hasta 4 mm
+             - Cizalla para cortar chapas de hasta 4 mm
         </p>
         <p class="text-justify">
-            - Multiponchadora TRUMP 1000 de planchas de metales de 2000x1000x3 mm.
+            - Multiponchadora TRUMP 1000: maquinaria que además de punzonar, puede generar conformaciones en frío mediante
+            punzones especiales que permiten el logro de diferentes formas buscando estética, rigidez y nervios en chapas
+            desde 0.5mm a 3mm de espesor.
         </p>
         <p class="text-justify">
-            - Press Brake para doblar metal de hasta 2 metros de ancho 
+            - Press Brake CNC (Control Numérico): Brinda óptima precisión hasta 0.2mm en los doblados, 
+            la cual ofrece una amplia gama de dobleces de diferentes formas y longitudes.
         </p>
         <p class="text-justify">
-            - Dobladora de tubos para tuberías de diámetro 25 mm.
+            - Press Brake: de utilidad para doblar metal de hasta 2 metros de longitud. 
         </p>
       </v-col>
     </v-row>
@@ -115,7 +122,8 @@
               acrílico PVC, entre otros plásticos que utiliza:
             </p>
             <p class="text-justify">
-              - Maquinaria de tres tornos convencionales de pequeño, mediano y largo alcance para trabajar piezas en revoluciones.    
+              - Maquinaria de tres tornos convencionales que facilita el trabajo pequeño, mediano y largo alcance 
+              para piezas en revoluciones.    
               <br>
             </p>
             <p class="text-justify">
@@ -135,14 +143,18 @@
               <br>
             </h3>
             <p class="text-justify">
-              Proceso para trabajar piezas pequeñas con eje (cilíndricas) y todo tipo de piezas planas.
+              Se rectifican todo tipo de piezas planas obteniendo un excelente acabado, facilitado por los punzones
+              piedra de grano fino que permiten lograr una óptima precisión y rigurosidad en la superficie de las piezas.
+              En el caso de la rectificación cilíndrica, se emplea en piezas de revolución tipo eje obteniendo un perfecto
+              resultado final.
             </p>
             <h3 class="text-uppercase">
               PINTURA ELECTROSTÁTICA 
               <br>
             </h3>
             <p class="text-justify">
-              Se utiliza pintura en polvo de alta calidad mediante corriente y fluido de aire solo para piezas metálicas de cualquier tamaño.
+              Se utiliza pintura en polvo de alta calidad mediante corriente y fluido de aire, solo para piezas metálicas
+              de diversos tamaños. Es un proceso que premia el acabado de la pintura en la superficie metálica.
             </p>
             <h3 class="text-uppercase">
                 SOLDADURA   
@@ -152,7 +164,7 @@
               - Soldadura argón para aluminio
             </p>
             <p class="text-justify">
-              - Soldadura eléctrica para acero (es un servicio que se puede ofrecer in situ) 
+              - Soldadura eléctrica para acero (por medio de electrodos) 
             </p>
             <p class="text-justify">
               - Soldadura con oxígeno de acetileno para acero
@@ -167,7 +179,9 @@
               <br>
             </h3>
             <p class="text-justify">
-              Se utiliza para el diseño de piezas mecánicas el programa Autodesk Inventor.
+              Contamos con un colectivo de ingenieros con vasta experiencia en el diseño mecánico. Nos valemos de programas como
+              Autodesk Inventor y AutoCAD para dar soluciones a los diferentes problemas que pueda presentar el cliente, adaptado
+              a las tecnologías y recursos con que cuenta nuestra Planta Mecánica.
             </p>
           </v-col>
         </v-row>

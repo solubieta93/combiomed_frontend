@@ -31,13 +31,11 @@
               v-model="post.abstract"
               :rules="[rules.required]"
               label="Descripción"
-              prepend-icon="edit"
             />
             <v-textarea
               v-model="post.context"
               :rules="[rules.required]"
               label="Contenido"
-              prepend-icon="edit"
             />
           </v-form>
         </v-card-text>

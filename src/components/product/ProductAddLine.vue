@@ -31,7 +31,6 @@
               v-model="line.description"
               :rules="[rules.required]"
               label="Descripción"
-              prepend-icon="edit"
             />
           </v-form>
         </v-card-text>
