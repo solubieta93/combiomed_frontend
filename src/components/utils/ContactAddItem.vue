@@ -14,6 +14,7 @@
     >
       <h2>Editar contacto</h2>
     </v-card-title>
+
     <v-window v-model="step">
       <v-window-item :value="1">
         <v-card-text>
@@ -58,6 +59,7 @@
       </v-window-item>
     </v-window>
     <v-divider />
+
     <v-card-actions>
       <v-btn
         :disabled="step === 1 || loading"
@@ -99,6 +101,7 @@
       'images-component': ImagesComponent,
     },
     props: {
+      contacts: [],
       contact: {
         id: Number,
         name: String,
@@ -140,6 +143,9 @@
       imagesSelected (value) {
         this.imagesURL = value.length ? value.map(img => URL.createObjectURL(img))[0] : null
       },
+      contact(value) {
+          console.log(value, 'editing')
+      }
     },
     methods: {
       saveContact: function () {
@@ -193,6 +199,13 @@
           })
         }
       },
+      async deleteContact(post_id) {
+            const ok = await this.$store.dispatch('delContact', this.$route.params.postId)
+            if (!ok) { this.$router.push('/') }
+            // await this.paginate()
+            // this.$router.push('/contacts')
+            this.onSave()
+        },
     },
   }
 </script>

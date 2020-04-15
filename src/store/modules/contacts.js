@@ -176,7 +176,7 @@ const actions = {
             }
         }
     },
-    delPost: async ({ commit }, id) => {
+    delContact: async ({ commit }, id) => {
         try {
             const res = await axios.delete(`/contacts/${id}`,
             {

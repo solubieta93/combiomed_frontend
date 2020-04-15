@@ -48,12 +48,12 @@
                         v-for="(item, i) in contactsItem"
                         :key="i"
                     >
-                    <div class="contactos">
-                        <img :src="item.image" alt="" width="250" height="260" id="p1">
-                        <h4>{{item.name}}</h4>
-                        <h4 class="text-uppercase">{{item.role}}</h4>
-                        <h5><i class="fi-mail large"></i> {{item.mail}}</h5>
-                    </div>
+                        <div class="contactos">
+                            <img :src="item.image" alt="" width="250" height="260" id="p1">
+                            <h4>{{item.name}}</h4>
+                            <h4 class="text-uppercase">{{item.role}}</h4>
+                            <h5><i class="fi-mail large"></i> {{item.mail}}</h5>
+                        </div>
                     </v-col>
                 </v-row>
                 <v-row v-else justify="center">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
+        <!-- TO ADD CONTACTS, ONLY ADMIN CAN DO IT -->
         <v-dialog
         v-model="addContact"
         max-width="600px"
@@ -96,10 +96,12 @@
 
 <script>
 import ContactAddItem from '@/components/utils/ContactAddItem'
+import EditDeleteContact from '@/components/utils/EditDeleteContact'
 import { mapGetters } from 'vuex'
 export default {
     components: {
-        ContactAddItem
+        ContactAddItem,
+        EditDeleteContact
     },
     props: {
         margin_style:{
@@ -114,6 +116,8 @@ export default {
             contactsItem: [],
             addContact: false,
             newContact: null,
+            editContact: false,
+            deleteContact: false,
       }
     }, 
     computed: {
