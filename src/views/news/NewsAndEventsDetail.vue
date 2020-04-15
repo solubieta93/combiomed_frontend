@@ -42,6 +42,70 @@
         </p>
         </div>
       </div>
+
+      <!-- TO EDIT NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
+      <v-dialog
+        v-model="editPost"
+        max-width="600px"
+      >
+        <post-add-item
+          :post="post"
+          :mode="'editing'"
+          :onSave="() => { editPost = false; load()}"
+        />
+      </v-dialog>
+      
+      <v-card-text
+        v-if="isAdmin"
+        style="height: 50px; position: relative"
+      >
+        <v-btn
+          absolute
+          dark
+          fab
+          right
+          small
+          color="pink"
+          @click="editPost= true"
+        >
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+      </v-card-text>
+
+      <!-- TO DELETE NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
+      <v-dialog 
+        v-model="deletePos" 
+        persistent 
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">Eliminar Noticia</v-card-title>
+          <v-card-text>¿Está seguro que desea eliminar la noticia?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="deletePost(post.id)">Si</v-btn>
+            <v-btn color="green darken-1" text @click="deletePos = false">No</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-card-text
+        v-if="isAdmin"
+        style="height: 50px; position: relative"
+      >
+        <v-btn
+          absolute
+          dark
+          fab
+          right
+          small
+          color="red"
+          @click="deletePos= !deletePos"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-card-text>
+
     </div>
     
     <!-- TO SHOW OTHER TWO NEWS -->
@@ -91,22 +155,29 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
+  import PostAddItem from '@/components/newsAndevents/PostAddItem'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       ShowPostDetail,
+      PostAddItem,
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
         twoposts: [],
         plaf: null,
+        editPost: false,
+        deletePos: false,
       }
     },
     computed: {
       ...mapGetters(['user', 'post']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
       postId () {
         return this.$route.params.postId
       },
@@ -134,6 +205,13 @@
         if (!ok) { this.$router.push('/') }
         await this.paginate()
       },
+      async deletePost(post_id) {
+        const ok = await this.$store.dispatch('delPost', this.$route.params.postId)
+        console.log(ok, '!!!!!!!!!!!!!!!!!!dletePos')
+        if (!ok) { this.$router.push('/') }
+        // await this.paginate()
+        this.$router.push('/news')
+      }
     },
   }
 </script>

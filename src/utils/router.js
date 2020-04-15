@@ -11,7 +11,8 @@ import Products from '@/views/products/Products.vue'
 import ProductDescription from '@/views/products/ProductDescription.vue'
 import Home from '@/views/Home.vue'
 import Services from '@/components/services/Services'
-import Contact from '@/components/utils/Contact'
+import Contacts from '@/views/Contacts'
+import Us from '@/views/Us'
 const AppLayout = () => import('@/components/layouts/App_Layout.vue')
 
 Vue.use(Router)
@@ -97,7 +98,17 @@ const router = new Router({
       children: [
         {
           path: '',
-          component: Contact,
+          component: Contacts,
+        },
+      ],
+    },
+    {
+      path: '/us',
+      component: AppLayout,
+      children: [
+        {
+          path: '',
+          component: Us,
         },
       ],
     },

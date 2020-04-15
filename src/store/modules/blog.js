@@ -31,13 +31,7 @@ const mutations = {
     PATCH_POST: (state, payload) => {
         // eslint-disable-next-line camelcase
         const post_i = state.blog.findIndex(x => x.id === payload.id)
-        if (payload.description) {
-            state.blog[post_i].description = payload.description
-        } else if (payload.name) {
-            state.blog[post_i].name = payload.name
-        } else if (payload.countLike) {
-            state.blog[post_i].countLike = payload.count
-        }
+        state.blog[post_i] = payload
     },
     SET_COUNT_POST: (state, payload) => {
         if (payload) {
@@ -230,14 +224,58 @@ const actions = {
     },
     patchPost: async ({ commit }, payload) => {
         try {
-            await axios.patch('blog/' + payload.id, {
-                description: payload.description,
-                name: payload.name,
+            const res= await axios.patch('blog/' + payload.id, {
+                title: payload.title,
+                abstract: payload.abstract,
+                context: payload.context,
+                news: payload.news,
             },
             {
-                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
             })
-            commit('PATCH_POST', payload)
+            commit('PATCH_POST', res.data)
+            console.log('genial patch')
+            return {
+                success: true,
+                message: 'ok',
+            }
+
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
+    },
+    putPost: async ({ commit }, payload) => {
+        try {
+            const res = await axios.put('/blog/' + payload.id, {
+                title: payload.title,
+                abstract: payload.abstract,
+                context: payload.context,
+                news: payload.news,
+                image: payload.image,
+            },
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            console.log(res)
+            commit('PATCH_POST', res.data)
             return {
                 success: true,
                 message: 'ok',
@@ -256,16 +294,18 @@ const actions = {
             }
         }
     },
-    delPost: async ({ commit }, payload) => {
+    delPost: async ({ commit }, id) => {
         try {
-            await axios.delete('/blog/' + payload.id,
+            const res = await axios.delete(`/blog/${id}`,
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            commit('DEL_POST', payload.id)
-            return {
-                success: true,
-                message: 'ok',
+            if(res.status === 200) {
+                await commit('DEL_POST', id)
+                return {
+                    success: true,
+                    message: 'ok',
+                }
             }
         } catch (error) {
             if (error.response) {
@@ -315,14 +355,6 @@ const actions = {
             abstract: '',
             news: false,
             image: null,
-        })
-    },
-    getNewNews: () => {
-        return Object({
-            title: '',
-            context: '',
-            abstract: '',
-            news: true,
         })
     },
 }

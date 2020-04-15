@@ -45,7 +45,7 @@
       <v-window-item :value="2">
         <v-card-text>
           <v-row justify="center">
-            <images-component :image-src="imagesURL" />
+            <images-component :image-src="post.image" />
           </v-row>
           <v-row justify="center">
             <v-col>
@@ -147,9 +147,10 @@
     methods: {
       saveNews: function () {
         this.loading = true
-        const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
+        const actionToDo = ''
         this.saveError = ''
         if (this.imagesSelected) {
+          const actionToDo = this.mode === 'editing' ? 'putPost' : 'postPost'
           this.$store.dispatch('uploadFile', this.imagesSelected[0]).then(uploadRes => {
             if (uploadRes.success) {
               this.post.image = uploadRes.src
@@ -173,7 +174,19 @@
             this.loading = false
           })
         } else {
-          this.$store.dispatch(actionToDo, this.post).then(res => {
+          const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
+          console.log("ESOY EN ELSE")
+          console.log('action to do', actionToDo)
+          console.log('post', this.post)
+          
+          this.$store.dispatch(actionToDo, {
+              title: this.post.title,
+              abstract: this.post.abstract,
+              context: this.post.context,
+              news: this.post.news,
+              id: this.post.id
+            })
+            .then(res => {
             if (!res.success) {
               this.saveError = res.detail
               this.loading = false
