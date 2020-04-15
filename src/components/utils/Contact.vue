@@ -3,7 +3,7 @@
         fluid 
         class="white_back"
     >
-        <div id="mycontainer" style="margin-top: -13%; margin-bottom: 1%;">
+        <div id="mycontainer" :style="margin_style">
             <v-col cols="12">
                 <v-row
                     justify="center"
@@ -57,6 +57,12 @@
 
 <script>
 export default {
+    props: {
+        margin_style:{
+            type: String,
+            default: 'margin-top: -13%; margin-bottom: 1%;'
+        }
+    },
     data () {
       return {
             style_d:"height: 50px;",
