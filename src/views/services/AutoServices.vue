@@ -103,14 +103,14 @@
                   v-for="item in lines"
                   :key="item"
                 >
-                  <v-list-item-icon>
+                  <!-- <v-list-item-icon>
                     <v-icon color="red">
                       mdi-star
                     </v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <p> {{ item }} </p>
-                  </v-list-item-content>
+                  </v-list-item-icon> -->
+                  <!-- <v-list-item-content> -->
+                    <li> {{ item }} </li>
+                  <!-- </v-list-item-content> -->
                 </v-list-item>
               </v-list>
             </v-card>
@@ -305,12 +305,12 @@
 }
 
 .item-0{
-	grid-row: 2/9;
+	grid-row: 2/10;
     grid-column: 1/2;
 	height: 100%;
 }
 .item-1{
-	grid-row: 10/17;
+	grid-row: 9/17;
     grid-column: 1/2;
 	height: 100%;
 }

@@ -201,13 +201,11 @@
       },
       async load () {
         const ok = await this.$store.dispatch('getPost', this.$route.params.postId)
-        console.log(ok, 'dispatchEvent')
         if (!ok) { this.$router.push('/') }
         await this.paginate()
       },
       async deletePost(post_id) {
         const ok = await this.$store.dispatch('delPost', this.$route.params.postId)
-        console.log(ok, '!!!!!!!!!!!!!!!!!!dletePos')
         if (!ok) { this.$router.push('/') }
         // await this.paginate()
         this.$router.push('/news')

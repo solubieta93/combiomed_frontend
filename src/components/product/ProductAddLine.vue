@@ -31,7 +31,6 @@
               v-model="line.description"
               :rules="[rules.required]"
               label="Descripción"
-              prepend-icon="edit"
             />
           </v-form>
         </v-card-text>
@@ -160,7 +159,6 @@
               this.loading = false
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })
@@ -175,7 +173,6 @@
               if (this.onSave) this.onSave()
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })

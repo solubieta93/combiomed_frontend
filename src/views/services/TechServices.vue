@@ -42,16 +42,10 @@
     >
       <v-col md="7">
         <p class="text-justify">
-          Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones Digitales (CID),
-          más tarde Instituto Central de Investigación Digital (ICID), con el objetivo de desarrollar la primera
-          computadora cubana. Desde diciembre de 2018 y hasta la actualidad funcionamos bajo el nombre COMBIOMED:
-          empresa de tecnología médica digital.
-          <br>
-        </p>
-        <p class="text-justify">
-          Tenemos referencia en el mercado nacional e internacional y brindamos soluciones tecnológicas seguras
-          y asequibles para la salud. Nuestro objetivo es investigar, desarrollar, producir, comercializar y brindar
-          servicio técnico a equipos electrónicos, de automatización destinados a la medicina, la biotecnología, etc.
+          Servicios Técnicos a Equipos Médicos garantiza el servicio de postventa a los equipos médicos comercializados 
+          por COMBIOMED. Con ingenieros y técnicos altamente calificados radicados en La Habana, Villa Clara y Las Tunas,
+          realiza la instalación y mantenimiento preventivo y correctivo de los equipos de Cuba y el resto del mundo. 
+          Además, capacita a personal médico y técnico en el uso de la tecnología.
           <br>
         </p>
       </v-col>

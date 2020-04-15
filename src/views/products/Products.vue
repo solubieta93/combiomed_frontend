@@ -151,13 +151,11 @@
           this.loading = false
         })
         .catch(e => {
-          console.log(e)
           this.loading = false
         })
     },
     methods: {
       buildItem (product) {
-        console.log('products')
         return {
           item: {
             id: product.id,
@@ -202,7 +200,6 @@
           this.loading = false
           return result.types
         }).catch(e => {
-          console.log(e, 'error getTypes')
           this.loading = false
           return []
         })
@@ -213,7 +210,6 @@
       },
       async showAddLineProductDialog () {
         this.newProduct = await this.$store.dispatch('getNewLineProduct')
-        console.log(this.newProduct, 'newProduct')
         this.addProduct = true
       },
     },

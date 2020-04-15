@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login.vue'
-import Dashboard from '@/views/Dashboard.vue'
 import NewsAndEvents from '@/views/news/NewsAndEvents.vue'
 import NewsAndEventsDetail from '@/views/news/NewsAndEventsDetail.vue'
 import AutoServices from '@/views/services/AutoServices.vue'
@@ -30,8 +29,12 @@ const router = new Router({
       }],
     },
     {
-      path: '/login',
-      component: Login,
+      path: '/',
+      component: AppLayout,
+      children: [{
+        path: '/login',
+        component: Login,
+      }],
     },
     {
       path: '/products',
@@ -46,15 +49,6 @@ const router = new Router({
           component: ProductDescription,
         },
       ],
-    },
-    {
-      path: '/dashboard',
-      // name: 'dashboard',
-      component: AppLayout,
-      children: [{
-        path: '',
-        component: Dashboard,
-      }],
     },
     {
       path: '/services',

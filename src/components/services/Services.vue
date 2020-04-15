@@ -88,7 +88,6 @@
     },
     methods:{
       pushRoute:function(path){
-        console.log("Esto es una prueba    ", path)
         if (path) this.$router.push({ path })
         
       }
