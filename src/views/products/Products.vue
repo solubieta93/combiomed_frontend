@@ -65,17 +65,6 @@
     </paginate-items>
 
     <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addProduct"
-      max-width="600px"
-    >
-      <product-add-line
-        :line="newProduct"
-        :mode="'creating'"
-        :onSave="() => { addProduct = false; paginate() }"
-      />
-    </v-dialog>
-    
     <v-card-text
       v-if="isAdmin"
       style="height: 100px; position: relative"
@@ -86,8 +75,8 @@
         fab
         right
         small
-        color="pink"
-        @click="showAddProductDialog"
+        color="red"
+        to="/products/new"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -99,7 +88,7 @@
   import PaginateItems from '@/components/core/PaginateItems'
   import ProductAddLine from '@/components/product/ProductAddLine'
   import { mapGetters } from 'vuex'
-  
+
   export default {
     components: {
       PaginateItems,
@@ -163,7 +152,7 @@
             description: product.description,
             image: product.image,
             owner: product.owner,
-            files: product.files
+            files: product.files,
           },
           pathTo: `/products/${product.id}`,
         }
