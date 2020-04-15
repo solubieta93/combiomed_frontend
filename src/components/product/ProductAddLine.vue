@@ -159,7 +159,6 @@
               this.loading = false
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })
@@ -174,7 +173,6 @@
               if (this.onSave) this.onSave()
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })

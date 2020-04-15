@@ -93,7 +93,6 @@
         return this.user && this.user.is_superuser
       },
       productsLine () {
-        console.log('estoy en b')
         return this.productsTypes.map(x => this.buildItem(x))
       },
     },
@@ -107,7 +106,6 @@
           this.productsTypes = result.types
           return result.types
         }).catch(e => {
-          console.log(e, 'error getTypes')
           return []
         })
       },
@@ -125,7 +123,6 @@
       },
       async showAddLineProductDialog () {
         this.newLineProduct = await this.$store.dispatch('getNewLineProduct')
-        console.log(this.newLineProduct, 'newLineProduct')
         this.addLineProduct = true
       },
     },

@@ -4,7 +4,13 @@
         class="white_back"
     >
         <div id="mycontainer" :style="margin_style">
-            <v-col cols="12">
+            <v-col
+                md="12"
+                sm="12"
+                lg="12"
+                xl="12"
+                xs="12"
+            >
                 <v-row
                     justify="center"
                     style="height: 50px; color:#818080;"
@@ -32,24 +38,52 @@
             </v-col>
 
             <div id="contacts"> 
-                <div class="contactos">
-                    <img src="../../../public/CONTACTOS/raider (4)a.png" alt="" width="250" height="260" id="p1">
-                    <h4>Ing. Raider Figueras Texidor </h4>
-                    <h4>JEFE DE AUTOMÁTICA</h4>
-                    <h5><i class="fi-mail large"></i>  raider@icid.cu</h5>
-                </div>
-                <div class="contactos">
-                    <img src="../../../public/CONTACTOS/norka (11).png" alt="" width="250" height="260" id="p2">
-                    <h4>Ing. Norka Gonzáles </h4>
-                    <h4>DIRECTORA COMERCIAL</h4>
-                    <h5><i class="fi-mail large"></i>  nglopez@icid.cu</h5>
-                </div>
-                <div class="contactos">
-                    <img src="../../../public/CONTACTOS/abdel (2).png" alt="" width="280" height="260" id="p3">
-                    <h4>Ing. Abdel Rodriguez Hernández </h4>
-                    <h4>JEFE DE SERVICIO TÉCNICO</h4>
-                    <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
-                </div>
+                <v-row justify="center">
+                    <v-col 
+                        md="6"
+                        sm="12"
+                        lg="4"
+                        xl="4"
+                        xs="12"
+                    >
+                    <div class="contactos">
+                        <img src="../../../public/CONTACTOS/raider (4)a.png" alt="" width="250" height="260" id="p1">
+                        <h4>Ing. Raider Figueras Texidor </h4>
+                        <h4>JEFE DE AUTOMÁTICA</h4>
+                        <h5><i class="fi-mail large"></i>  raider@icid.cu</h5>
+                    </div>
+                    </v-col>  
+                    <v-col 
+                        md="6"
+                        sm="12"
+                        lg="4"
+                        xl="4"
+                        xs="12"
+                        justify="center"
+                    >
+                        <div class="contactos">
+                            <img src="../../../public/CONTACTOS/norka (11).png" alt="" width="250" height="260" id="p2">
+                            <h4>Ing. Norka Gonzáles </h4>
+                            <h4>DIRECTORA COMERCIAL</h4>
+                            <h5><i class="fi-mail large"></i>  nglopez@icid.cu</h5>
+                        </div>
+                    </v-col>
+                    <v-col 
+                        md="12"
+                        sm="12"
+                        lg="4"
+                        xl="4"
+                        xs="12"
+                        justify="center"
+                    >
+                        <div class="contactos">
+                            <img src="../../../public/CONTACTOS/abdel (2).png" alt="" width="280" height="260" id="p3">
+                            <h4>Ing. Abdel Rodriguez Hernández </h4>
+                            <h4>JEFE DE SERVICIO TÉCNICO</h4>
+                            <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
+                        </div>
+                    </v-col>
+                </v-row>
             </div>
         </div>
     </v-container>

@@ -68,7 +68,6 @@ const actions = {
                     headers: { 'Content-Type': 'application/json',
                                 'Accept': 'application/json' },
                 })
-            console.log(res, 'RES')
             if (res.status === 202) {
                 commit('SET_TOKEN', res.data.token)
                 commit('SET_USER', res.data.user)

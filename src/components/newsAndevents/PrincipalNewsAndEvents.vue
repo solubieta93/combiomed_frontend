@@ -30,18 +30,15 @@
     },
     methods: {
        async paginate () {
-         console.log('estoy en paginate')
         this.loading = true
         const { posts } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
           limit: 4,
         })
         this.postFixed = posts
-        console.log(this.postFixed, 'postFixed')
         this.loading = false
       },
       buildItem (news) {
-        console.log('estoy en buildItem')
         return {
           item: {
             id: news.id,
@@ -54,7 +51,6 @@
         }
       },
       async filterItems() {
-        console.log('estoy en principal news')
         this.loading = true
         const { posts, count } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
@@ -62,7 +58,6 @@
         })
         this.postFixed = posts
         this.loading = false
-        console.log('posts', postFixed)
         return {
           items: this.postFixed.map(x => this.buildItem(x)),
           count,
@@ -74,14 +69,6 @@
 
 
 <style scoped>
-/* .v-card--reveal {
-  align-items: center;
-  bottom: 0;
-  justify-content: center;
-  opacity: .5;
-  position: absolute;
-  width: 100%;
-} */
 
 .white_back {
     background-color: white !important;
@@ -106,7 +93,6 @@ div img{
 .grid{
   display:grid;
   grid-template-columns: repeat(3, 1fr);
-/* grid-template-rows: repeat(5, 1fr); */
   grid-gap: 16px;
   column-gap: 16px;
   grid-auto-rows:200px;

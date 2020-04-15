@@ -132,7 +132,6 @@
       },
       async showAddNewsDialog () {
         this.newPost = await this.$store.dispatch('getNewPost')
-        console.log(this.newPost, 'new post')
         this.addPost = true
       },
       async submit () {

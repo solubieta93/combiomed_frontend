@@ -125,7 +125,6 @@
           .then(res => {
             if (res.success) {
               this.product = res.product
-              console.log(this.product, 'product fetched')
             } else if (res.notFound) {
               this.$router.push('/')
             } else {
@@ -134,7 +133,6 @@
             }
           })
           .catch(e => {
-            console.log(e)
             this.error = e
             this.snackbar = true
           }).finally(() => {

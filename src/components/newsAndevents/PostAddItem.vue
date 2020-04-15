@@ -167,15 +167,11 @@
               this.loading = false
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })
         } else {
           const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
-          console.log("ESOY EN ELSE")
-          console.log('action to do', actionToDo)
-          console.log('post', this.post)
           
           this.$store.dispatch(actionToDo, {
               title: this.post.title,
@@ -194,7 +190,6 @@
               if (this.onSave) this.onSave()
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })

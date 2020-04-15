@@ -172,15 +172,6 @@
     },
     computed: {
       ...mapGetters(['user']),
-      // is_login () {
-      //   return !!this.$store.getters.user
-      //   // return true
-      // },
-    },
-    watch: {
-      slider (value) {
-        console.log(value)
-      },
     },
     methods: {
       logout: async function () {
@@ -188,7 +179,6 @@
         this.$router.push('/')
       },
       pushRoute (i, path) {
-        console.log(path, 'path')
         this.tab = i
         if (path) this.$router.push({ path })
       },

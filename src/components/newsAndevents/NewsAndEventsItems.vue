@@ -160,7 +160,6 @@
           limit: this.limit,
           search: this.text,
         })
-        console.log(result, 'filterNews')
         const { posts, count } = result
         this.posts = posts
         this.count_post = count
