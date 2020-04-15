@@ -12,6 +12,8 @@ import ProductDescription from '@/views/products/ProductDescription.vue'
 import Home from '@/views/Home.vue'
 import Services from '@/components/services/Services'
 import Contact from '@/components/utils/Contact'
+import ProductEdition from '@/views/products/ProductEdition'
+import { store } from '../store/store'
 const AppLayout = () => import('@/components/layouts/App_Layout.vue')
 
 Vue.use(Router)
@@ -41,8 +43,25 @@ const router = new Router({
           component: Products,
         },
         {
+          path: 'new',
+          component: ProductEdition,
+          props: {
+            modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: ':productId',
           component: ProductDescription,
+        },
+        {
+          path: ':productId/edit',
+          component: ProductEdition,
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
     },
@@ -111,15 +130,13 @@ const router = new Router({
   },
 })
 
-// router.beforeEach(async (to, from, next) => {
-//   // const currentUser = firebase.auth().currentUser
-//   // console.log(this.$store.getters.token)
-//   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-//   // let token = localStorage.getItem('token')
-//   const validToken = await store.dispatch('verifyToken')
-//   if (requiresAuth && !validToken.success) next('login')
-//   else if (!requiresAuth && validToken.success) next('dashboard')
-//   else next()
-// })
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth) {
+    const validToken = await store.dispatch('verifyToken')
+    if (!validToken.success) next('')
+    else next()
+  } else next()
+})
 
 export default router

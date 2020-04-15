@@ -45,7 +45,10 @@
       <v-window-item :value="2">
         <v-card-text>
           <v-row justify="center">
-            <images-component :image-src="imagesURL" />
+            <images-component
+              :image-src="imagesURL"
+              style="width: 100%; height: 300px"
+            />
           </v-row>
           <v-row justify="center">
             <v-col>
