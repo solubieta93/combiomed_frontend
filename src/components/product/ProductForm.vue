@@ -1,0 +1,324 @@
+<template>
+  <v-card
+    class="mx-auto"
+  >
+    <v-col>
+      <v-row justify="center">
+        <v-col md="8">
+          <v-text-field
+            v-model="product.name"
+            label="Nombre"
+            :rules="[rules.required, rules.charactersLength(null, 100)]"
+            counter="100"
+            class="headline"
+            @change="value => changeField('name', value)"
+          />
+          <v-text-field
+            v-model="product.description"
+            label="Descripcion"
+            :rules="[rules.charactersLength(null, 100)]"
+            counter="100"
+            class="subtitle-1"
+            @change="value => changeField('description', value)"
+          />
+          <v-select
+            v-model="selectedType"
+            :items="selectProductsTypes"
+            clearable
+            dense
+            color="#8b0000"
+            :loading="loading"
+            label="Linea de producto"
+            :rules="[rules.required]"
+            @click:clear="onUpdateSelected"
+            @change="onUpdateSelected"
+          />
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="8">
+          <images-component
+            :image-src="imagesURL"
+            style="width: 100%; height: 300px"
+          />
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col
+          sm="8"
+          md="6"
+          lg="4"
+        >
+          <files-input-component
+            :accept="'image/*'"
+            :placeholder="'Seleccione una foto'"
+            label="Imagenes"
+            @files:changed="(v) => imagesSelected = v"
+          />
+        </v-col>
+      </v-row>
+    </v-col>
+    <v-row
+      v-for="(item, i) in !loading && product ? product.details : []"
+      :key="i"
+      justify="center"
+      align="center"
+    >
+      <v-col
+        cols="8"
+      >
+        <v-row>
+          <v-btn
+            icon
+            color="red"
+            @click="() => removeFromDetails(i)"
+          >
+            <v-icon
+              dark
+            >
+              mdi-delete
+            </v-icon>
+          </v-btn>
+          <v-text-field
+            v-model="item.text"
+            solo-inverted
+            class="display-1 text-uppercase pt-0 mt-0"
+          />
+        </v-row>
+        <v-row
+          v-for="(value, j) in item.items"
+          :key="j"
+        >
+          <v-btn
+            icon
+            small
+            color="red"
+            class="pr-5"
+            @click="() => removeFromItemOfDetails(i, j)"
+          >
+            <v-icon
+              small
+              dark
+            >
+              mdi-cancel
+            </v-icon>
+          </v-btn>
+          <li />
+          <v-text-field
+            :value="value"
+            class="subtitle-1 pt-0 mt-0"
+            hide-details
+            @change="v => changeDetails(i, j, v)"
+          />
+        </v-row>
+        <v-row justify="end">
+          <v-btn
+            icon
+            color="green"
+            @click="() => addDetail(i)"
+          >
+            <v-icon
+              dark
+            >
+              mdi-plus-circle
+            </v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="8">
+        <v-row>
+          <v-btn
+            tile
+            outlined
+            color="green"
+            class="ma-2"
+            @click="() => addDetail(null)"
+          >
+            <v-icon
+              left
+            >
+              mdi-plus-circle
+            </v-icon>
+            Adicionar Elemento
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-card-actions>
+      <v-row justify="center">
+        <v-col cols="8">
+          <v-divider />
+          <v-row justify="end">
+            <v-btn
+              :visible="!loading"
+              tile
+              outlined
+              class="ma-2"
+              @click="cancel"
+            >
+              <v-icon
+                left
+              >
+                mdi-cancel
+              </v-icon>
+              Cancelar
+            </v-btn>
+            <v-btn
+              :loading="loading"
+              tile
+              outlined
+              color="blue"
+              class="ma-2"
+              @click="save"
+            >
+              <v-icon
+                left
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+              Aceptar
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-card-actions>
+  </v-card>
+</template>
+
+<script>
+  import ImagesComponent from '../core/ImagesComponent'
+  import FilesInputComponent from '../core/FilesInputComponent'
+  import Rules from '../../utils/rules'
+  export default {
+    name: 'ProductForm',
+    components: {
+      ImagesComponent,
+      FilesInputComponent,
+    },
+    props: {
+      productBase: {
+        type: Object,
+        required: true,
+      },
+      onSave: {
+        type: Function,
+        default: () => {},
+      },
+      editing: {
+        type: Boolean,
+        default: true,
+      },
+    },
+    data: () => ({
+      loading: false,
+      product: null,
+      changes: {},
+      imagesSelected: null,
+      imagesURL: null,
+      rules: Rules,
+      productsTypes: [],
+      selectedType: undefined,
+    }),
+    computed: {
+      selectProductsTypes () {
+        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
+      },
+    },
+    watch: {
+      imagesSelected (value) {
+        console.log(value, 'selected watch')
+        this.imagesURL = !!value && value.length ? value.map(img => URL.createObjectURL(img))[0] : null
+        this.changeField('image', this.imagesURL ? value[0] : null)
+      },
+    },
+    async created () {
+      this.load()
+      await this.getTypes()
+        .then(_ => {
+          const temp = this.product.typeId ? this.selectProductsTypes.filter(x => x.value === this.product.typeId.toString()) : null
+          console.log(temp)
+          if (this.product.typeId && temp) {
+            this.selectedType = temp[0]
+          }
+          this.loading = false
+        })
+        .catch(e => {
+          console.log(e)
+          this.loading = false
+        })
+    },
+    methods: {
+      async save () {
+        this.loading = true
+        await this.onSave(Object(this.changes))
+        this.loading = false
+      },
+      load () {
+        this.product = this.productBase
+        this.loading = false
+        this.changes = this.editing ? {} : this.productBase
+        this.imagesURL = this.product.image
+      },
+      changeField (field, value) {
+        this.changes[field] = value
+      },
+      removeElement (i, item) {
+        const a = i > 0 ? item.slice(0, i) : []
+        const b = i < item.length - 1 ? item.slice(i + 1, item.length) : []
+        return a.concat(b)
+      },
+      removeFromDetails (i) {
+        this.product.details = this.removeElement(i, this.product.details)
+        this.changeField('json_details', JSON.stringify({ details: this.product.details }))
+      },
+      removeFromItemOfDetails (i, j) {
+        this.product.details[i].items = this.removeElement(j, this.product.details[i].items)
+        this.changeField('json_details', JSON.stringify({ details: this.product.details }))
+      },
+      changeDetails (i, j, value) {
+        this.product.details[i].items[j] = value
+        this.changeField('json_details', JSON.stringify({ details: this.product.details }))
+      },
+      addDetail (i) {
+        if (i === undefined || i === null) {
+          this.product.details.push({
+            text: '',
+            items: [],
+          })
+        } else {
+          this.product.details[i].items.push('')
+        }
+      },
+      log () {
+        console.log(this.product.details, 'details')
+        console.log(this.changes['json_details'], 'details json')
+      },
+      async getTypes () {
+        this.loading = true
+        await this.$store.dispatch('getProductsTypes').then(result => {
+          this.productsTypes = result.types
+          this.loading = false
+          return result.types
+        }).catch(e => {
+          console.log(e, 'error getTypes')
+          this.loading = false
+          return []
+        })
+      },
+      onUpdateSelected () {
+        const value = this.selectedType ? typeof (this.selectedType) === 'object' ? this.selectedType.value : this.selectedType : null
+        this.changeField('typeId', value)
+        this.product.typeId = value
+      },
+      cancel () {
+        this.$router.push(`/products${this.product.id ? `/${this.product.id}` : ''}`)
+      },
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>
