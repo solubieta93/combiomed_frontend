@@ -62,7 +62,7 @@
             :align-with-title="false"
             background-color="transparent"
             color="white"
-            :hide-slider="this.$route.path === '/'"
+            :hide-slider="this.$route.path === '/' || this.$route.path === '/login'"
             centered
             show-arrows
             class="white--text"
@@ -126,9 +126,16 @@
                     {{ item.text }}
                   </v-tab>
                 </v-tabs>
-
               </v-menu>
             </v-item>
+            <v-tab
+                v-if="!!user"
+                background-color="transparent"
+                class="white--text"
+                @click="logout"
+              >
+                Logout
+              </v-tab>
           </v-tabs>
         </v-col>
       </v-row>
@@ -144,7 +151,7 @@
         drawer: null,
         slider: 3,
         links: [
-          { text: 'Nosotros', route: '/#us', roles: [] },
+          { text: 'Nosotros', route: '/us', roles: [] },
           { text: 'Productos', route: '/products', roles: [] },
           { text: 'Servicios', 
             active: false, 
@@ -157,7 +164,7 @@
             roles: [],
           },
           { text: 'Noticias y Eventos', route: '/news' },
-          { text: 'Contactos', route: '/#contacts' }, // route: '/clients' },
+          { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
         ],
         baseUrl: process.env.BASE_URL,
         tab: null,
@@ -165,22 +172,13 @@
     },
     computed: {
       ...mapGetters(['user']),
-      is_login () {
-        return this.$store.getters.user
-      },
-    },
-    watch: {
-      slider (value) {
-        console.log(value)
-      },
     },
     methods: {
       logout: async function () {
         await this.$store.dispatch('signOut')
-        this.$router.push('/dashboard')
+        this.$router.push('/')
       },
       pushRoute (i, path) {
-        console.log(path, 'path')
         this.tab = i
         if (path) this.$router.push({ path })
       },

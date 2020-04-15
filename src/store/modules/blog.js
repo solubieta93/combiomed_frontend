@@ -31,13 +31,7 @@ const mutations = {
     PATCH_POST: (state, payload) => {
         // eslint-disable-next-line camelcase
         const post_i = state.blog.findIndex(x => x.id === payload.id)
-        if (payload.description) {
-            state.blog[post_i].description = payload.description
-        } else if (payload.name) {
-            state.blog[post_i].name = payload.name
-        } else if (payload.countLike) {
-            state.blog[post_i].countLike = payload.count
-        }
+        state.blog[post_i] = payload
     },
     SET_COUNT_POST: (state, payload) => {
         if (payload) {
@@ -68,7 +62,6 @@ const actions = {
                 return []
             }
         }).catch(e => {
-            console.log(e)
             return []
         })
     },
@@ -77,7 +70,6 @@ const actions = {
             await commit('SET_BLOG', [])
             const res = await axios.get(`/blog`, { params })
             if (res.status === 200) {
-                console.log('ooooookkkkk')
                 await commit('SET_COUNT_POST', res.data.count)
                 await commit('SET_BLOG', res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
@@ -92,7 +84,6 @@ const actions = {
                 }
             }
         } catch (e) {
-            console.log(e)
             return {
                 posts: [],
                 count: 0,
@@ -101,12 +92,9 @@ const actions = {
     },
     getPaginateBlogDistinct: async ({ commit }, params) => {
         try {
-            console.log('DISTINT')
             await commit('SET_BLOG', [])
             const res = await axios.get(`/blog/blog`, {params})
             if (res.status === 200) {
-                console.log('OKKKKKK 200')
-                console.log(res, 'print res distinct')
                 await commit('SET_COUNT_POST', res.data.data.count)
                 await commit('SET_BLOG', res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
@@ -122,7 +110,6 @@ const actions = {
             }
         }
         catch (e) {
-            console.log(e)
             return {
                 posts: [],
                 count: 0,
@@ -142,22 +129,18 @@ const actions = {
     },
     getPost: async ({commit}, id) => {
         try {
-            console.log('init_action')
             commit('SET_POST', [])
             const res = await axios.get(`/blog/${id}`)
-            console.log(res, 'get result')
             if(res.status === 200) {
                 await commit('SET_POST', {
                     ...res.data,
                     image: res.data.image ? apiURI + res.data.image : null,
                 })
-                console.log('return true', 'action')
                 return true
             }
             await commit('SET_PRODUCT_ERROR', res.data.detail)
             return false
         } catch (e) {
-            console.log(e, 'catch action')
             await commit('SET_PRODUCT_ERROR', e.message)
             return false
         }
@@ -209,7 +192,6 @@ const actions = {
                     'Accept': 'application/json',
                 },
             })
-            console.log(res)
             return {
                 success: true,
                 message: 'ok',
@@ -230,14 +212,56 @@ const actions = {
     },
     patchPost: async ({ commit }, payload) => {
         try {
-            await axios.patch('blog/' + payload.id, {
-                description: payload.description,
-                name: payload.name,
+            const res= await axios.patch('blog/' + payload.id, {
+                title: payload.title,
+                abstract: payload.abstract,
+                context: payload.context,
+                news: payload.news,
             },
             {
-                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
             })
-            commit('PATCH_POST', payload)
+            commit('PATCH_POST', res.data)
+            return {
+                success: true,
+                message: 'ok',
+            }
+
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
+    },
+    putPost: async ({ commit }, payload) => {
+        try {
+            const res = await axios.put('/blog/' + payload.id, {
+                title: payload.title,
+                abstract: payload.abstract,
+                context: payload.context,
+                news: payload.news,
+                image: payload.image,
+            },
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            commit('PATCH_POST', res.data)
             return {
                 success: true,
                 message: 'ok',
@@ -256,16 +280,18 @@ const actions = {
             }
         }
     },
-    delPost: async ({ commit }, payload) => {
+    delPost: async ({ commit }, id) => {
         try {
-            await axios.delete('/blog/' + payload.id,
+            const res = await axios.delete(`/blog/${id}`,
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            commit('DEL_POST', payload.id)
-            return {
-                success: true,
-                message: 'ok',
+            if(res.status === 200) {
+                await commit('DEL_POST', id)
+                return {
+                    success: true,
+                    message: 'ok',
+                }
             }
         } catch (error) {
             if (error.response) {
@@ -315,14 +341,6 @@ const actions = {
             abstract: '',
             news: false,
             image: null,
-        })
-    },
-    getNewNews: () => {
-        return Object({
-            title: '',
-            context: '',
-            abstract: '',
-            news: true,
         })
     },
 }

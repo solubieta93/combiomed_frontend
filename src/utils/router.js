@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login.vue'
-import Dashboard from '@/views/Dashboard.vue'
 import NewsAndEvents from '@/views/news/NewsAndEvents.vue'
 import NewsAndEventsDetail from '@/views/news/NewsAndEventsDetail.vue'
 import AutoServices from '@/views/services/AutoServices.vue'
@@ -11,7 +10,8 @@ import Products from '@/views/products/Products.vue'
 import ProductDescription from '@/views/products/ProductDescription.vue'
 import Home from '@/views/Home.vue'
 import Services from '@/components/services/Services'
-import Contact from '@/components/utils/Contact'
+import Contacts from '@/views/Contacts'
+import Us from '@/views/Us'
 import ProductEdition from '@/views/products/ProductEdition'
 import { store } from '../store/store'
 const AppLayout = () => import('@/components/layouts/App_Layout.vue')
@@ -31,8 +31,12 @@ const router = new Router({
       }],
     },
     {
-      path: '/login',
-      component: Login,
+      path: '/',
+      component: AppLayout,
+      children: [{
+        path: '/login',
+        component: Login,
+      }],
     },
     {
       path: '/products',
@@ -64,15 +68,6 @@ const router = new Router({
           },
         },
       ],
-    },
-    {
-      path: '/dashboard',
-      // name: 'dashboard',
-      component: AppLayout,
-      children: [{
-        path: '',
-        component: Dashboard,
-      }],
     },
     {
       path: '/services',
@@ -116,7 +111,17 @@ const router = new Router({
       children: [
         {
           path: '',
-          component: Contact,
+          component: Contacts,
+        },
+      ],
+    },
+    {
+      path: '/us',
+      component: AppLayout,
+      children: [
+        {
+          path: '',
+          component: Us,
         },
       ],
     },

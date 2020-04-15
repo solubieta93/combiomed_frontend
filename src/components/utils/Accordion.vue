@@ -69,7 +69,7 @@
             text
             @click="readless = !readless"
           >
-            <v-text>{{ readless ? 'Leer más' : 'Leer menos' }} </v-text>
+            {{ readless ? 'Leer más' : 'Leer menos' }} 
           </v-btn>
       </v-row>
     </v-card>

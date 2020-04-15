@@ -5,6 +5,7 @@ import product from './modules/product'
 import blog from './modules/blog'
 import file from './modules/file'
 import query from './modules/query'
+import contacts from './modules/contacts'
 
 import queryNames from './names/query'
 
@@ -55,6 +56,7 @@ export const store = new Vuex.Store({
     blog,
     file,
     query,
+    contacts,
   },
 })
 

@@ -18,11 +18,22 @@
     </v-row>
   </v-col>
   </v-row>
-  <v-row justify="center">
-    <p style="color: lightgrey">
-      @ Copyright 2020 Combiomed BioCubaFarma
-    </p>
-  </v-row>
+  
+    <v-col 
+      md="12"
+      sm="12"
+      lg="12"
+      xl="12"
+      xs="12"
+      justify="center"
+    >
+    <v-row justify="center">
+      <p style="color: lightgrey">
+        @ Copyright 2020 Combiomed BioCubaFarma
+      </p>
+      </v-row>
+    </v-col>
+  
   </v-img>
 </template>
 

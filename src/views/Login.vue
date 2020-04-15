@@ -1,48 +1,39 @@
 <template>
+<!-- #8c3564 -->
   <v-row
-    style="background-color: #8c3564;"
+    style="background-color: white;"
     align="center"
     justify="center"
   >
-    <!-- Error Alert -->
-    <!--    <v-row>-->
-    <!--      <v-col-->
-    <!--        cols="12"-->
-    <!--        sm="6"-->
-    <!--        offset-sm="3"-->
-    <!--      >-->
-    <!--      </v-col>-->
-    <!--    </v-row>-->
     <div class="login">
       <form-alert
         v-if="authError"
         :message="authError"
       />
-      <v-card>
+      <v-card class="mx-auto" style="width:400px;">
         <v-card-text>
           <img
             style="margin-left: 25%"
             width="43%"
-            src="/Símbolo - Contracción - Fondo blanco.svg"
+            :src="`${baseUrl}Símbolo - Contracción - Fondo blanco.svg`"
           >
           <v-text-field
             v-model="unique"
-            label="UserName"
+            label="Nombre de Usuario"
             :rules="[rules.required]"
             clearable
           />
           <br>
           <v-text-field
             v-model="password"
-            :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            label="Password"
-            hint="At least 6 characters"
+            label="Contaseña"
+            hint="Como mínimo 6 caracteres"
             counter
             @click:append="show1 = !show1"
-          />
+          /> 
           <v-container>
             <v-row>
               <v-col
@@ -56,7 +47,7 @@
                   dark
                   @click="login"
                 >
-                  Sign in
+                  Aceptar
                 </v-btn>
               </v-col>
             </v-row>
@@ -74,6 +65,7 @@
     name: 'Login',
     data () {
       return {
+        baseUrl: process.env.BASE_URL,
         unique: '',
         show1: false,
         show2: true,
@@ -94,12 +86,9 @@
       user (value) {
         // if user value changes, redirect to home page
         if (value) {
-          this.$router.push('/dashboard')
+          this.$router.push('/')
         }
       },
-    },
-    mounted () {
-      this.setLayout('simple-layout')
     },
     methods: {
       login: async function () {
@@ -108,9 +97,6 @@
           password: this.password,
         })
       },
-      setLayout (layout) {
-        this.$store.commit('SET_LAYOUT', layout)
-      },
     },
   }
 </script>
@@ -118,7 +104,8 @@
 <style scoped>
 /* "scoped" attribute limit the CSS to this component only */
 .login {
-  margin-top: 40px;
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
 input {
   margin: 10px 0;
@@ -127,7 +114,7 @@ input {
 }
 button {
   margin-top: 20px;
-  width: 10%;
+  width: 25%;
   cursor: pointer;
 }
 p {

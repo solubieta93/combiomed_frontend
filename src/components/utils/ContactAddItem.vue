@@ -7,13 +7,14 @@
     <v-card-title
       v-if="mode==='creating'"
     >
-      <h2>Add a New News</h2>
+      <h2>Agregar contacto</h2>
     </v-card-title>
     <v-card-title
       v-if="mode==='editing'"
     >
-      <h2>Edit News</h2>
+      <h2>Editar contacto</h2>
     </v-card-title>
+
     <v-window v-model="step">
       <v-window-item :value="1">
         <v-card-text>
@@ -23,21 +24,19 @@
             class="px-3"
           >
             <v-text-field
-              v-model="post.title"
+              v-model="contact.name"
               :rules="[rules.required]"
-              label="Title"
+              label="Nombre"
             />
-            <v-textarea
-              v-model="post.abstract"
+            <v-text-field
+              v-model="contact.role"
               :rules="[rules.required]"
-              label="Abstract"
-              prepend-icon="edit"
+              label="Rol"
             />
-            <v-textarea
-              v-model="post.context"
+            <v-text-field
+              v-model="contact.mail"
               :rules="[rules.required]"
-              label="Content"
-              prepend-icon="edit"
+              label="Correo"
             />
           </v-form>
         </v-card-text>
@@ -45,10 +44,7 @@
       <v-window-item :value="2">
         <v-card-text>
           <v-row justify="center">
-            <images-component
-              :image-src="imagesURL"
-              style="width: 100%; height: 300px"
-            />
+            <images-component :image-src="contact.image" />
           </v-row>
           <v-row justify="center">
             <v-col>
@@ -63,13 +59,14 @@
       </v-window-item>
     </v-window>
     <v-divider />
+
     <v-card-actions>
       <v-btn
         :disabled="step === 1 || loading"
         text
         @click="step--"
       >
-        Atras
+        Atrás
       </v-btn>
       <v-spacer />
       <v-btn
@@ -86,9 +83,9 @@
         :disabled="step !== 2 || !form"
         :hidden="step !== 2"
         :loading="loading"
-        @click="saveNews"
+        @click="saveContact"
       >
-        Save news
+        Salvar
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -104,13 +101,13 @@
       'images-component': ImagesComponent,
     },
     props: {
-      post: {
+      contacts: [],
+      contact: {
         id: Number,
-        title: String,
-        owner: String,
-        context: String,
+        name: String,
+        role: String,
         image: String,
-        news: Boolean,
+        mail: Boolean,
         default: null,
       },
       mode: {
@@ -146,17 +143,21 @@
       imagesSelected (value) {
         this.imagesURL = value.length ? value.map(img => URL.createObjectURL(img))[0] : null
       },
+      contact(value) {
+          console.log(value, 'editing')
+      }
     },
     methods: {
-      saveNews: function () {
+      saveContact: function () {
         this.loading = true
-        const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
+        const actionToDo = ''
         this.saveError = ''
         if (this.imagesSelected) {
+          const actionToDo = this.mode === 'editing' ? 'putContact' : 'postContact'
           this.$store.dispatch('uploadFile', this.imagesSelected[0]).then(uploadRes => {
             if (uploadRes.success) {
-              this.post.image = uploadRes.src
-              this.$store.dispatch(actionToDo, this.post).then(res => {
+              this.contact.image = uploadRes.src
+              this.$store.dispatch(actionToDo, this.contact).then(res => {
                 if (!res.success) {
                   this.saveError = res.detail
                   this.loading = false
@@ -171,12 +172,19 @@
               this.loading = false
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })
         } else {
-          this.$store.dispatch(actionToDo, this.post).then(res => {
+          const actionToDo = this.mode === 'editing' ? 'patchContact' : 'postContact'
+          
+          this.$store.dispatch(actionToDo, {
+              name: this.contact.name,
+              mail: this.contact.mail,
+              role: this.contact.role,
+              id: this.contact.id
+            })
+            .then(res => {
             if (!res.success) {
               this.saveError = res.detail
               this.loading = false
@@ -186,12 +194,18 @@
               if (this.onSave) this.onSave()
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })
         }
       },
+      async deleteContact(post_id) {
+            const ok = await this.$store.dispatch('delContact', this.$route.params.postId)
+            if (!ok) { this.$router.push('/') }
+            // await this.paginate()
+            // this.$router.push('/contacts')
+            this.onSave()
+        },
     },
   }
 </script>

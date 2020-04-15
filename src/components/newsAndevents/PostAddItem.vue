@@ -7,12 +7,12 @@
     <v-card-title
       v-if="mode==='creating'"
     >
-      <h2>Add a New Line Product</h2>
+      <h2>Agregar una noticia</h2>
     </v-card-title>
     <v-card-title
       v-if="mode==='editing'"
     >
-      <h2>Edit Line Product</h2>
+      <h2>Editar noticia</h2>
     </v-card-title>
     <v-window v-model="step">
       <v-window-item :value="1">
@@ -23,15 +23,19 @@
             class="px-3"
           >
             <v-text-field
-              v-model="line.title"
+              v-model="post.title"
               :rules="[rules.required]"
-              label="Title"
+              label="Título"
             />
             <v-textarea
-              v-model="line.description"
+              v-model="post.abstract"
               :rules="[rules.required]"
-              label="Description"
-              prepend-icon="edit"
+              label="Descripción"
+            />
+            <v-textarea
+              v-model="post.context"
+              :rules="[rules.required]"
+              label="Contenido"
             />
           </v-form>
         </v-card-text>
@@ -39,7 +43,7 @@
       <v-window-item :value="2">
         <v-card-text>
           <v-row justify="center">
-            <images-component :image-src="imagesURL" />
+            <images-component :image-src="post.image" />
           </v-row>
           <v-row justify="center">
             <v-col>
@@ -60,7 +64,7 @@
         text
         @click="step--"
       >
-        Atras
+        Atrás
       </v-btn>
       <v-spacer />
       <v-btn
@@ -77,9 +81,9 @@
         :disabled="step !== 2 || !form"
         :hidden="step !== 2"
         :loading="loading"
-        @click="saveLine"
+        @click="saveNews"
       >
-        Save Line
+        Salvar
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -95,11 +99,13 @@
       'images-component': ImagesComponent,
     },
     props: {
-      line: {
+      post: {
         id: Number,
         title: String,
-        description: String,
+        owner: String,
+        context: String,
         image: String,
+        news: Boolean,
         default: null,
       },
       mode: {
@@ -137,15 +143,16 @@
       },
     },
     methods: {
-      saveLine: function () {
+      saveNews: function () {
         this.loading = true
-        const actionToDo = this.mode === 'editing' ? 'patchTypeProduct' : 'postTypeProduct'
+        const actionToDo = ''
         this.saveError = ''
         if (this.imagesSelected) {
+          const actionToDo = this.mode === 'editing' ? 'putPost' : 'postPost'
           this.$store.dispatch('uploadFile', this.imagesSelected[0]).then(uploadRes => {
             if (uploadRes.success) {
-              this.line.image = uploadRes.src
-              this.$store.dispatch(actionToDo, this.line).then(res => {
+              this.post.image = uploadRes.src
+              this.$store.dispatch(actionToDo, this.post).then(res => {
                 if (!res.success) {
                   this.saveError = res.detail
                   this.loading = false
@@ -160,12 +167,20 @@
               this.loading = false
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })
         } else {
-          this.$store.dispatch(actionToDo, this.line).then(res => {
+          const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
+          
+          this.$store.dispatch(actionToDo, {
+              title: this.post.title,
+              abstract: this.post.abstract,
+              context: this.post.context,
+              news: this.post.news,
+              id: this.post.id
+            })
+            .then(res => {
             if (!res.success) {
               this.saveError = res.detail
               this.loading = false
@@ -175,7 +190,6 @@
               if (this.onSave) this.onSave()
             }
           }).catch(e => {
-            console.log(e.message, 'catch save')
             this.saveError = e.message
             this.loading = false
           })

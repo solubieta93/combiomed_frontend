@@ -65,13 +65,8 @@ const mutations = {
 
 const actions = {
     getProduct: async ({ commit }, id) => {
-        console.log('getcurrenProduct')
-        // commit('SET_PRODUCT', [])
-        // commit('SET_PRODUCT_ERROR', null)
-        // .then(res => {
         try {
             const res = await axios.get(`/api/products/${id}/`)
-            console.log(res, 'result')
             if (res.status === 200) {
                 return {
                     success: true,
@@ -87,7 +82,6 @@ const actions = {
                 notFound: res.status === 404,
             }
         } catch (error) {
-            console.log(error.message, 'error fetch product')
             const split = error.message.toString().split('status code ')
             const notFound = split.length > 1 && split[1].substr(0, 3) === '404'
             return {
@@ -102,11 +96,10 @@ const actions = {
       try {
         const result = await axios.get('/api/products/', { params })
         if (result.status === 200) {
-          console.log(result.data, 'getProducts action')
           return {
               success: true,
               message: 'ok',
-              products: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
+              products: result.data.results.map(unzipProduct),
               count: result.data.count,
           }
         } else {

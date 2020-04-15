@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%; height: 300px">
     <v-sheet
       v-if="!image"
       :color="'orange darken-1'"
@@ -51,10 +51,6 @@
       image () {
         return this.imageSrc
       },
-    },
-    watch: {
-    },
-    methods: {
     },
   }
 </script>

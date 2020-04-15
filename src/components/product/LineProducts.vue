@@ -35,51 +35,64 @@
         :items="productsLine"
       />
     </v-container>
-  </v-img>
+  
+
+  <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
+    <v-dialog
+      v-model="addLineProduct"
+      max-width="600px"
+    >
+      <product-add-line
+        :line="newLineProduct"
+        :mode="'creating'"
+        :onSave="() => { addLineProduct = false; getTypes() }"
+      />
+    </v-dialog>
+    
+    <v-card-text
+      v-if="isAdmin"
+      style="height: 100px; position: relative"
+    >
+      <v-btn
+        absolute
+        dark
+        fab
+        right
+        small
+        color="pink"
+        @click="showAddLineProductDialog"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-card-text>
+    </v-img>
 </template>
 
 <script>
   import ResponsiveItems from '@/components/core/ResponsiveItems'
+  import ProductAddLine from '@/components/product/ProductAddLine'
   import { mapGetters } from 'vuex'
+  
 
   export default {
     components: {
-      ResponsiveItems
+      ResponsiveItems,
+      ProductAddLine
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
         productsTypes: [],
-        imagesClients: [
-          {
-            name: 'Diagnóstico y Rehabilitacion Cardiovascular',
-            image: 'productImages/product1.png',
-            typeId: 1,
-          },
-          {
-            image: 'productImages/product2.png',
-            name: 'Monitorización de Pacientes y Soporte de Vida',
-            typeId: 2,
-          },
-          {
-            image: 'productImages/product5.png',
-            name: 'Soluciones para la Atención Primaria de Salud',
-            typeId: 3,
-          },
-          {
-            image: 'productImages/product3.png',
-            name: 'Estimulación Eléctrica',
-          },
-          {
-            image: 'productImages/product4.png',
-            name: 'Diagnóstico de Enfermedades Respiratorias Crónicas',
-          },
-        ],
+        addLineProduct: false,
+        newLineProduct: [],
       }
     },
     computed: {
+      ...mapGetters(['user']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
       productsLine () {
-        console.log('estoy en b')
         return this.productsTypes.map(x => this.buildItem(x))
       },
     },
@@ -93,14 +106,13 @@
           this.productsTypes = result.types
           return result.types
         }).catch(e => {
-          console.log(e, 'error getTypes')
           return []
         })
       },
       buildItem (productType) {
         return {
           item: {
-            id: productType.id ,
+            id: productType.id,
             title: productType.title,
             description: productType.description,
             image: productType.image,
@@ -108,6 +120,10 @@
           },
           pathTo: '/products' + (productType.id ? `?type=${productType.id}` : ''),
         }
+      },
+      async showAddLineProductDialog () {
+        this.newLineProduct = await this.$store.dispatch('getNewLineProduct')
+        this.addLineProduct = true
       },
     },
   }

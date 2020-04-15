@@ -95,7 +95,6 @@
     },
     methods:{
       my:function(){
-        console.log('click');
             this.style_d="height: 640px;"
             var leer=document.getElementById("leer");
             leer.style.display="none";
