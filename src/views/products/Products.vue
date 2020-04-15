@@ -66,13 +66,13 @@
 
     <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
     <v-dialog
-      v-model="addLineProduct"
+      v-model="addProduct"
       max-width="600px"
     >
-      <add-line-product
-        :line="newLineProduct"
+      <product-add-line
+        :line="newProduct"
         :mode="'creating'"
-        :onSave="() => { addLineProduct = false; paginate() }"
+        :onSave="() => { addProduct = false; paginate() }"
       />
     </v-dialog>
     
@@ -87,7 +87,7 @@
         right
         small
         color="pink"
-        @click="showAddLineProductDialog"
+        @click="showAddProductDialog"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -97,13 +97,13 @@
 
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
-  import AddLineProduct from '@/components/product/AddLineProduct'
+  import ProductAddLine from '@/components/product/ProductAddLine'
   import { mapGetters } from 'vuex'
   
   export default {
     components: {
       PaginateItems,
-      AddLineProduct,
+      ProductAddLine,
     },
     data () {
       return {
@@ -118,8 +118,8 @@
         refresh: false,
         selectedType: undefined,
         hasCreated: false,
-        addLineProduct: false,
-        newLineProduct: [],
+        addProduct: false,
+        newProduct: [],
       }
     },
     computed: {
@@ -157,6 +157,7 @@
     },
     methods: {
       buildItem (product) {
+        console.log('products')
         return {
           item: {
             id: product.id,
@@ -164,6 +165,7 @@
             description: product.description,
             image: product.image,
             owner: product.owner,
+            files: product.files
           },
           pathTo: `/products/${product.id}`,
         }
@@ -210,9 +212,9 @@
         this.refresh = true
       },
       async showAddLineProductDialog () {
-        this.newLineProduct = await this.$store.dispatch('getNewLineProduct')
-        console.log(this.newLineProduct, 'newLineProduct')
-        this.addLineProduct = true
+        this.newProduct = await this.$store.dispatch('getNewLineProduct')
+        console.log(this.newProduct, 'newProduct')
+        this.addProduct = true
       },
     },
   }

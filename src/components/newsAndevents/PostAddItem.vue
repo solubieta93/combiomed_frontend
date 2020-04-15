@@ -7,12 +7,12 @@
     <v-card-title
       v-if="mode==='creating'"
     >
-      <h2>Add a New News</h2>
+      <h2>Agregar una noticia</h2>
     </v-card-title>
     <v-card-title
       v-if="mode==='editing'"
     >
-      <h2>Edit News</h2>
+      <h2>Editar noticia</h2>
     </v-card-title>
     <v-window v-model="step">
       <v-window-item :value="1">
@@ -25,18 +25,18 @@
             <v-text-field
               v-model="post.title"
               :rules="[rules.required]"
-              label="Title"
+              label="Título"
             />
             <v-textarea
               v-model="post.abstract"
               :rules="[rules.required]"
-              label="Abstract"
+              label="Descripción"
               prepend-icon="edit"
             />
             <v-textarea
               v-model="post.context"
               :rules="[rules.required]"
-              label="Content"
+              label="Contenido"
               prepend-icon="edit"
             />
           </v-form>
@@ -45,7 +45,7 @@
       <v-window-item :value="2">
         <v-card-text>
           <v-row justify="center">
-            <images-component :image-src="imagesURL" />
+            <images-component :image-src="post.image" />
           </v-row>
           <v-row justify="center">
             <v-col>
@@ -66,7 +66,7 @@
         text
         @click="step--"
       >
-        Atras
+        Atrás
       </v-btn>
       <v-spacer />
       <v-btn
@@ -85,7 +85,7 @@
         :loading="loading"
         @click="saveNews"
       >
-        Save news
+        Salvar
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -147,9 +147,10 @@
     methods: {
       saveNews: function () {
         this.loading = true
-        const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
+        const actionToDo = ''
         this.saveError = ''
         if (this.imagesSelected) {
+          const actionToDo = this.mode === 'editing' ? 'putPost' : 'postPost'
           this.$store.dispatch('uploadFile', this.imagesSelected[0]).then(uploadRes => {
             if (uploadRes.success) {
               this.post.image = uploadRes.src
@@ -173,7 +174,19 @@
             this.loading = false
           })
         } else {
-          this.$store.dispatch(actionToDo, this.post).then(res => {
+          const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
+          console.log("ESOY EN ELSE")
+          console.log('action to do', actionToDo)
+          console.log('post', this.post)
+          
+          this.$store.dispatch(actionToDo, {
+              title: this.post.title,
+              abstract: this.post.abstract,
+              context: this.post.context,
+              news: this.post.news,
+              id: this.post.id
+            })
+            .then(res => {
             if (!res.success) {
               this.saveError = res.detail
               this.loading = false

@@ -106,7 +106,7 @@ const actions = {
           return {
               success: true,
               message: 'ok',
-              products: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
+              products: result.data.results.map(unzipProduct),
               count: result.data.count,
           }
         } else {

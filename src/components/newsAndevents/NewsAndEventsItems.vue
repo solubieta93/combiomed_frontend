@@ -1,74 +1,5 @@
 <template>
-  <div class="mycontainer3">
-
-    <!-- <v-row justify="center">
-      <v-col cols="3">
-        <query-search
-          @search:text="paginateSearch"
-          :loading="loading"
-        ></query-search></v-col>
-    </v-row>
-
-    <div class="grid">
-      <template v-for="(post,i) in posts">
-        <v-hover
-          :key="i"
-          v-slot:default="{ hover }"
-        >
-          <v-card
-            :elevation="hover ? 12 : 2"
-            :class="items[i].class"
-          >
-            <v-img
-              :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
-              class="fill-height"
-            >
-              <v-expand-transition>
-                <div
-                  v-if="hover"
-                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                  style="height: 100%"
-                >
-                  <v-btn
-                    text
-                    large
-                    color="white"
-                    class="div_product"
-                    :to="`/news/${post.id}`"
-                  >
-                    Leer Mas
-                  </v-btn>
-                </div>
-                <v-overlay
-                  :absolute="true"
-                  :value="true"
-                  :opacity="0.46"
-                  color="#001A33"
-                  :style="items[i].style"
-                >
-                  <div>
-                    <h3 class="text-uppercase">
-                      {{ post.title }}
-                    </h3>
-                    <h3>{{ post.abstract }}</h3>
-                    <h3>Autor: {{ post.owner }}</h3>
-                  </div>
-                </v-overlay>
-              </v-expand-transition>
-            </v-img>
-          </v-card>
-        </v-hover>
-      </template>
-    </div>
-
-    <v-pagination
-      v-model="page"
-      :length="pagination_length"
-      circle
-      color="red"
-      @paginate="paginateSearch"
-    /> -->
-
+  <div class="mycontainer">
     <v-row
       justify="center"
       align="center"
@@ -247,25 +178,6 @@
           pathTo: `/news/${news.id}`,
         }
       },
-      // async paginate () {
-      //   const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
-      //     offset: this.start + (this.page - 1) * this.limit,
-      //     limit: this.limit,
-      //     id_distinct: this.post_id,
-      //   })
-      //   this.posts = posts
-      //   this.count_post = count
-      // },
-      // async paginateSearch (text = '') {
-      //   this.page = 1
-      //   const { count, posts } = await this.$store.dispatch('getPaginateBlog', {
-      //     offset: (this.page - 1),
-      //     limit: this.limit,
-      //     search: text,
-      //   })
-      //   this.posts = posts
-      //   this.count_post = count
-      // },
     },
   }
 </script>
@@ -280,7 +192,7 @@
   width: 100%;
 }
 
-.mycontainer3 {
+.mycontainer {
   margin: auto;
 	width:65%;
   background-color: white !important;

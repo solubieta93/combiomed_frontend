@@ -144,7 +144,7 @@
         drawer: null,
         slider: 3,
         links: [
-          { text: 'Nosotros', route: '/#us', roles: [] },
+          { text: 'Nosotros', route: '/us', roles: [] },
           { text: 'Productos', route: '/products', roles: [] },
           { text: 'Servicios', 
             active: false, 
@@ -157,7 +157,7 @@
             roles: [],
           },
           { text: 'Noticias y Eventos', route: '/news' },
-          { text: 'Contactos', route: '/#contacts' }, // route: '/clients' },
+          { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
         ],
         baseUrl: process.env.BASE_URL,
         tab: null,
