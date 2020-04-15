@@ -59,23 +59,27 @@ const actions = {
         commit('SET_TOKEN', '')
         commit('SET_AUTH_ERROR', null)
 
-        axios.post('/auth/login', {
-            username: payload.username,
-            password: payload.password,
-        },
-        {
-            headers: { 'Content-Type': 'application/json',
-                        'Accept': 'application/json' },
-        })
-        .then(res => {
-            if (res.status < 500) {
-                commit('SET_TOKEN', { token: res.data.token })
-                localStorage.setItem('token', res.data.token)
+        try {
+            const res = await axios.post('/auth/login', {
+                    username: payload.username,
+                    password: payload.password,
+                },
+                {
+                    headers: { 'Content-Type': 'application/json',
+                                'Accept': 'application/json' },
+                })
+            console.log(res, 'RES')
+            if (res.status === 202) {
+                commit('SET_TOKEN', res.data.token)
                 commit('SET_USER', res.data.user)
             }
-        }).catch(e => {
+            else {
+                commit('SET_AUTH_ERROR', 'Invalid credentials')
+            }
+        }
+        catch(e) {
             commit('SET_AUTH_ERROR', 'Invalid credentials')
-        })
+        }
     },
     signOut: async ({ commit }) => {
         commit('SET_USER', null)

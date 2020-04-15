@@ -86,7 +86,7 @@
       user (value) {
         // if user value changes, redirect to home page
         if (value) {
-          this.$router.push('/dashboard')
+          this.$router.push('/')
         }
       },
     },
@@ -99,9 +99,6 @@
           username: this.unique,
           password: this.password,
         })
-      },
-      setLayout (layout) {
-        this.$store.commit('SET_LAYOUT', layout)
       },
     },
   }
