@@ -12,7 +12,7 @@
 
     <!-- CONTACTOS -->  
     <div id="contacts">  
-    <contact margin_style="margin-bottom: 1%;"/>
+      <contact margin_style="margin-bottom: 2%;" />
     </div>
     </v-container>
 </template>

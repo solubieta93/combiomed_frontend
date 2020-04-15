@@ -90,9 +90,6 @@
         }
       },
     },
-    mounted () {
-      this.setLayout('simple-layout')
-    },
     methods: {
       login: async function () {
         await this.$store.dispatch('signinUser', {

@@ -38,59 +38,69 @@
             </v-col>
 
             <div id="contacts"> 
-                <v-row justify="center">
+                <v-row justify="center" v-if="contactsItem.length">
                     <v-col 
                         md="6"
                         sm="12"
-                        lg="4"
+                        lg="3"
                         xl="4"
                         xs="12"
+                        v-for="(item, i) in contactsItem"
+                        :key="i"
                     >
                     <div class="contactos">
-                        <img src="../../../public/CONTACTOS/raider (4)a.png" alt="" width="250" height="260" id="p1">
-                        <h4>Ing. Raider Figueras Texidor </h4>
-                        <h4>JEFE DE AUTOMÁTICA</h4>
-                        <h5><i class="fi-mail large"></i>  raider@icid.cu</h5>
+                        <img :src="item.image" alt="" width="250" height="260" id="p1">
+                        <h4>{{item.name}}</h4>
+                        <h4 class="text-uppercase">{{item.role}}</h4>
+                        <h5><i class="fi-mail large"></i> {{item.mail}}</h5>
                     </div>
-                    </v-col>  
-                    <v-col 
-                        md="6"
-                        sm="12"
-                        lg="4"
-                        xl="4"
-                        xs="12"
-                        justify="center"
-                    >
-                        <div class="contactos">
-                            <img src="../../../public/CONTACTOS/norka (11).png" alt="" width="250" height="260" id="p2">
-                            <h4>Ing. Norka Gonzáles </h4>
-                            <h4>DIRECTORA COMERCIAL</h4>
-                            <h5><i class="fi-mail large"></i>  nglopez@icid.cu</h5>
-                        </div>
                     </v-col>
-                    <v-col 
-                        md="12"
-                        sm="12"
-                        lg="4"
-                        xl="4"
-                        xs="12"
-                        justify="center"
-                    >
-                        <div class="contactos">
-                            <img src="../../../public/CONTACTOS/abdel (2).png" alt="" width="280" height="260" id="p3">
-                            <h4>Ing. Abdel Rodriguez Hernández </h4>
-                            <h4>JEFE DE SERVICIO TÉCNICO</h4>
-                            <h5><i class="fi-mail large"></i>  arodriguez@icid.cu</h5>
-                        </div>
-                    </v-col>
+                </v-row>
+                <v-row v-else justify="center">
+                    <p> No hay contactos que mostrar </p>
                 </v-row>
             </div>
         </div>
+
+        <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
+        <v-dialog
+        v-model="addContact"
+        max-width="600px"
+        >
+        <contact-add-item
+            :contact="newContact"
+            :mode="'creating'"
+            :onSave="() => { addContact = false; paginate()}"
+        />
+        </v-dialog>
+        
+        <v-card-text
+        v-if="isAdmin"
+        style="height: 100px; position: relative"
+        >
+        <v-btn
+            absolute
+            dark
+            fab
+            right
+            small
+            color="pink"
+            @click="showAddContactDialog"
+        >
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        </v-card-text>
+        
     </v-container>
 </template>
 
 <script>
+import ContactAddItem from '@/components/utils/ContactAddItem'
+import { mapGetters } from 'vuex'
 export default {
+    components: {
+        ContactAddItem
+    },
     props: {
         margin_style:{
             type: String,
@@ -100,10 +110,35 @@ export default {
     data () {
       return {
             style_d:"height: 50px;",
-	        show:false
+            show:false,
+            contactsItem: [],
+            addContact: false,
+            newContact: null,
       }
     }, 
+    computed: {
+      ...mapGetters(['user']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
+    },
+    async created () {
+      this.paginate()
+    },
     methods:{
+        async paginate () {
+            this.contactsItem = []
+            await this.$store.dispatch('getContacts').then(res => {
+                console.log(res, 'result contacts')
+                this.contactsItem = res
+                console.log(this.contactsItem, 'contacts')
+            })
+            
+        },
+        async showAddContactDialog () {
+        this.newContact = await this.$store.dispatch('getNewContact')
+        this.addContact = true
+        },
         my:function(){
             var button = document.getElementById("contacts");
             if(this.show==false){
