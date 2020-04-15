@@ -1,5 +1,19 @@
 import axios from '@/utils/axios-auth'
-import {apiURI} from "../../utils/globalConstants";
+import { apiURI } from '@/utils/globalConstants'
+
+const unzipProduct = x => ({
+    ...x,
+    image: x.image ? apiURI + x.image : null,
+    files: x.files
+      ? x.files.map(y => ({
+          ...y,
+          src: apiURI + y.src,
+      }))
+      : [],
+    details: x.details && x.details.details
+      ? x.details.details
+      : [],
+})
 
 const state = {
     product: [],
@@ -44,37 +58,48 @@ const mutations = {
     SET_ADD_PRODUCT: (state, payload) => {
         state.product.push(payload)
     },
+    SET_ADD_PRODUCT_TYPE: (state, payload) => {
+        state.productsTypes.push(payload)
+    },
 }
 
 const actions = {
-    getCurrentProduct: async ({ commit }, payload) => {
-        console.log('getcurrenProduct')
-        commit('SET_PRODUCT', [])
-        commit('SET_PRODUCT_ERROR', null)
-
-        axios.get('/api/products', {
-            id: payload.id,
-        },
-        {
-            headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
-        })
-        .then(res => {
-            commit('SET_PRODUCT', res.data.results)
-        })
-        .catch(error => {
-            commit('SET_PRODUCT_ERROR', error.message)
-            console.log(error.message)
-        })
+    getProduct: async ({ commit }, id) => {
+        try {
+            const res = await axios.get(`/api/products/${id}/`)
+            if (res.status === 200) {
+                return {
+                    success: true,
+                    message: 'ok',
+                    product: unzipProduct(res.data),
+                    notFound: false,
+                }
+            }
+            return {
+                success: false,
+                message: res.data[Object.keys(res.data)[0]],
+                product: null,
+                notFound: res.status === 404,
+            }
+        } catch (error) {
+            const split = error.message.toString().split('status code ')
+            const notFound = split.length > 1 && split[1].substr(0, 3) === '404'
+            return {
+                success: false,
+                message: error,
+                product: null,
+                notFound,
+            }
+        }
     },
     getProducts: async ({ commit }, params) => {
       try {
         const result = await axios.get('/api/products/', { params })
         if (result.status === 200) {
-          console.log(result.data, 'getProducts action')
           return {
               success: true,
               message: 'ok',
-              products: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
+              products: result.data.results.map(unzipProduct),
               count: result.data.count,
           }
         } else {
@@ -109,8 +134,7 @@ const actions = {
     postProduct: async ({ commit }, payload) => {
         try {
             const res = await axios.post('/api/products/', {
-                name: payload.name,
-                description: payload.description,
+                ...payload,
             },
             {
                 headers: {
@@ -119,7 +143,49 @@ const actions = {
                     'Accept': 'application/json',
                 },
             })
-            commit('SET_ADD_PRODUCT', res.data)
+            // commit('SET_ADD_PRODUCT', res.data)
+            return {
+                success: true,
+                message: 'ok',
+                id: res.data.id,
+            }
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+                return {
+                    success: false,
+                    message: `Error: ${error.request}`,
+                }
+            } else {
+                console.log(error.message)
+                return {
+                    success: false,
+                    message: `Error: ${error.error.message}`,
+                }
+            }
+        }
+    },
+    postTypeProduct: async ({ commit }, payload) => {
+        try {
+            const res = await axios.post('/api/types/products/', {
+                title: payload.title,
+                description: payload.description,
+                image: payload.image
+            },
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            commit('SET_ADD_PRODUCT_TYPE', res.data)
             return {
                 success: true,
                 message: 'ok',
@@ -140,29 +206,21 @@ const actions = {
     },
     patchProduct: async ({ commit }, payload) => {
         try {
-            await axios.patch('/api/products/' + payload.id + '/', {
-                description: payload.description,
-                name: payload.name,
-            },
+            const res = await axios.patch('/api/products/' + payload.id + '/', { ...payload.changes },
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            commit('PATCH_PRODUCT', payload)
+            console.log(res, 'result patch')
             return {
                 success: true,
                 message: 'ok',
+                id: res.data.id,
             }
         } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
+            console.log(error)
+            return {
+                success: false,
+                message: `Error: ${error}`,
             }
         }
     },
@@ -204,6 +262,16 @@ const actions = {
         return Object({
             name: '',
             description: '',
+            details: [],
+            files: [],
+            image: null,
+            typeId: null,
+        })
+    },
+    getNewLineProduct: () => {
+        return Object({
+            title: '',
+            description: '',
         })
     },
     getProductsTypes: async ({ commit }, params) => {
@@ -215,7 +283,7 @@ const actions = {
           return {
               success: true,
               message: 'ok',
-              types: result.data.results,
+              types: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
               count: result.data.count,
           }
         } else {

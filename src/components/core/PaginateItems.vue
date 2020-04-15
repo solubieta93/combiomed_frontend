@@ -167,7 +167,6 @@
       },
       async updateItems () {
         this.loading = true
-        console.log('update items')
         const offset = (this.page - 1) * this.limit
         const { items, count } = await this.filterItems(this.text, offset, this.limit)
         this.items = items

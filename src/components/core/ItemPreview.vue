@@ -6,6 +6,7 @@
     <v-card
       :elevation="hover ? 10 : 2"
       height="350"
+      max-height="350"
       max-width="100%"
       min-width="250"
       class="mx-auto"
@@ -13,8 +14,7 @@
     >
       <v-img
         :src="item.image ? item.image : `${baseUrl}ampa- (1).png`"
-        min-height="350"
-        class="mx-auto"
+        class="fill-height"
         :aspect-ratio="16/9"
       >
         <v-expand-transition>
@@ -59,13 +59,6 @@
     name: 'ItemPreview',
     props: {
       item: {
-        // type: {
-        //   id: Number | String,
-        //   image: String,
-        //   title: String,
-        //   description: String,
-        //   owner: Object,
-        // },
         type: Object,
         required: true,
       },

@@ -56,10 +56,10 @@
       v-model="addPost"
       max-width="600px"
     >
-      <add-post
+      <post-add-item
         :post="newPost"
         :mode="'creating'"
-        :onSave="() => { addPost = false; paginate() }"
+        :onSave="() => { addPost = false; paginate()}"
       />
     </v-dialog>
     
@@ -85,14 +85,14 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
-  import AddPost from '@/components/newsAndevents/AddPost'
+  import PostAddItem from '@/components/newsAndevents/PostAddItem'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       PrincipalNewsAndEvents,
-      AddPost,
+      PostAddItem,
     },
     data () {
       return {
@@ -132,7 +132,6 @@
       },
       async showAddNewsDialog () {
         this.newPost = await this.$store.dispatch('getNewPost')
-        console.log(this.newPost, 'new post')
         this.addPost = true
       },
       async submit () {

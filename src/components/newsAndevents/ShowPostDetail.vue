@@ -78,12 +78,6 @@
       },
 
     },
-      watch: {
-        post (value) {
-            if (value)
-                console.log('hay un post')
-        }
-      },
     data () {
       return {
         baseUrl: process.env.BASE_URL,

@@ -63,14 +63,36 @@
         </v-col>
       </v-row>
     </paginate-items>
+
+    <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
+    <v-card-text
+      v-if="isAdmin"
+      style="height: 100px; position: relative"
+    >
+      <v-btn
+        absolute
+        dark
+        fab
+        right
+        small
+        color="red"
+        to="/products/new"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-card-text>
   </v-container>
 </template>
 
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
+  import ProductAddLine from '@/components/product/ProductAddLine'
+  import { mapGetters } from 'vuex'
+
   export default {
     components: {
       PaginateItems,
+      ProductAddLine,
     },
     data () {
       return {
@@ -85,9 +107,15 @@
         refresh: false,
         selectedType: undefined,
         hasCreated: false,
+        addProduct: false,
+        newProduct: [],
       }
     },
     computed: {
+      ...mapGetters(['user']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
       selectProductsTypes () {
         return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
       },
@@ -112,7 +140,6 @@
           this.loading = false
         })
         .catch(e => {
-          console.log(e)
           this.loading = false
         })
     },
@@ -125,6 +152,7 @@
             description: product.description,
             image: product.image,
             owner: product.owner,
+            files: product.files,
           },
           pathTo: `/products/${product.id}`,
         }
@@ -161,7 +189,6 @@
           this.loading = false
           return result.types
         }).catch(e => {
-          console.log(e, 'error getTypes')
           this.loading = false
           return []
         })
@@ -169,6 +196,10 @@
       onUpdateSelected () {
         this.typeId = this.selectedType ? typeof (this.selectedType) === 'object' ? this.selectedType.value : this.selectedType : null
         this.refresh = true
+      },
+      async showAddLineProductDialog () {
+        this.newProduct = await this.$store.dispatch('getNewLineProduct')
+        this.addProduct = true
       },
     },
   }
