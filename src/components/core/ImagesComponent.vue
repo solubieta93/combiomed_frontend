@@ -37,13 +37,9 @@
         type: Boolean,
         default: true,
       },
-      height: {
-        type: Number,
-        default: 300,
-      },
-      width: {
-        type: Number,
-        default: 300,
+      styleComponent: {
+        type: String,
+        default: null,
       },
     },
     data () {

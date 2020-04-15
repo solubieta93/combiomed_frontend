@@ -134,8 +134,7 @@ const actions = {
     postProduct: async ({ commit }, payload) => {
         try {
             const res = await axios.post('/api/products/', {
-                name: payload.name,
-                description: payload.description,
+                ...payload,
             },
             {
                 headers: {
@@ -144,10 +143,11 @@ const actions = {
                     'Accept': 'application/json',
                 },
             })
-            commit('SET_ADD_PRODUCT', res.data)
+            // commit('SET_ADD_PRODUCT', res.data)
             return {
                 success: true,
                 message: 'ok',
+                id: res.data.id,
             }
         } catch (error) {
             if (error.response) {
@@ -158,8 +158,16 @@ const actions = {
                 }
             } else if (error.request) {
                 console.log('error request', error.request)
+                return {
+                    success: false,
+                    message: `Error: ${error.request}`,
+                }
             } else {
                 console.log(error.message)
+                return {
+                    success: false,
+                    message: `Error: ${error.error.message}`,
+                }
             }
         }
     },
@@ -198,29 +206,21 @@ const actions = {
     },
     patchProduct: async ({ commit }, payload) => {
         try {
-            await axios.patch('/api/products/' + payload.id + '/', {
-                description: payload.description,
-                name: payload.name,
-            },
+            const res = await axios.patch('/api/products/' + payload.id + '/', { ...payload.changes },
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            commit('PATCH_PRODUCT', payload)
+            console.log(res, 'result patch')
             return {
                 success: true,
                 message: 'ok',
+                id: res.data.id,
             }
         } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
+            console.log(error)
+            return {
+                success: false,
+                message: `Error: ${error}`,
             }
         }
     },
@@ -262,6 +262,10 @@ const actions = {
         return Object({
             name: '',
             description: '',
+            details: [],
+            files: [],
+            image: null,
+            typeId: null,
         })
     },
     getNewLineProduct: () => {

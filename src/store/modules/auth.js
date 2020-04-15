@@ -49,8 +49,15 @@ const actions = {
                 }
             } else if (error.request) {
                 console.log('error request', error.request)
+                return {
+                    success: false,
+                    message: `Error: ${error}`,
+                }
             } else {
-                console.log(error.message)
+                return {
+                    success: false,
+                    message: `Error: ${error}`,
+                }
             }
         }
     },

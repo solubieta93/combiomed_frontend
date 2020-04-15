@@ -46,7 +46,27 @@
         {{ error }}
       </v-alert>
     </v-row>
-
+    <v-row
+      v-if="!loading && product && isAdmin"
+      justify="center"
+    >
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
+          fab
+          dark
+          large
+          right
+          color="green"
+          @click="goToEdit"
+        >
+          <v-icon dark>
+            mdi-pencil
+          </v-icon>
+        </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
     <v-col
       v-if="!loading && product"
     >
@@ -68,7 +88,7 @@
         <v-col md="8">
           <v-img
             class="io"
-            :src="product.image ? product.image : `${baseUrl}ampa- (1).png`"
+            :src="product.image || `${baseUrl}ampa- (1).png`"
             style="min-height:350px; max-height: 500px; border: red 2px solid; border-radius: 0;"
           />
         </v-col>
@@ -87,7 +107,9 @@
         <li
           v-for="(value, index) in item.items"
           :key="index"
-        >{{value}}</li>
+        >
+          {{ value }}
+        </li>
       </v-col>
     </v-row>
   </v-container>
@@ -95,6 +117,7 @@
 
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -103,9 +126,6 @@
     data () {
       return {
         baseUrl: process.env.BASE_URL,
-        // absolute: true,
-        // opacity: 0.46,
-        // overlay: true,
         loading: false,
         product: null,
         error: null,
@@ -114,6 +134,13 @@
     },
     created () {
       this.getProduct()
+    },
+    // eslint-disable-next-line vue/order-in-components
+    computed: {
+      ...mapGetters(['user']),
+      isAdmin () {
+        return this.user && this.user.is_superuser
+      },
     },
     methods: {
       getProduct: function () {
@@ -138,6 +165,9 @@
           }).finally(() => {
             this.loading = false
           })
+      },
+      goToEdit () {
+        this.$router.push(`/products/${this.$route.params.productId}/edit`)
       },
     },
 
