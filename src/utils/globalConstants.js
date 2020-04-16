@@ -1,4 +1,4 @@
-export const apiURI = process.env.NODE_ENV === 'production' ? 'https://apinest.anandaspa.us' : 'http://localhost:8000'
+export const apiURI = process.env.NODE_ENV === 'production' ? 'https://api-combiomed.herokuapp.com' : 'https://api-combiomed.herokuapp.com'
 export const apiGqlEndpoint = apiURI + 'graphql'
 export const api = {
     uri: apiURI,
