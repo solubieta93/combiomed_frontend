@@ -10,3 +10,4 @@ export const api = {
         },
     },
 }
+export const apiKeyFileStack = 'AvM4GawwuTFeUBzWR3yX9z'

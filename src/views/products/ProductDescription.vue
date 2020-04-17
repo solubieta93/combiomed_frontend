@@ -53,17 +53,17 @@
       <v-col cols="8">
         <v-row justify="end">
           <v-btn
-          fab
-          dark
-          large
-          right
-          color="green"
-          @click="goToEdit"
-        >
-          <v-icon dark>
-            mdi-pencil
-          </v-icon>
-        </v-btn>
+            fab
+            dark
+            large
+            right
+            color="green"
+            @click="goToEdit"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -87,9 +87,9 @@
       <v-row justify="center">
         <v-col md="8">
           <v-img
-            class="io"
             :src="product.image || `${baseUrl}ampa- (1).png`"
-            style="min-height:350px; max-height: 500px; border: red 2px solid; border-radius: 0;"
+            style="min-height:350px; max-height: 500px;"
+            :contain="true"
           />
         </v-col>
       </v-row>
@@ -173,53 +173,3 @@
 
   }
 </script>
-
-<style scoped>
-io{
-
-       background-color: transparent;
-
-       background-repeat: repeat-x;
-       background-attachment: scroll;
-       background-position: 0px 92%;
-       background-clip: border-box;
-       background-origin: padding-box;
-       background-size: auto auto;
-}
-div {
-    position: relative;
-}
-
-div img{
-	width:100%;
-	height:100%;
-}
-
-.dd {
-	margin:auto;
-	width:60%;
-}
-
-.grid{
-	display:grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-gap: 24px;
-	grid-auto-rows:160px;
-}
-
-.grid div{
-	overflow:hidden;
-}
-.item-2{
-	grid-row: 1/3;
-	grid-column: 3/3;
-	height: 100%;
-}
-
-.item-9{
-
-	grid-column: 2/4;
-	height: 100%;
-}
-
-</style>

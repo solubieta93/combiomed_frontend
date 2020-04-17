@@ -81,8 +81,8 @@
           </v-btn>
           <v-text-field
             v-model="item.text"
-            solo-inverted
-            class="display-1 text-uppercase pt-0 mt-0"
+            solo
+            class="headline text-uppercase pt-0 mt-0"
           />
         </v-row>
         <v-row
