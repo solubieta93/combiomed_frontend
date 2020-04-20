@@ -54,7 +54,7 @@ const actions = {
         await axios.get(`/blog/blog`, { params })
         .then(res => {
             if (res.data.success) {
-                const posts = res.data.data.posts.map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
+                const posts = res.data.data.posts // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
                 commit('SET_TWOPOSTS', posts)
                 return posts
             } else {
@@ -71,9 +71,9 @@ const actions = {
             const res = await axios.get(`/blog`, { params })
             if (res.status === 200) {
                 await commit('SET_COUNT_POST', res.data.count)
-                await commit('SET_BLOG', res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
+                await commit('SET_BLOG', res.data.results)
                 return {
-                    posts: res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    posts: res.data.results,
                     count: res.data.count,
                 }
             } else {
@@ -96,9 +96,9 @@ const actions = {
             const res = await axios.get(`/blog/blog`, { params })
             if (res.status === 200) {
                 await commit('SET_COUNT_POST', res.data.data.count)
-                await commit('SET_BLOG', res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
+                await commit('SET_BLOG', res.data.data.results) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
-                    posts: res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    posts: res.data.data.results, // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
                     count: res.data.data.count,
                 }
             } else {
@@ -133,7 +133,7 @@ const actions = {
             if (res.status === 200) {
                 await commit('SET_POST', {
                     ...res.data,
-                    image: res.data.image ? apiURI + res.data.image : null,
+                    // image: res.data.image ? apiURI + res.data.image : null,
                 })
                 return true
             }
