@@ -3,7 +3,7 @@ import { apiURI } from '@/utils/globalConstants'
 
 const unzipProduct = x => ({
     ...x,
-    image: x.image ? apiURI + x.image : null,
+    // image: x.image ? apiURI + x.image : null,
     files: x.files
       ? x.files.map(y => ({
           ...y,
@@ -176,7 +176,7 @@ const actions = {
             const res = await axios.post('/api/types/products/', {
                 title: payload.title,
                 description: payload.description,
-                image: payload.image
+                image: payload.image,
             },
             {
                 headers: {
@@ -283,7 +283,7 @@ const actions = {
           return {
               success: true,
               message: 'ok',
-              types: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
+              types: result.data.results, // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
               count: result.data.count,
           }
         } else {

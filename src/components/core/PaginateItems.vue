@@ -26,18 +26,19 @@
           >
             <v-text-field
               v-if="showLimit"
-              v-model="limit"
+              :value="limit"
               :readonly="!canChangeLimit"
               class="mx-auto"
               type="number"
               :min="Math.min(count, 1)"
-              :max="count"
+              :max="10"
               :disabled="!count"
               style="width: 120px; max-width: 120px"
               :hint="`Total: ${count}`"
               persistent-hint
               label="Cantidad por paginas"
               :rules="[x => (Number.isInteger(x))]"
+              @input="v => changeLimit(v)"
             />
           </v-row>
         </v-col>
@@ -139,16 +140,16 @@
       },
     },
     watch: {
-      async limit (value) {
-        this.limit = Number.parseInt(value) || Math.min(1, this.count)
-        this.page = 1
-        await this.updateItems()
-      },
-      async defaultLimit (value) {
-        this.limit = Number.parseInt(value) || Math.min(1, this.count)
-        this.page = 1
-        await this.updateItems()
-      },
+      // async limit (value) {
+      //   this.limit = Number.parseInt(value) || Math.min(1, this.count)
+      //   this.page = 1
+      //   await this.updateItems()
+      // },
+      // async defaultLimit (value) {
+      //   this.limit = Number.parseInt(value) || Math.min(1, this.count)
+      //   this.page = 1
+      //   await this.updateItems()
+      // },
       async refresh (value) {
         if (value) {
           this.page = 1
@@ -172,6 +173,15 @@
         this.items = items
         this.count = count
         this.loading = false
+      },
+      async changeLimit (value) {
+        const parsed = Number.parseInt(value)
+        console.log(parsed, 'parsed')
+        if (!parsed) return
+        console.log(parsed, 'parsed')
+        this.limit = parsed || Math.min(1, this.count)
+        this.page = 1
+        await this.updateItems()
       },
     },
   }

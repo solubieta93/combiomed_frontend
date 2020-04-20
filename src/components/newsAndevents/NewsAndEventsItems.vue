@@ -1,84 +1,24 @@
 <template>
   <div class="mycontainer">
-    <v-row
-      justify="center"
-      align="center"
-    >
-      <v-row
-        justify="center"
-        align="center"
-        style="max-width: 50vw"
-      >
-        <v-col class="mr-0">
-          <query-search
-            :loading="loading"
-            @search:text="appliedSearch"
-            :onKeyUp="true"
-          ></query-search>
-        </v-col>
-        <v-col>
-          <v-row
-            justify="start"
-            align="start"
-            class="ml-0"
-          >
-            <v-text-field
-              v-model="limit"
-              class="mx-auto"
-              type="number"
-              :min="0"
-              :max="count_post"
-              :disabled="!count_post"
-              label="Cantidad"
-              style="width: 50px; max-width: 50px"
-            />
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-row>
-    
-    <v-row
-      align="center"
-      justify="center"
-    >
-      <v-col class="px-6">
-        <v-divider />
-      </v-col>
-    </v-row>
-
-    <v-row
-      justify="center"
-      align="center"
-    >
-      <v-row
-        justify="center"
-        align="center"
-        style="max-width: 80vw"
-      >
-        <v-col
-          v-for="(item, i) in newsItems"
-          :key="i"
-        >
-          <item-preview
-            :item="item.item"
-            :pathTo="item.pathTo"
-          ></item-preview>
-        </v-col>
-      </v-row>
-    </v-row>
-
+    <paginate-items
+      show-limit
+      show-search-text
+      :filter-items="filterNews"
+      show-divider
+      :default-limit="limit"
+      :refresh="refresh"
+      :update-on-change-text="false"
+      can-change-limit
+    />
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import ItemPreview from '@/components/core/ItemPreview'
-  import QuerySearch from '@/components/core/QuerySearch'
+  import PaginateItems from '../core/PaginateItems'
 
   export default {
     components: {
-      ItemPreview,
-      QuerySearch,
+      PaginateItems,
     },
     props: {
       limit: {
@@ -100,70 +40,37 @@
     },
     data () {
       return {
-        page: 1,
-        items: [
-          // 275px
-          { class: 'item-0', style: 'height:141px; left: 0px; top: 67%;' },
-          { class: 'item-1', style: 'height:141px; left: 0px; top: 40%;' },
-          { class: 'item-2', style: 'height:141px; left: 0px; top: 40%;' },
-        ],
         posts: [],
         count_post: 0,
         baseUrl: process.env.BASE_URL,
         loading: false,
         text: '',
+        refresh: false,
+        firstStep: true,
       }
     },
-    computed: {
-      ...mapGetters(['user']),
-      isAdmin: function () {
-        return this.user && this.user.is_superuser
-      },
-      pagination_length () {
-        if (!this.count_post) return 0
-        const count = this.count_post - this.start
-        return Number.parseInt(count % this.limit > 0 ? (count / this.limit) + 1 : count / this.limit)
-      },
-      postId () {
-        return this.post_id
-      },
-      newsItems () {
-        return this.posts.map(x => this.buildItem(x))
-      },
-    },
-    watch: {
-      async page (value) {
-        if (value) {
-          await this.filterNews()
-        }
-      },
-      async postId (value) {
-        if (value) {
-          await this.filterNews()
-        }
-      },
-    },
     mounted: async function () {
-      await this.filterNews()
+      this.firstStep = true
+      this.refresh = true
     },
     methods: {
-      async appliedSearch (text) {
-        this.page = 1
-        this.text = text
-        this.start = 0
-        await this.filterNews()
-      },
-      async filterNews () {
+      async filterNews (search, offset, limit) {
         this.loading = true
+        this.refresh = false
         const result = await this.$store.dispatch('getPaginateBlog', {
-          offset: this.start + (this.page - 1) * this.limit,
-          limit: this.limit,
-          search: this.text,
+          offset: !search ? offset + 4 : offset,
+          limit,
+          search,
         })
         const { posts, count } = result
         this.posts = posts
         this.count_post = count
         this.loading = false
+        this.firstStep = false
+        return {
+          items: posts.map(x => this.buildItem(x)),
+          count: !search ? count - 4 : count,
+        }
       },
       buildItem (news) {
         return {
@@ -172,7 +79,6 @@
             title: news.title,
             description: news.abstract,
             image: news.image,
-            owner: news.owner,
           },
           pathTo: `/news/${news.id}`,
         }
