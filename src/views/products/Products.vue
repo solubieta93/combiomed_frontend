@@ -1,6 +1,5 @@
 <template>
   <v-container
-    v-if="productsTypes && productsTypes.length"
     class="pa-0 ma-0 align-center justify-center"
     fluid
     style="background-color: white"
@@ -14,7 +13,44 @@
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="top:-46px"
     />
+    <v-row
+      justify="center"
+      align="center"
+    >
+      <v-col
+        sm="8"
+        md="8"
+        lg="8"
+        cols="10"
+      >
+        <v-row
+          justify="center"
+          align="center"
+          style="height: 50px; color: grey;"
+        >
+          <v-col>
+            <hr>
+          </v-col>
+          <v-col
+            md="3"
+          >
+<!--            <hr>-->
+            <h3
+              class="text-uppercase text-center"
+            >
+              Productos
+<!--              <br>-->
+            </h3>
+          </v-col>
+          <v-col>
+            <hr>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+
     <paginate-items
+      v-if="productsTypes && productsTypes.length"
       :can-change-limit="true"
       :default-limit="limit"
       :filter-items="filterItems"
@@ -65,17 +101,6 @@
     </paginate-items>
 
     <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addProduct"
-      max-width="600px"
-    >
-      <product-add-line
-        :line="newProduct"
-        :mode="'creating'"
-        :onSave="() => { addProduct = false; paginate() }"
-      />
-    </v-dialog>
-    
     <v-card-text
       v-if="isAdmin"
       style="height: 100px; position: relative"
@@ -86,8 +111,8 @@
         fab
         right
         small
-        color="pink"
-        @click="showAddProductDialog"
+        color="red"
+        to="/products/new"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -97,13 +122,11 @@
 
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
-  import ProductAddLine from '@/components/product/ProductAddLine'
   import { mapGetters } from 'vuex'
-  
+
   export default {
     components: {
       PaginateItems,
-      ProductAddLine,
     },
     data () {
       return {
@@ -163,7 +186,7 @@
             description: product.description,
             image: product.image,
             owner: product.owner,
-            files: product.files
+            files: product.files,
           },
           pathTo: `/products/${product.id}`,
         }

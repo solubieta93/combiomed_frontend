@@ -172,27 +172,27 @@
           })
         } else {
           const actionToDo = this.mode === 'editing' ? 'patchPost' : 'postPost'
-          
+
           this.$store.dispatch(actionToDo, {
-              title: this.post.title,
-              abstract: this.post.abstract,
-              context: this.post.context,
-              news: this.post.news,
-              id: this.post.id
-            })
-            .then(res => {
-            if (!res.success) {
-              this.saveError = res.detail
-              this.loading = false
-            } else {
-              this.mode = 'show'
-              this.loading = false
-              if (this.onSave) this.onSave()
-            }
-          }).catch(e => {
-            this.saveError = e.message
-            this.loading = false
+            title: this.post.title,
+            abstract: this.post.abstract,
+            context: this.post.context,
+            news: this.post.news,
+            id: this.post.id,
           })
+            .then(res => {
+              if (!res.success) {
+                this.saveError = res.detail
+                this.loading = false
+              } else {
+                this.mode = 'show'
+                this.loading = false
+                if (this.onSave) this.onSave()
+              }
+            }).catch(e => {
+              this.saveError = e.message
+              this.loading = false
+            })
         }
       },
     },

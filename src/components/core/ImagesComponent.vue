@@ -21,6 +21,7 @@
       style="height: 100%; width: 100%"
       :src="image"
       aspect-ratio="1"
+      :contain="true"
     />
   </div>
 </template>

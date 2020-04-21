@@ -35,8 +35,8 @@
         </v-col>
       </v-row>
     </v-col>
-  
-    <principal-news-and-events/>
+
+    <principal-news-and-events />
 
     <div>
       <img
@@ -48,7 +48,7 @@
 
     <news-and-events-items
       :start="4"
-      :limit="10"
+      :limit="3"
     />
 
     <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
@@ -59,10 +59,10 @@
       <post-add-item
         :post="newPost"
         :mode="'creating'"
-        :onSave="() => { addPost = false; paginate()}"
+        :on-save="() => { addPost = false; paginate()}"
       />
     </v-dialog>
-    
+
     <v-card-text
       v-if="isAdmin"
       style="height: 100px; position: relative"
@@ -116,20 +116,7 @@
         return this.user && this.user.is_superuser
       },
     },
-    mounted: async function () {
-      await this.paginate()
-    },
     methods: {
-      async paginate (text = '') {
-        this.loading = true
-        const { posts } = await this.$store.dispatch('getPaginateBlog', {
-          offset: 0,
-          limit: 4,
-          search: text,
-        })
-        this.postFixed = posts
-        this.loading = false
-      },
       async showAddNewsDialog () {
         this.newPost = await this.$store.dispatch('getNewPost')
         this.addPost = true

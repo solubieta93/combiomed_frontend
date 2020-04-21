@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import axios from '../../utils/axios-auth'
-import {apiURI} from "../../utils/globalConstants";
+import { apiURI } from '../../utils/globalConstants'
 
 const state = {
     blog: [],
@@ -51,10 +51,10 @@ const mutations = {
 const actions = {
     getTwoPosts: async ({ commit }, params) => {
         commit('SET_TWOPOSTS', [])
-        await axios.get(`/blog/blog`,{params})
+        await axios.get(`/blog/blog`, { params })
         .then(res => {
             if (res.data.success) {
-                const posts = res.data.data.posts.map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
+                const posts = res.data.data.posts // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
                 commit('SET_TWOPOSTS', posts)
                 return posts
             } else {
@@ -71,9 +71,9 @@ const actions = {
             const res = await axios.get(`/blog`, { params })
             if (res.status === 200) {
                 await commit('SET_COUNT_POST', res.data.count)
-                await commit('SET_BLOG', res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
+                await commit('SET_BLOG', res.data.results)
                 return {
-                    posts: res.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    posts: res.data.results,
                     count: res.data.count,
                 }
             } else {
@@ -93,23 +93,22 @@ const actions = {
     getPaginateBlogDistinct: async ({ commit }, params) => {
         try {
             await commit('SET_BLOG', [])
-            const res = await axios.get(`/blog/blog`, {params})
+            const res = await axios.get(`/blog/blog`, { params })
             if (res.status === 200) {
                 await commit('SET_COUNT_POST', res.data.data.count)
-                await commit('SET_BLOG', res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
+                await commit('SET_BLOG', res.data.data.results) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
-                    posts: res.data.data.results.map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    posts: res.data.data.results, // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
                     count: res.data.data.count,
                 }
-            }else {
+            } else {
                 await commit('SET_PRODUCT_ERROR', res.data.message)
                 return {
                     posts: [],
                     count: 0,
                 }
             }
-        }
-        catch (e) {
+        } catch (e) {
             return {
                 posts: [],
                 count: 0,
@@ -127,14 +126,14 @@ const actions = {
             commit('SET_PRODUCT_ERROR', error.message)
         })
     },
-    getPost: async ({commit}, id) => {
+    getPost: async ({ commit }, id) => {
         try {
             commit('SET_POST', [])
             const res = await axios.get(`/blog/${id}`)
-            if(res.status === 200) {
+            if (res.status === 200) {
                 await commit('SET_POST', {
                     ...res.data,
-                    image: res.data.image ? apiURI + res.data.image : null,
+                    // image: res.data.image ? apiURI + res.data.image : null,
                 })
                 return true
             }
@@ -180,39 +179,9 @@ const actions = {
             }
         }
     },
-    put_img: async ({ commit }, payload) => {
-        try {
-            const res = await axios.post('/blog/put_img', {
-                image: payload.image,
-            },
-            {
-                headers: {
-                    'Authorization': 'Token ' + localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-            })
-            return {
-                success: true,
-                message: 'ok',
-            }
-        } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
-            }
-        }
-    },
     patchPost: async ({ commit }, payload) => {
         try {
-            const res= await axios.patch('blog/' + payload.id, {
+            const res = await axios.patch('blog/' + payload.id, {
                 title: payload.title,
                 abstract: payload.abstract,
                 context: payload.context,
@@ -230,7 +199,6 @@ const actions = {
                 success: true,
                 message: 'ok',
             }
-
         } catch (error) {
             if (error.response) {
                 const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
@@ -286,7 +254,7 @@ const actions = {
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            if(res.status === 200) {
+            if (res.status === 200) {
                 await commit('DEL_POST', id)
                 return {
                     success: true,

@@ -62,7 +62,7 @@
             :align-with-title="false"
             background-color="transparent"
             color="white"
-            :hide-slider="this.$route.path === '/' || this.$route.path === '/login'"
+            :hide-slider="hideSlider"
             centered
             show-arrows
             class="white--text"
@@ -70,7 +70,7 @@
             <v-tabs-slider
               v-model="slider"
               color="#8b0000"
-            ></v-tabs-slider>
+            />
             <v-item
               v-for="(link, i) in links"
               :key="link.text"
@@ -96,8 +96,8 @@
                     background-color="transparent"
                     class="white--text fill-height"
                     color="white"
-                    v-on="on"
                     :style="link.style"
+                    v-on="on"
                   >
                     {{ link.text }}
                     <v-icon right>
@@ -106,19 +106,19 @@
                   </v-tab>
                 </template>
 
-                <v-tabs 
+                <v-tabs
                   vertical
                   class="semitransparent white--text"
                 >
                   <v-tabs-slider
                     v-model="slider"
                     color="#8b0000"
-                  ></v-tabs-slider>
+                  />
                   <v-tab
-                    class="semitransparent white--text"
-                    style="min-width: 150px"
                     v-for="item in link.items"
                     :key="item.text"
+                    class="semitransparent white--text"
+                    style="min-width: 150px"
                     :inactive="!item.route"
                     :disabled="!item.route"
                     @click="() => pushRoute(i, item.route)"
@@ -129,13 +129,13 @@
               </v-menu>
             </v-item>
             <v-tab
-                v-if="!!user"
-                background-color="transparent"
-                class="white--text"
-                @click="logout"
-              >
-                Logout
-              </v-tab>
+              v-if="!!user"
+              background-color="transparent"
+              class="white--text"
+              @click="logout"
+            >
+              Logout
+            </v-tab>
           </v-tabs>
         </v-col>
       </v-row>
@@ -153,8 +153,8 @@
         links: [
           { text: 'Nosotros', route: '/us', roles: [] },
           { text: 'Productos', route: '/products', roles: [] },
-          { text: 'Servicios', 
-            active: false, 
+          { text: 'Servicios',
+            active: false,
             style: 'min-width:150px',
             items: [
               { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
@@ -172,6 +172,10 @@
     },
     computed: {
       ...mapGetters(['user']),
+      hideSlider () {
+        const route = this.$route.path
+        return /^\/services\/*/.test(route) || route === '/' || route === '/login'
+      },
     },
     methods: {
       logout: async function () {

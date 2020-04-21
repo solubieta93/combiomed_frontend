@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <v-content class="pa-0 ma-0">
+    <v-content class="pa-0 ma-0 white_back">
       <v-container
         fluid
-        class="pa-0 ma-0"
-        bacground-color="white"
+        class="pa-0 ma-0 white_back"
       >
         <my-navbar />
         <router-view />
@@ -32,3 +31,9 @@
     },
   }
 </script>
+
+<style scoped>
+.white_back {
+  background-color: white !important;
+}
+</style>
