@@ -207,7 +207,7 @@
       async deletedContact() {
         const ok = await this.$store.dispatch('delContact', this.contact.id)
         if (!ok) { this.$router.push('/') }
-        this.onSave()
+        this.$router.push('/contacts') 
       },
       cancel () {
         this.$router.push('/')

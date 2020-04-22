@@ -96,40 +96,9 @@ const actions = {
             }
         }
     },
-    putContact: async ({ commit }, payload) => {
-        try {
-            const res = await axios.put('/contacts/' + payload.id, {
-                ...payload
-            },
-            {
-                headers: {
-                    'Authorization': 'Token ' + localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-            })
-            commit('PATCH_CONTACT', res.data)
-            return {
-                success: true,
-                message: 'ok',
-            }
-        } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
-            }
-        }
-    },
     delContact: async ({ commit }, id) => {
         try {
-            const res = await axios.delete(`/contacts/${id}`,
+            const res = await axios.delete(`/contacts/${id}/`,
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
