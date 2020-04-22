@@ -38,17 +38,6 @@
   
 
   <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addLineProduct"
-      max-width="600px"
-    >
-      <product-add-line
-        :line="newLineProduct"
-        :mode="'creating'"
-        :onSave="() => { addLineProduct = false; getTypes() }"
-      />
-    </v-dialog>
-    
    <v-row
       v-if="isAdmin"
       justify="center"
@@ -61,20 +50,10 @@
             small
             right
             color="pink"
-            @click="showAddLineProductDialog"
+            to="/products/newLine"
           >
              <v-icon>mdi-plus</v-icon>
           </v-btn>
-        </v-row>
-      </v-col>
-   </v-row>
-
-    <v-row
-      v-if="isAdmin"
-      justify="center"
-    >
-      <v-col cols="8">
-        <v-row justify="end">
           <v-btn
             fab
             dark
@@ -89,20 +68,18 @@
           </v-btn>
         </v-row>
       </v-col>
-    </v-row>
+   </v-row>
     </v-img>
 </template>
 
 <script>
   import ResponsiveItems from '@/components/core/ResponsiveItems'
-  import ProductAddLine from '@/components/product/ProductAddLine'
   import { mapGetters } from 'vuex'
   
 
   export default {
     components: {
       ResponsiveItems,
-      ProductAddLine
     },
     data () {
       return {
@@ -145,10 +122,6 @@
           },
           pathTo: '/products' + (productType.id ? `?type=${productType.id}` : ''),
         }
-      },
-      async showAddLineProductDialog () {
-        this.newLineProduct = await this.$store.dispatch('getNewLineProduct')
-        this.addLineProduct = true
       },
     },
   }

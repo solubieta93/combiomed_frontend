@@ -14,7 +14,7 @@
     <accordion id="us"/>
     
     <!-- PRODUCTOS -->
-    <line-products/>
+    <products-line/>
 
     <!-- SERVICIOS -->
     <services />
@@ -74,7 +74,7 @@
   import CarouselPortada from '@/components/utils/CarouselPortada'
   import Services from '@/components/services/Services'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
-  import LineProducts from '@/components/product/LineProducts'
+  import ProductsLine from '@/components/product/ProductsLine'
   import Accordion from '@/components/utils/Accordion'
   import Contact from '@/components/utils/Contact'
 
@@ -84,7 +84,7 @@
       Accordion,
       PrincipalNewsAndEvents,
       Services,
-      LineProducts,
+      ProductsLine,
       Contact
     },
     data () {

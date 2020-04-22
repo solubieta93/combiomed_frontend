@@ -14,7 +14,7 @@ import MecServices from '@/views/services/MecServices.vue'
 import Products from '@/views/products/Products.vue'
 import ProductDescription from '@/views/products/ProductDescription.vue'
 import ProductEdition from '@/views/products/ProductEdition'
-import ProductLineEdit from '@/components/product/ProductLineEdit'
+import ProductLineEdition from '@/views/products/ProductLineEdition'
 
 import Home from '@/views/Home.vue'
 
@@ -65,8 +65,24 @@ const router = new Router({
           },
         },
         {
+          path: 'newLine',
+          component: ProductLineEdition,
+          props: {
+            modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: 'editLine',
-          component: ProductLineEdit,
+          component: ProductLineEdition,
+          props: {
+            modeEdition: true,
+          },
+          meta: {
+            requiresAuth: true,
+          },
         },
         {
           path: ':productId',

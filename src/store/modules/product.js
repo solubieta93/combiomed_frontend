@@ -36,6 +36,9 @@ const mutations = {
     DEL_PRODUCT: (state, payload) => {
         state.product = state.product.filter(x => x.id !== payload)
     },
+    DEL_PRODUCT_TYPES: (state, payload) => {
+        state.productsTypes = state.productsTypes.filter(x => x.id !== payload)
+    },
     PATCH_PRODUCT: (state, payload) => {
         // eslint-disable-next-line camelcase
         const product_i = state.product.findIndex(x => x.id === payload.id)
@@ -301,6 +304,31 @@ const actions = {
           count: 0,
         }
       }
+    },
+    delProductTypes: async ({ commit }, payload) => {
+        try {
+            await axios.delete('/api/types/products/' + payload + '/',
+            {
+                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
+            })
+            commit('DEL_PRODUCT_TYPES', payload.id)
+            return {
+                success: true,
+                message: 'ok',
+            }
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
     },
 }
 
