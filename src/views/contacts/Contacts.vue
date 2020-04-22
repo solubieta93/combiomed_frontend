@@ -19,7 +19,7 @@
 
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
-  import Contact from '@/components/utils/Contact'
+  import Contact from '@/components/contacts/ContactsDescription'
 
   export default {
     components: {

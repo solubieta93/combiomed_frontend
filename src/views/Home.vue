@@ -76,7 +76,7 @@
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
   import ProductsLine from '@/components/product/ProductsLine'
   import Accordion from '@/components/utils/Accordion'
-  import Contact from '@/components/utils/Contact'
+  import Contact from '@/components/contacts/ContactsDescription'
 
   export default {
     components: {

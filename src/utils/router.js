@@ -18,7 +18,9 @@ import ProductLineEdition from '@/views/products/ProductLineEdition'
 
 import Home from '@/views/Home.vue'
 
-import Contacts from '@/views/Contacts'
+import Contacts from '@/views/contacts/Contacts'
+import ContactsEdition from '@/views/contacts/ContactsEdition'
+
 import Us from '@/views/Us'
 
 import { store } from '../store/store'
@@ -95,7 +97,6 @@ const router = new Router({
             requiresAuth: true,
           },
         },
-        
       ],
     },
     {
@@ -158,6 +159,26 @@ const router = new Router({
         {
           path: '',
           component: Contacts,
+        },
+        {
+          path: 'new',
+          component: ContactsEdition,
+          props: {
+            modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'edit',
+          component: ContactsEdition,
+          props: {
+            modeEdition: true,
+          },
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
     },
