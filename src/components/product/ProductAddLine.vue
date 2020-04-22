@@ -24,13 +24,22 @@
           >
             <v-text-field
               v-model="line.title"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.charactersLength(null, 100)]"
               label="Título"
             />
-            <v-textarea
+            <v-text-field
               v-model="line.description"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.charactersLength(null, 100)]"
               label="Descripción"
+            />
+            <v-text-field
+              v-model="line.priority"
+              class="mx-auto"
+              type="number"
+              :min="Math.min(1)"
+              style="width: 120px; max-width: 120px"
+              label="Prioridad"
+              :rules="[x => (Number.isInteger(x))]"
             />
           </v-form>
         </v-card-text>
@@ -88,6 +97,8 @@
   import { mapGetters } from 'vuex'
   import FilesInputComponent from '@/components/core/FilesInputComponent'
   import ImagesComponent from '@/components/core/ImagesComponent'
+  import Rules from '../../utils/rules'
+
   export default {
     components: {
       'files-input': FilesInputComponent,
@@ -114,9 +125,7 @@
         show: false,
         saveError: '',
         overlay: false,
-        rules: {
-          required: value => !!value || 'Required.',
-        },
+        rules: Rules,
         loading: false,
         step: 1,
         form: null,

@@ -24,7 +24,7 @@
         <v-col md="2">
           <h3
             class="text-uppercase"
-            style="margin-top: -14px; margin-left: 16px;"
+            style="margin-top: -14px; margin-left: 16px; width:100%;"
           >
             Noticias y Eventos
             <br>
@@ -38,30 +38,16 @@
 
     <principal-news-and-events />
 
-    <div>
-      <img
-        class="fill-height"
-        src="news_middle_image.png"
-        style="margin-top: 100px; margin-bottom: 50px;"
-      >
-    </div>
+    <img
+      class="fill-height"
+      src="news_middle_image.png"
+      style="margin-top: 100px; margin-bottom: 50px;"
+    />
 
     <news-and-events-items
       :start="4"
       :limit="3"
     />
-
-    <!-- TO ADD NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addPost"
-      max-width="600px"
-    >
-      <post-add-item
-        :post="newPost"
-        :mode="'creating'"
-        :on-save="() => { addPost = false; paginate()}"
-      />
-    </v-dialog>
 
     <v-card-text
       v-if="isAdmin"
@@ -74,7 +60,7 @@
         right
         small
         color="pink"
-        @click="showAddNewsDialog"
+        to="/news/new"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -85,24 +71,16 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
-  import PostAddItem from '@/components/newsAndevents/PostAddItem'
+
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       PrincipalNewsAndEvents,
-      PostAddItem,
     },
     data () {
       return {
-        items: [
-          // 275px
-          { class: 'item-0', style: 'height:141px; left: 0px; top: 67%;' },
-          { class: 'item-1', style: 'height:141px; left: 0px; top: 67%;' },
-          { class: 'item-2', style: 'height:141px; left: 0px; top: 83.6%;' },
-          { class: 'item-3', style: 'height:141px; left: 0px; top: 67%;' },
-        ],
         postFixed: [],
         newPost: null,
         addPost: false,
@@ -121,80 +99,12 @@
         this.newPost = await this.$store.dispatch('getNewPost')
         this.addPost = true
       },
-      async submit () {
-        const res = await this.$store.dispatch('postPost', this.newPost)
-        if (!res.success) {
-          this.saveError = res.message
-          return
-        }
-        this.addPost = false
-      },
     },
   }
 </script>
 
 <style scoped>
-.v-card--reveal {
-  align-items: center;
-  bottom: 0;
-  justify-content: center;
-  opacity: .5;
-  position: absolute;
-  width: 100%;
-}
-
 .white_back {
     background-color: white !important;
   }
-
-.div_product{
-  font-family: helvetica;
-  font-size: 18px;
-}
-
-div img{
-  width:100%;
-  height:100%;
-  object-fit: fill;
-}
-
-.my_container {
-  margin:auto;
-  width:80%;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-/* grid-template-rows: repeat(5, 1fr); */
-  grid-gap: 16px;
-  column-gap: 16px;
-  grid-auto-rows:200px;
-}
-
-.grid div{
-  overflow:hidden;
-}
-
-.item-0{
-  grid-row: 1/3;
-  grid-column: 1/2;
-  height: 100%;
-}
-.item-1{
-  grid-row: 1/3;
-  grid-column: 2/3;
-  height: 100%;
-}
-.item-2{
-  grid-row: 1/5;
-  grid-column: 3/4;
-  height: 100%;
-}
-.item-3{
-  grid-column: 1/3;
-  grid-row: 3/5;
-  height: 100%;
-}
-
 </style>

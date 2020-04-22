@@ -174,9 +174,7 @@ const actions = {
     postTypeProduct: async ({ commit }, payload) => {
         try {
             const res = await axios.post('/api/types/products/', {
-                title: payload.title,
-                description: payload.description,
-                image: payload.image,
+                ...payload,
             },
             {
                 headers: {
@@ -272,6 +270,7 @@ const actions = {
         return Object({
             title: '',
             description: '',
+            priority: -1,
         })
     },
     getProductsTypes: async ({ commit }, params) => {

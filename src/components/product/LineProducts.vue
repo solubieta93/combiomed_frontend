@@ -49,22 +49,47 @@
       />
     </v-dialog>
     
-    <v-card-text
+   <v-row
       v-if="isAdmin"
-      style="height: 100px; position: relative"
+      justify="center"
     >
-      <v-btn
-        absolute
-        dark
-        fab
-        right
-        small
-        color="pink"
-        @click="showAddLineProductDialog"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-card-text>
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
+            fab
+            dark
+            small
+            right
+            color="pink"
+            @click="showAddLineProductDialog"
+          >
+             <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+   </v-row>
+
+    <v-row
+      v-if="isAdmin"
+      justify="center"
+    >
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
+            fab
+            dark
+            small
+            right
+            color="green"
+            to="/products/editLine"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
     </v-img>
 </template>
 

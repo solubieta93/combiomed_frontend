@@ -27,50 +27,71 @@
             class="text-uppercase"
             style="color: grey;"
           >
-            <!-- {{post.title}} -->
             {{ post.title }}
             <br>
           </h3>
         </div>
-        <!-- <div class="item-1">
-          <hr/>
-        </div> -->
         <div class="item-2">
-          <p class="text-justify">
-          <!-- {{post.content}} -->
-          {{ post.context }}
-        </p>
+          <v-row
+            v-for="(item, i) in !loading && post ? post.details : []"
+            :key="i"
+            justify="center"
+            align="center"
+          >
+            <v-col
+              cols="12"
+            >
+              <h2>{{ item.text }}</h2>
+              <li
+                v-for="(value, index) in item.items"
+                :key="index"
+              >
+                {{ value }}
+              </li>
+            </v-col>
+          </v-row>
         </div>
       </div>
-
-      <!-- TO EDIT NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
-      <v-dialog
-        v-model="editPost"
-        max-width="600px"
+      <v-row
+        v-if="!loading && post && isAdmin"
+        justify="center"
       >
-        <post-add-item
-          :post="post"
-          :mode="'editing'"
-          :onSave="() => { editPost = false; load()}"
-        />
-      </v-dialog>
-      
-      <v-card-text
-        v-if="isAdmin"
-        style="height: 50px; position: relative"
+        <v-col cols="8">
+          <v-row justify="end">
+            <v-btn
+              fab
+              dark
+              small
+              right
+              color="green"
+              @click="goToEdit"
+            >
+              <v-icon dark>
+                mdi-pencil
+              </v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row
+        v-if="!loading && post && isAdmin"
+        justify="center"
       >
-        <v-btn
-          absolute
-          dark
-          fab
-          right
-          small
-          color="pink"
-          @click="editPost= true"
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-      </v-card-text>
+        <v-col cols="8">
+          <v-row justify="end">
+            <v-btn
+              fab
+              dark
+              small
+              right
+              color="red"
+              @click="deletePos= !deletePos"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
 
       <!-- TO DELETE NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
       <v-dialog 
@@ -89,22 +110,7 @@
         </v-card>
       </v-dialog>
 
-      <v-card-text
-        v-if="isAdmin"
-        style="height: 50px; position: relative"
-      >
-        <v-btn
-          absolute
-          dark
-          fab
-          right
-          small
-          color="red"
-          @click="deletePos= !deletePos"
-        >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-      </v-card-text>
+      
 
     </div>
     
@@ -155,22 +161,23 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
-  import PostAddItem from '@/components/newsAndevents/PostAddItem'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       ShowPostDetail,
-      PostAddItem,
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
+        post: null,
         twoposts: [],
         plaf: null,
         editPost: false,
         deletePos: false,
+        loading: false,
+        error: null,
       }
     },
     computed: {
@@ -199,17 +206,37 @@
         })
         this.twoposts = posts
       },
-      async load () {
-        const ok = await this.$store.dispatch('getPost', this.$route.params.postId)
-        if (!ok) { this.$router.push('/') }
-        await this.paginate()
+      load () {
+        this.loading = true
+        this.error = null
+        this.$store.dispatch('getPost', this.$route.params.postId)
+          .then(res => {
+            if (res.success) {
+              this.post = res.post
+            } else if (res.notFound) {
+              this.$router.push('/')
+            } else {
+              this.error = res.message
+            }
+          })
+          .catch(e => {
+            console.log(e)
+            this.error = e
+          }).finally(() => {
+            this.loading = false
+            this.paginate()
+          })
       },
       async deletePost(post_id) {
         const ok = await this.$store.dispatch('delPost', this.$route.params.postId)
         if (!ok) { this.$router.push('/') }
         // await this.paginate()
         this.$router.push('/news')
-      }
+      },
+      goToEdit () {
+        this.$router.push(`/news/${this.$route.params.postId}/edit`)
+      },
+      
     },
   }
 </script>

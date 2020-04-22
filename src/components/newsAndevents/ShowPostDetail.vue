@@ -19,10 +19,27 @@
         </h3>
       </div>
       <div class="item-2" v-if="ubication_news === 'Right'">
-          <p class="text-justify">
-          <!-- {{post.content}} -->
+          <!-- <p class="text-justify">
           {{ post.context }}
-        </p>
+        </p> -->
+        <v-row
+      v-for="(item, i) in post ? post.details : []"
+      :key="i"
+      justify="center"
+      align="center"
+    >
+      <v-col
+        cols="12"
+      >
+        <h2>{{ item.text }}</h2>
+        <li
+          v-for="(value, index) in item.items"
+          :key="index"
+        >
+          {{ value }}
+        </li>
+      </v-col>
+    </v-row>
       </div>
       <!-- <div class="item-3" v-if="ubication_news === 'Right'">
           <hr/>
@@ -47,10 +64,27 @@
         </h3>
       </div>
       <div class="item-20" v-if="ubication_news==='Left'">
-          <p class="text-justify">
-          <!-- {{post.content}} -->
+          <!-- <p class="text-justify">
           {{ post.context }}
-        </p>
+        </p> -->
+        <v-row
+      v-for="(item, i) in post ? post.details : []"
+      :key="i"
+      justify="center"
+      align="center"
+    >
+      <v-col
+        cols="12"
+      >
+        <h2>{{ item.text }}</h2>
+        <li
+          v-for="(value, index) in item.items"
+          :key="index"
+        >
+          {{ value }}
+        </li>
+      </v-col>
+    </v-row>
       </div>
       <!-- <div class="item-30" v-if="ubication_news === 'Left'">
           <hr/>

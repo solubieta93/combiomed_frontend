@@ -170,6 +170,5 @@
         this.$router.push(`/products/${this.$route.params.productId}/edit`)
       },
     },
-
   }
 </script>

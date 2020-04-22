@@ -100,7 +100,7 @@
       </v-row>
     </paginate-items>
 
-    <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
+    <!-- TO ADD PRODUCTS, ONLY ADMIN CAN DO IT -->
     <v-card-text
       v-if="isAdmin"
       style="height: 100px; position: relative"
