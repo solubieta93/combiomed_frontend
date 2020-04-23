@@ -54,8 +54,15 @@
           v-show="!readless"
           class="my_container"
         >
-          <div class="grid">
-            <div class="item-0">
+          <v-row justify="center">
+            <v-col
+              md="4"
+              sm="6"
+              lg="4"
+              xl="4"
+              xs="1"
+              cols="12"
+            >
               <h2>Génesis</h2>
               <h3> PRIMERA COMPUTADORA CUBANA: CID 201</h3>
               <p class="text-justify">
@@ -65,15 +72,22 @@
                 centrales azucareros y otros centro de la economía nacional, tarea que sigue incrementándose posteriormente,
                 con el diseño y producción de los primeros autómatas NODOREM.
               </p>
-            </div>
-            <div class="item-1">
+            </v-col>
+            <v-col
+              md="4"
+              sm="6"
+              lg="4"
+              xl="4"
+              xs="1"
+              cols="12"
+            >
               <img
                 src="CID 201.png"
                 alt="La primera computadora cubana CID 201"
                 fill-height
               >
-            </div>
-          </div>
+            </v-col>
+          </v-row>
         </div>
       </v-expand-transition>
 
@@ -112,30 +126,7 @@ div img{
 
 .my_container {
   margin:auto;
-  width:66%;
-}
-.grid{
-  display:grid;
-  grid-template-columns: repeat(2, 1fr);
-/* grid-template-rows: repeat(5, 1fr); */
-  grid-gap: 16px;
-  column-gap: 16px;
-  grid-auto-rows:200px;
-}
-
-.grid div{
-  overflow:hidden;
-}
-
-.item-0{
-  grid-row: 1/3;
-  grid-column: 1/2;
-  height: 100%;
-}
-.item-1{
-  grid-row: 1/3;
-  grid-column: 2/3;
-  height: 100%;
+  width:100%;
 }
 
 </style>
