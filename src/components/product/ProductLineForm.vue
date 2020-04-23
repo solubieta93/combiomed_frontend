@@ -17,11 +17,13 @@
               v-model="line.title"
               :rules="[rules.required, rules.charactersLength(null, 100)]"
               label="Título"
+              @change="value => changeField('title', value)"
             />
             <v-text-field
               v-model="line.description"
               :rules="[rules.required, rules.charactersLength(null, 100)]"
               label="Descripción"
+              @change="value => changeField('description', value)"
             />
             <v-text-field
               v-model="line.priority"
@@ -31,6 +33,7 @@
               style="width: 120px; max-width: 120px"
               label="Prioridad"
               :rules="[x => (Number.isInteger(x))]"
+              @input="value => changeField('priority', value)"
             />
         </v-col>
       </v-row>
@@ -97,7 +100,7 @@
               outlined
               color="blue"
               class="ma-2"
-              @click="saveLine"
+              @click="save"
             >
               <v-icon
                 left
@@ -181,6 +184,7 @@
         imagesSelected: null,
         imagesURL: null,
         deleteLine: false,
+        changes: {},
       }
     },
     computed: {
@@ -200,51 +204,22 @@
       }
     },
     methods: {
-      saveLine () {
+      async save () {
         this.loading = true
-        const actionToDo = this.mode === 'editing' ? 'patchTypeProduct' : 'postTypeProduct'
-        this.saveError = ''
-        if (this.imagesSelected) {
-          this.$store.dispatch('uploadFile', this.imagesSelected[0]).then(uploadRes => {
-            if (uploadRes.success) {
-              this.line.image = uploadRes.src
-              this.$store.dispatch(actionToDo, this.line).then(res => {
-                if (!res.success) {
-                  this.saveError = res.detail
-                  this.loading = false
-                } else {
-                  this.mode = 'show'
-                  this.loading = false
-                  if (this.onSave) this.onSave()
-                }
-              })
-            } else {
-              this.saveError = uploadRes.message
-              this.loading = false
-            }
-          }).catch(e => {
-            this.saveError = e.message
-            this.loading = false
-          })
-        } else {
-          this.$store.dispatch(actionToDo, this.line).then(res => {
-            if (!res.success) {
-              this.saveError = res.detail
-              this.loading = false
-            } else {
-              this.mode = 'show'
-              this.loading = false
-              if (this.onSave) this.onSave()
-            }
-          }).catch(e => {
-            this.saveError = e.message
-            this.loading = false
-          })
-        }
+        await this.onSave(Object(this.changes))
+        this.loading = false
       },
+
+      changeField (field, value) {
+        console.log(field, 'field')
+        console.log(value, 'value')
+        this.changes[field] = value
+      },
+
       cancel () {
         this.$router.push('/')
       },
+
       async deletedLine () {
         console.log(this.line.id, 'id')
         const ok = await this.$store.dispatch('delProductTypes', this.line.id)

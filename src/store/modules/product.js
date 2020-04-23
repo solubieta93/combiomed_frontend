@@ -173,38 +173,7 @@ const actions = {
                 }
             }
         }
-    },
-    postTypeProduct: async ({ commit }, payload) => {
-        try {
-            const res = await axios.post('/api/types/products/', {
-                ...payload,
-            },
-            {
-                headers: {
-                    'Authorization': 'Token ' + localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-            })
-            commit('SET_ADD_PRODUCT_TYPE', res.data)
-            return {
-                success: true,
-                message: 'ok',
-            }
-        } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
-            }
-        }
-    },
+    },    
     patchProduct: async ({ commit }, payload) => {
         try {
             const res = await axios.patch('/api/products/' + payload.id + '/', { ...payload.changes },
@@ -305,6 +274,57 @@ const actions = {
         }
       }
     },
+    postTypeProduct: async ({ commit }, payload) => {
+        try {
+            const res = await axios.post('/api/types/products/', {
+                ...payload,
+            },
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            commit('SET_ADD_PRODUCT_TYPE', res.data)
+            return {
+                success: true,
+                message: 'ok',
+            }
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
+    },
+    patchTypeProduct: async ({ commit }, payload) => {
+        try {
+            const res = await axios.patch('/api/types/products/' + payload.id + '/', { ...payload.changes },
+            {
+                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
+            })
+            console.log(res, 'result patch')
+            return {
+                success: true,
+                message: 'ok',
+                id: res.data.id,
+            }
+        } catch (error) {
+            console.log(error)
+            return {
+                success: false,
+                message: `Error: ${error}`,
+            }
+        }
+    },
     delProductTypes: async ({ commit }, payload) => {
         try {
             await axios.delete('/api/types/products/' + payload + '/',
@@ -330,6 +350,7 @@ const actions = {
             }
         }
     },
+
 }
 
 const getters = {

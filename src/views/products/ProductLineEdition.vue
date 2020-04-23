@@ -73,7 +73,7 @@
     <product-line-form
       v-if="!loading"
       :line="modeEdition ? productType : line"
-      :on-save="saved"
+      :on-save="saveLine"
       :mode="modeEdition ? 'editing' : 'creating'"
     />
   </v-container>
@@ -128,9 +128,6 @@
         return this.typeId && this.productsTypes ? this.productsTypes.filter(x => x.id.toString() === this.typeId)[0] : null
       }
     },
-    // created () {
-    //   this.modeEdition = !!this.$route.params.productId
-    // },
     async mounted () {
       console.log(this.modeEdition, 'modeEdition')
       if (this.modeEdition) {
@@ -177,9 +174,71 @@
         })
       },      
 
-      saved() {
-        this.$router.push('/')
-      }
+      async saveLine (changes) {
+        this.loading = true
+        const prepared = await this.prepareChanges(changes)
+        if (!prepared.success) {
+          this.loading = false
+          return
+        }
+        const payload = this.modeEdition ? { changes, id: this.typeId } : { ...changes }
+        const res = await this.$store.dispatch(this.modeEdition ? 'patchTypeProduct' : 'postTypeProduct', payload)
+        if (res.success) {
+          this.loading = false
+          this.$router.push('/')
+
+        } else {
+          this.loading = false
+          this.error = res.message
+        }
+      },
+      prepareChanges: async function (changes) {
+        if (changes.image) {
+          const uploadRes = await this.$store.dispatch('uploadFile', changes.image)
+          if (uploadRes.success) {
+            changes.image = uploadRes.src
+          } else {
+            this.error = 'Error subiendo la imagen'
+            return {
+              success: false,
+              changes: changes,
+            }
+          }
+        }
+        if (changes.files && changes.files.length) {
+          const files = []
+          for (let item of changes.files) {
+            if (item.file) {
+              const uploadFile = await this.$store.dispatch('uploadFile', item.file)
+              if (uploadFile.success) {
+                files.push({
+                  text: item.text,
+                  src: uploadFile.src,
+                })
+              } else {
+                this.error = 'Error subiendo el archivo'
+              }
+            }
+          }
+          if (!files || !files.length) {
+            return {
+              success: false,
+              changes: changes,
+            }
+          } else {
+            changes.json_files = JSON.stringify({
+              files,
+            })
+          }
+        }
+        if (this.modeEdition) {
+          changes['owner'] = this.user.id
+        }
+        return {
+          success: true,
+          changes,
+        }
+      },
     },
   }
 </script>
