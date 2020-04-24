@@ -6,12 +6,21 @@
     <v-img
       src="ampa- (1).png"
       height="80vh"
-    />
-    <v-img
-      src="web-combiomed-historia-03.png"
-      style="top:-46px"
-    />
+    >
+      <v-col
+      class="d-flex flex-column-reverse ma-0 pa-0"
+      style="height:100%"
+      >
+        <v-img
+          src="web-combiomed-historia-03.png"
+          height="16%"
+          width="100vw"
+          max-height="16%"
 
+        />
+      </v-col>
+    </v-img>
+    
     <!-- TITLE -->
     <v-col cols="12">
       <v-row
@@ -41,7 +50,7 @@
     <img
       class="fill-height"
       src="news_middle_image.png"
-      style="margin-top: 100px; margin-bottom: 50px;"
+      style="margin-top: 100px; margin-bottom: 50px; width: 100%;"
     />
 
     <news-and-events-items

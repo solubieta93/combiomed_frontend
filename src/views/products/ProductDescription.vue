@@ -6,10 +6,10 @@
   >
     <carousel-portada />
 
-    <v-img
+    <!-- <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       style="margin-top: -46px"
-    />
+    /> -->
     <v-row
       justify="center"
       align="center"
