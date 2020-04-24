@@ -1,5 +1,5 @@
 <template>
-  <div class="mycontainer">
+  <!-- <div class="mycontainer">
     <div class="mygrid">
       <template v-for="(item,i) in images">
         <v-card
@@ -15,11 +15,47 @@
         </v-card>
       </template>
     </div>
-  </div>
+  </div> -->
+  <v-row
+    justify="center"
+    align="center"
+  >
+    <v-row
+      justify="center"
+      align="center"
+      style="max-width: 60vw"
+    >
+      <v-col
+        v-for="(item, i) in images"
+        :key="i"
+      >
+        <v-card
+          height="200"
+          max-height="200"
+          max-width="100%"
+          min-width="250"
+          class="mx-auto"
+        >
+          <v-img
+            :src="`${baseUrl}${item}` ? `${baseUrl}${item}` : `${baseUrl}ampa- (1).png`"
+            class="fill-height"
+            :aspect-ratio="16/9"
+          >
+          </v-img>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-row>
 </template>
 
 <script>
+import ItemPreview from '@/components/core/ItemPreview'
+  // import QuerySearch from '@/components/core/QuerySearch'
   export default {
+    components: {
+      ItemPreview,
+      // QuerySearch,
+    },
     props :{
       currentView: {
         type: String,
@@ -33,17 +69,6 @@
     data () {
       return {
         baseUrl: process.env.BASE_URL,
-        imagesClients: [
-          'servicesAuto/client1.jpg',
-          'servicesAuto/client2.jfif',
-          'servicesAuto/client3.png',
-          'servicesAuto/client4.jpg',
-          'servicesAuto/client5.png',
-        ],
-        imagesMachine: [
-
-        ],
-        // currentImages: currentView === "auto"?  this.imagesClients : this.imagesMachine
       }
     },
   }
@@ -51,7 +76,7 @@
 
 <style scoped>
 .myimg{
-	width:100%;
+	width:100vw;
 	height:100%;
 }
 

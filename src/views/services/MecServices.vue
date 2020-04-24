@@ -3,44 +3,51 @@
     fluid
     class="white_back pa-0 ma-0"
   >
-    <v-img
-      :src="`${baseUrl}servicesMec/servMec0.png`"
-      height="80vh"
-    />
-    <!-- <v-img
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-      style="top:-48px"
-    /> -->
-    <v-img
-      :src="`${baseUrl}web-combiomed-servicios-mecanica&automatizacion.png`"
-      style="margin-top:-7%; z-index:2; "
+  <v-img
+    :src="`${baseUrl}servicesMec/servMec0.png`"
+    height="100%"
+    width="100vw"
+  >
+    <v-col
+    class="d-flex flex-column-reverse ma-0 pa-0"
+    style="height:100%"
     >
-      <!-- TITLE -->
-      <v-col
-        cols="12"
-        style="margin-top:10%; "
+      <v-img
+        :src="`${baseUrl}web-combiomed-historia-03.png`"
+        height="16%"
+        width="100vw"
+        max-height="16%"
+
+      />
+    </v-col>
+  </v-img>
+  
+    <!-- TITLE -->
+    <v-col 
+      cols="12"
+    >
+      <v-row
+        justify="center"
+        style="height: 50px; color: grey;"
       >
-        <v-row
-          justify="center"
-          style="height: 50px; color: grey;"
-        >
-          <v-col md="2">
-            <hr>
-          </v-col>
-          <v-col md="3">
-            <h3
+        <v-col md="2">
+          <hr>
+        </v-col>
+        <v-col md="3">
+          <v-row justify="center">
+            <h4
               class="text-uppercase"
-              style="margin-top: -20px; margin-left: 16px;"
+              style="margin-top: -14px; "
             >
               Servicio de Mecánica
               <br>
-            </h3>
-          </v-col>
-          <v-col md="2">
-            <hr>
-          </v-col>
-        </v-row>
-      </v-col>
+            </h4>
+          </v-row>
+        </v-col>
+        <v-col md="2">
+          <hr>
+        </v-col>
+      </v-row>
 
       <v-row
         justify="center"
@@ -91,22 +98,28 @@
           </p>
         </v-col>
       </v-row>
-    </v-img>
+    </v-col>
 
-    <div
-      fill-height
-      style="max-height: 800px; z-index: 1; margin-top:-10%;"
-    >
-      <v-img
-        width="auto"
-        :src="`${baseUrl}servicesMec/servMec1.png`"
-      />
-    </div>
     <v-img
-      contain
-      style="margin-top:-77px"
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-    />
+      width="100vw"
+      height="100%"
+      :style="imageStyle"
+      :src="`${baseUrl}servicesMec/servMec1.png`"
+    >
+      <v-col
+        class="d-flex flex-column-reverse ma-0 pa-0"
+        style="height:100%"
+      >
+        <v-img
+          :src="`${baseUrl}web-combiomed-historia-03.png`"
+          height="16%"
+          width="100vw"
+          max-height="16%"
+        />
+      </v-col>
+    </v-img>
+    <!-- </div> -->
+
     <div>
       <v-col
         cols="12"
@@ -215,6 +228,17 @@
         ],
       }
     },
+    computed: {
+      imageStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'z-index: 1; margin-top:-10%;'
+          case 'sm': return 'z-index: 1; margin-top:-10%;'
+          case 'md': return 'z-index: 1; margin-top:-10%;'
+          case 'lg': return 'z-index: 1; margin-top:-10%;'
+          case 'xl': return 'z-index: 1; margin-top:-10%;'
+        }
+      },
+    }
   }
 </script>
 
@@ -222,4 +246,52 @@
 .white_back {
   background-color: white !important;
 }
+.xsOnlyStyle1 {
+  margin-top:-42%; 
+  z-index:2;
+}
+.smAndDownStyle1 {
+  margin-top:-12%; 
+  z-index:2;
+}
+.mdAndUpStyle1 {
+  margin-top:-5%; 
+  z-index:2;
+}
+.xlOnlyStyle1 {
+  margin-top:-5%; 
+  z-index:2;
+}
+
+.xsOnlyStyle2 {
+  margin-top:-33%; 
+  z-index:2;
+}
+.smAndDownStyle2 {
+  margin-top:-14%; 
+  z-index:2;
+}
+.mdAndUpStyle2 {
+  margin-top:-7%; 
+  z-index:2;
+}
+.xlOnlyStyle2 {
+  margin-top:14%; 
+  z-index:2;
+}
+
+
+.xsOnlyColStyle {
+  margin-top:40%; 
+}
+.smAndDownColStyle {
+  margin-top:12%; 
+}
+.mdAndUpColStyle {
+  margin-top:10%; 
+}
+.xlOnlyColStyle {
+  margin-top:10%; 
+}
+
 </style>

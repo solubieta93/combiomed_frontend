@@ -5,10 +5,10 @@
   >
     <carousel-portada />
 
-    <v-img
+    <!-- <v-img
         src="web-combiomed-historia-03.png"
         style="top:-46px"
-    />
+    /> -->
 
     <!-- CONTACTOS -->  
     <div id="contacts">  

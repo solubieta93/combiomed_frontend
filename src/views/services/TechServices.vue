@@ -5,16 +5,32 @@
   >
     <v-img
       :src="`${baseUrl}servTech0.png`"
-      max-height="90vh"
-      width="100vw"
-    />
-    <v-img
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-      style="top:-48px"
-    />
+      :style="imageStyle"
+    >
+      <v-col
+        class="d-flex flex-column-reverse ma-0 pa-0"
+        style="height:100%"
+      >
+        <v-img
+          :src="`${baseUrl}web-combiomed-historia-03.png`"
+          height="16%"
+          width="100vw"
+          max-height="16%"
+
+        />
+      </v-col>
+    </v-img>
 
     <!-- TITLE -->
-    <v-col cols="12">
+    <v-col 
+      cols="12"
+      :class="{
+        'xsOnlyColStyle' : $vuetify.breakpoint.xsOnly,
+        'smAndDownColStyle' : $vuetify.breakpoint.smOnly,
+        'mdAndUpColStyle' : $vuetify.breakpoint.mdAndUp,
+        'xlOnlyColStyle' : $vuetify.breakpoint.xlOnly 
+      }"
+    >
       <v-row
         justify="center"
         style="height: 50px; color: grey;"
@@ -23,12 +39,16 @@
           <hr>
         </v-col>
         <v-col md="3">
+          <v-row
+            justify="center"
+          >
           <h3
             class="text-uppercase center"
-            style="margin-top: -14px; margin-left: 70px;"
+            style="margin-top: -14px; margin-left: 16px;"
           >
             SERVICIO TÉCNICO
           </h3>
+          </v-row>
         </v-col>
         <v-col md="2">
           <hr>
@@ -40,7 +60,14 @@
       justify="center"
       style=" color: grey; margin-bottom:75px;"
     >
-      <v-col md="7">
+      <v-col
+      md="7"
+      sm="11"
+      lg="7"
+      xl="7"
+      cols="10"
+
+      >
         <p class="text-justify">
           Servicios Técnicos a Equipos Médicos garantiza el servicio de postventa a los equipos médicos comercializados 
           por COMBIOMED. Con ingenieros y técnicos altamente calificados radicados en La Habana, Villa Clara y Las Tunas,
@@ -51,15 +78,11 @@
       </v-col>
     </v-row>
 
-    <div
-      fill-height
-      style="min-height: 500px;"
-    >
       <v-img
-        width="auto"
+        width="100vw"
+        height="100%"
         :src="`${baseUrl}servTech1.png`"
       />
-    </div>
   </v-container>
 </template>
 
@@ -87,6 +110,17 @@
         ],
       }
     },
+    computed: {
+      imageStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:40vh; width:100vw;'
+          case 'sm': return 'height:50vh; width:100vw;'
+          case 'md': return 'height:60vh; width:100vw;'
+          case 'lg': return 'height:80vh; width:100vw;'
+          case 'xl': return 'height:80vh; width:100vw;'
+        }
+      },
+    }
   }
 </script>
 
@@ -177,5 +211,18 @@
 	grid-row: 2/3;
     grid-column: 2/4;
 	/* height: 100%; */
+}
+
+.xsOnlyColStyle {
+  margin-top:24%; 
+}
+.smAndDownColStyle {
+  margin-top:10%; 
+}
+.mdAndUpColStyle {
+  margin-top:10%; 
+}
+.xlOnlyColStyle {
+  margin-top:10%; 
 }
 </style>

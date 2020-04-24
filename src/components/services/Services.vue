@@ -31,6 +31,10 @@
     >
       <v-col
         md="2"
+        sm="2"
+        lg="3"
+        xl="3"
+        xs="1"
         class="text-uppercase"
       >
         <button 
@@ -46,6 +50,10 @@
 
       <v-col
         md="2"
+        sm="2"
+        lg="3"
+        xl="3"
+        xs="1"
         class="text-uppercase"
       >
         <button 
@@ -60,6 +68,10 @@
       </v-col>
       <v-col
         md="2"
+        sm="2"
+        lg="3"
+        xl="3"
+        xs="1"
         class="text-uppercase"
       >
         <button 
