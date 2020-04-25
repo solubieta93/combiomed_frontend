@@ -3,24 +3,22 @@
     fluid
     class="white_back pa-0 ma-0"
   >
-  <v-img
-    :src="`${baseUrl}servicesMec/servMec0.png`"
-    height="100%"
-    width="100vw"
-  >
-    <v-col
-    class="d-flex flex-column-reverse ma-0 pa-0"
-    style="height:100%"
+    <v-img
+      :src="`${baseUrl}servicesMec/servMec0.png`"
+      :style="principalImgStyle"
     >
-      <v-img
-        :src="`${baseUrl}web-combiomed-historia-03.png`"
-        height="16%"
-        width="100vw"
-        max-height="16%"
-
-      />
-    </v-col>
-  </v-img>
+      <v-col
+        class="d-flex flex-column-reverse ma-0 pa-0"
+        style="height:100%"
+      >
+        <v-img
+          :src="`${baseUrl}web-combiomed-historia-03.png`"
+          height="16%"
+          width="100vw"
+          max-height="16%"
+        />
+      </v-col>
+    </v-img>
   
     <!-- TITLE -->
     <v-col 
@@ -103,7 +101,7 @@
     <v-img
       width="100vw"
       height="100%"
-      :style="imageStyle"
+      :style="secondImageStyle"
       :src="`${baseUrl}servicesMec/servMec1.png`"
     >
       <v-col
@@ -118,7 +116,6 @@
         />
       </v-col>
     </v-img>
-    <!-- </div> -->
 
     <div>
       <v-col
@@ -229,7 +226,16 @@
       }
     },
     computed: {
-      imageStyle () {
+      principalImgStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:100%; width:100vw'
+          case 'sm': return 'height:100%; width:100vw'
+          case 'md': return 'height:100%; width:100vw'
+          case 'lg': return 'height:80vh; width:100vw'
+          case 'xl': return 'height:80vh; width:100vw'
+        }
+      },
+      secondImageStyle () {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 'z-index: 1; margin-top:-10%;'
           case 'sm': return 'z-index: 1; margin-top:-10%;'
@@ -246,52 +252,4 @@
 .white_back {
   background-color: white !important;
 }
-.xsOnlyStyle1 {
-  margin-top:-42%; 
-  z-index:2;
-}
-.smAndDownStyle1 {
-  margin-top:-12%; 
-  z-index:2;
-}
-.mdAndUpStyle1 {
-  margin-top:-5%; 
-  z-index:2;
-}
-.xlOnlyStyle1 {
-  margin-top:-5%; 
-  z-index:2;
-}
-
-.xsOnlyStyle2 {
-  margin-top:-33%; 
-  z-index:2;
-}
-.smAndDownStyle2 {
-  margin-top:-14%; 
-  z-index:2;
-}
-.mdAndUpStyle2 {
-  margin-top:-7%; 
-  z-index:2;
-}
-.xlOnlyStyle2 {
-  margin-top:14%; 
-  z-index:2;
-}
-
-
-.xsOnlyColStyle {
-  margin-top:40%; 
-}
-.smAndDownColStyle {
-  margin-top:12%; 
-}
-.mdAndUpColStyle {
-  margin-top:10%; 
-}
-.xlOnlyColStyle {
-  margin-top:10%; 
-}
-
 </style>

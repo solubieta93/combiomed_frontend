@@ -107,7 +107,7 @@ export default {
     props: {
         margin_style:{
             type: String,
-            default: 'margin-top: -13%; margin-bottom: 1%;'
+            default: 'margin-top: 2%; margin-bottom: 1%;'
         }
     },
     data () {

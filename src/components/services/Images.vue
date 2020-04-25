@@ -22,10 +22,15 @@
   >
     <v-row
       justify="center"
-      align="center"
-      style="max-width: 60vw"
+      align="center"      
+      style="max-width: 80vw"
     >
       <v-col
+        md="6"
+        sm="12"
+        lg="4"
+        xl="4"
+        cols="12"
         v-for="(item, i) in images"
         :key="i"
       >
@@ -84,25 +89,6 @@ import ItemPreview from '@/components/core/ItemPreview'
 	margin:auto;
 	width:60%;
   margin-bottom: 5%;
-}
-
-.mygrid{
-	display:grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 18px;
-	grid-auto-rows:200px;
-  margin-left: 40px;
-  margin-right: 40px;
-}
-
-.mygrid div{
-	overflow:hidden;
-}
-
-.item-4{
-	grid-row: 2/3;
-	grid-column: 2/4;
-	height: 100%;
 }
 
 </style>

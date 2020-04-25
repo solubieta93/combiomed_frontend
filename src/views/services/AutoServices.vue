@@ -5,8 +5,8 @@
   >
     <v-img
       :src="`${baseUrl}servAut0.png`"
-      height="100%"
-      width="100vw"
+      :style="imgStyle"
+      
     >
       <v-col
       class="d-flex flex-column-reverse ma-0 pa-0"
@@ -22,12 +22,6 @@
       </v-col>
     </v-img>
 
-    <!-- :class="{
-        'xsOnlyColStyle' : $vuetify.breakpoint.xsOnly,
-        'smAndDownColStyle' : $vuetify.breakpoint.smOnly,
-        'mdAndUpColStyle' : $vuetify.breakpoint.mdAndUp,
-        'xlOnlyColStyle' : $vuetify.breakpoint.xlOnly 
-      }" -->
     <!-- TITLE -->
     <v-col 
       cols="12" 
@@ -57,7 +51,7 @@
 
       <v-row
         justify="center"
-        style=" color: grey; margin-bottom:75px;"
+        style=" color: grey; margin-bottom:5%;"
       >
         <v-col md="7">
           <p class="text-justify">
@@ -82,19 +76,26 @@
       </v-row>
     </v-col>
     
-    <v-img
+    <!-- <v-img
       :src="`${baseUrl}servAut2.jpg`"
       height="100%"
       width="100vw"
     >
-    </v-img>
+    </v-img> -->
+
+    <v-img
+      :src="`${baseUrl}web-combiomed-historia-032.png`"
+      height="16%"
+      width="100vw"
+      max-height="16%"
+      class="image-rotation"
+    />
     
     <div class="my_container">
-      <!-- :style="rowStyle" -->
-      <v-row :style="rowProjectStyle2" >
+      <v-row :style="rowProjectStyle" >
         <v-col
           sm="12"
-          lg="6"
+          lg="5"
           xl="6"
           cols="12"
         >
@@ -126,23 +127,24 @@
 
         <v-col
           sm="12"
-          lg="6"
+          lg="7"
           xl="6"
           cols="12"
         >
           <v-row align="center" style="justify-content:center;">
             <v-col
-            sm="10"
+            sm="12"
             >
               <v-img 
                 :src="`${baseUrl}servAut4.png`"
+                :style="cicloImageStyle"
               />
             </v-col>
           </v-row>
         </v-col>
       </v-row> 
       
-      <v-row :style="rowProjectStyle">
+      <v-row :style="rowProjectStyle2">
         <v-col
           sm="12"
           lg="7"
@@ -208,11 +210,6 @@
     </div>
 
     <div>
-      <!-- <v-img
-        contain
-        style="margin-top:-77px"
-        :src="`${baseUrl}web-combiomed-historia-03.png`"
-      /> -->
       <v-col
         cols="12"
         style="margin-bottom: 50px;"
@@ -221,10 +218,15 @@
           justify="center"
           style="height: 50px; margin-top: 10px; color: grey;"
         >
-          <v-col md="7">
+          <v-col 
+            sm="12"
+            md="7"            
+            lg="6"
+            xl="6"
+            cols="12"
+          >
             <h3
               class="text-uppercase"
-              style="margin-left: 16px;"
             >
               NUESTROS CLIENTES
               <br>
@@ -235,29 +237,41 @@
           v-for="(item1,i) in this.clients"
           :key="i"
           justify="center"
-          style="height: 50px; color: grey;"
+          style=" color: grey;"
         >
           <v-col
             v-if="i!==0 && i!==2"
-            md="7"
+            sm="12"
+            md="7"            
+            lg="6"
+            xl="6"
+            cols="12"
           >
+          <v-row>
             <h5
               style="margin-left: 16px;"
             >
               {{ item1 }}
               <br>
             </h5>
+          </v-row>
           </v-col>
           <v-col
             v-if="i===0 || i===2"
+            sm="12"
             md="7"
+            lg="6"
+            xl="6"
+            cols="12"
           >
+          <v-row>
             <h4
               style="margin-left: 16px;"
             >
               {{ item1 }}
               <br>
             </h4>
+          </v-row>
           </v-col>
         </v-row>
       </v-col>
@@ -308,6 +322,15 @@
       }
     },
     computed: {
+      imgStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:100%; width:100vw'
+          case 'sm': return 'height:100%; width:100vw'
+          case 'md': return 'height:100%; width:100vw'
+          case 'lg': return 'height:80vh; width:100vw'
+          case 'xl': return 'height:80vh; width:100vw'
+        }        
+      },
       rowStyle () {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 'margin-top: 60%;"'
@@ -316,25 +339,32 @@
           case 'lg': return 'margin-top: 10%;"'
           case 'xl': return 'margin-top: 8%;"'
         }
-      },
+      },    
       rowProjectStyle () {
         switch (this.$vuetify.breakpoint.name) {
-          case 'xs': return 'margin-right: 1%; margin-left: 1%;'
-          case 'sm': return 'margin-right: 3%; margin-left: 1%;'
-          case 'md': return 'margin-right: 10%; margin-left: 1%;'
-          case 'lg': return 'margin-right: 10%; margin-left: 5%;'
-          case 'xl': return 'margin-right: 8%; margin-left: 8%;'
-        }
-      },
-      rowProjectStyle2 () {
-        switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 'margin-right: 1%; margin-left: 1%; padding-top: 5%;'
-          case 'sm': return 'margin-right: 3%; margin-left: 1%; padding-top: 5%;'
+          case 'sm': return 'margin-right: 3%; margin-left: 12%; padding-top: 5%;'
           case 'md': return 'margin-right: 10%; margin-left: 1%; padding-top: 5%;'
           case 'lg': return 'margin-right: 10%; margin-left: 5%; padding-top: 15%;'
           case 'xl': return 'margin-right: 8%; margin-left: 1%; padding-top: 25%;'
         }
       },
+      cicloImgeStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:100%; width:100vw;'
+          case 'sm': return 'height:100%; width:100vw;'
+        }
+      },
+      rowProjectStyle2 () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'margin-right: 1%; margin-left: 1%;'
+          case 'sm': return 'margin-right: 3%; margin-left: 12%;'
+          case 'md': return 'margin-right: 10%; margin-left: 1%;'
+          case 'lg': return 'margin-right: 10%; margin-left: 5%;'
+          case 'xl': return 'margin-right: 8%; margin-left: 8%;'
+        }
+      },
+      
     },
   }
 </script>
@@ -343,6 +373,11 @@
 .white_back {
   background-color: white !important;
 }
+
+.image-rotation {
+  transform: rotate(180deg);
+}
+
 .xsOnlyStyle1 {
   margin-top:-27%; 
   z-index:2;

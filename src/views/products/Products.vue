@@ -6,13 +6,22 @@
   >
     <v-img
       :src="`${baseUrl}doctus VIII.png`"
-      height="80vh"
-      width="100vw"
-    />
-    <v-img
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-      style="top:-46px"
-    />
+      :style="imgStyle"
+    >
+      <v-col
+      class="d-flex flex-column-reverse ma-0 pa-0"
+      style="height:100%"
+      >
+        <v-img
+          :src="`${baseUrl}web-combiomed-historia-03.png`"
+          height="16%"
+          width="100vw"
+          max-height="16%"
+
+        />
+      </v-col>
+    </v-img>
+    
     <v-row
       justify="center"
       align="center"
@@ -34,12 +43,10 @@
           <v-col
             md="3"
           >
-<!--            <hr>-->
             <h3
               class="text-uppercase text-center"
             >
               Productos
-<!--              <br>-->
             </h3>
           </v-col>
           <v-col>
@@ -156,6 +163,15 @@
       routeType () {
         return this.$route.query['type'] && this.selectProductsTypes.some(x => x.value === this.$route.query['type'])
           ? this.$route.query['type'] : null
+      },
+      imgStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:100%; width:100vw'
+          case 'sm': return 'height:100%; width:100vw'
+          case 'md': return 'height:100%; width:100vw'
+          case 'lg': return 'height:80vh; width:100vw'
+          case 'xl': return 'height:80vh; width:100vw'
+        }        
       },
     },
     async created () {

@@ -1,11 +1,12 @@
 <template>
-  <v-img
+  <!-- <v-img
     src="../../../public/web-combiomed-productos-noticias&eventos-04.png"
     style="z-index: 2;"
-  >
+  > -->
+  <div style="margin-bottom:5%;">
     <v-col
       cols="12"
-      style="margin-top:10%;"
+      style="margin-top:5%;"
     >
       <v-row
         justify="center"
@@ -69,7 +70,8 @@
         </v-row>
       </v-col>
    </v-row>
-    </v-img>
+  </div>
+    <!-- </v-img> -->
 </template>
 
 <script>
