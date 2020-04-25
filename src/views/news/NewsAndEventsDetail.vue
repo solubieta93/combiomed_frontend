@@ -5,33 +5,41 @@
   >
     <v-img
       v-if="!post.image"
-      :src="`${baseUrl}ampa- (1).png`"
-      style="top:0px"
-      max-height="80vh"
-    />
-    <v-img
-      v-else
-      :src="post.image"
-      max-height="70vh"
-    />
-    <v-img
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-      style="top:-46px"
-    />
+      :src="!post.image ? `${baseUrl}ampa- (1).png` : `${baseUrl}web-combiomed-historia-03.png`"
+      :style="imgStyle"
+    >
+      <v-col
+      class="d-flex flex-column-reverse ma-0 pa-0"
+      style="height:100%"
+      >
+        <v-img
+          :src="`${baseUrl}web-combiomed-historia-03.png`"
+          height="16%"
+          width="100vw"
+          max-height="16%"
+
+        />
+      </v-col>
+    </v-img>
 
     <!-- FIRST NEWS -->
     <div class="mycontainer">
-      <div class="mygrid">
-        <div class="item-0">
-          <h3
-            class="text-uppercase"
-            style="color: grey;"
-          >
-            {{ post.title }}
-            <br>
-          </h3>
-        </div>
-        <div class="item-2">
+      <v-row >
+        <v-col 
+          sm="12"
+          lg="5"
+          xl="6"
+          cols="12"
+        >
+          <v-row>
+            <h3
+              class="text-uppercase"
+              style="color: grey;"
+            >
+              {{ post.title }}
+              <br>
+            </h3>
+          </v-row>
           <v-row
             v-for="(item, i) in !loading && post ? post.details : []"
             :key="i"
@@ -40,18 +48,21 @@
           >
             <v-col
               cols="12"
+              class="pa-0"
             >
-              <h2>{{ item.text }}</h2>
-              <li
+              <h4>{{ item.text }}</h4>
+              <p
                 v-for="(value, index) in item.items"
                 :key="index"
               >
                 {{ value }}
-              </li>
+              </p>
             </v-col>
           </v-row>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
+
+      <!-- TO EDIT NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
       <v-row
         v-if="!loading && post && isAdmin"
         justify="center"
@@ -73,6 +84,8 @@
           </v-row>
         </v-col>
       </v-row>
+
+      <!-- TO DELETE NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
       <v-row
         v-if="!loading && post && isAdmin"
         justify="center"
@@ -92,8 +105,6 @@
           </v-row>
         </v-col>
       </v-row>
-
-      <!-- TO DELETE NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
       <v-dialog 
         v-model="deletePos" 
         persistent 
@@ -109,9 +120,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      
-
     </div>
     
     <!-- TO SHOW OTHER TWO NEWS -->
@@ -126,7 +134,6 @@
     </v-row>
 
     <!-- TO SHOW OTHER NEWS AS SUGERENCY -->
-
     <v-col cols="12">
       <v-row
         justify="center"
@@ -188,6 +195,15 @@
       postId () {
         return this.$route.params.postId
       },
+      imgStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:100%; width:100vw'
+          case 'sm': return 'height:100%; width:100vw'
+          case 'md': return 'height:100%; width:100vw'
+          case 'lg': return 'height:80vh; width:100vw'
+          case 'xl': return 'height:80vh; width:100vw'
+        }        
+      },
     },
     watch: {
       async postId (value) {
@@ -205,6 +221,7 @@
           id_distinct: this.$route.params.postId,
         })
         this.twoposts = posts
+        console.log(this.twoposts, 'twoposts')
       },
       load () {
         this.loading = true
@@ -254,7 +271,7 @@ height:100%;
 .mycontainer {
 	margin:auto;
   margin-bottom: 10%;
-	width:60%;
+	width:80%;
 }
 
 .mygrid{

@@ -100,7 +100,8 @@ const actions = {
                 await commit('SET_COUNT_POST', res.data.data.count)
                 await commit('SET_BLOG', res.data.data.results) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
-                    posts: res.data.data.results, // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    posts: res.data.data.results.map(x => unzip(x)), // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    
                     count: res.data.data.count,
                 }
             } else {

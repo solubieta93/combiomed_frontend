@@ -18,7 +18,7 @@
           style="height:100%"
         >
           <v-img
-            src="web-combiomed-historia-03.png"
+            :src="`${baseUrl}web-combiomed-historia-03.png`"
             height="16%"
             width="100vw"
             max-height="16%"
