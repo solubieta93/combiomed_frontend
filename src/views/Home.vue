@@ -5,68 +5,95 @@
   >
     <carousel-portada />
 
-    <v-img
+    <!-- <v-img
         src="web-combiomed-historia-03.png"
         style="top:-46px"
-    />
+    /> -->
 
     <!-- QUIENES SOMOS -->
     <accordion id="us"/>
     
+
+    <v-img
+      :src="`${baseUrl}web-combiomed-historia-03.png`"
+      height="16%"
+      width="100vw"
+      max-height="16%"
+      class="image-rotation"
+    />
+
     <!-- PRODUCTOS -->
-    <line-products/>
+    <products-line/>
+
+    <v-img
+      :src="`${baseUrl}web-combiomed-historia-03.png`"
+      height="16%"
+      width="100vw"
+      max-height="16%"
+    />
 
     <!-- SERVICIOS -->
     <services />
 
-    <!-- NOTICIAS Y EVENTOS -->
     <v-img
-        src="web-combiomed-productos-noticias&eventos-04.png"
-        style="top:-195px; z-index:2;"
-    >
-      <v-col justify-self="center">
-        <v-row style="margin-top:120px;">
-          <v-col cols="12">
-            <v-row
-              justify="center"
-              style="height: 50px; color:#293D66;"
-            >
-              <v-col md="3">
-                <hr style="color:#293D66;">
-              </v-col>
-              <v-col md="2">
-                <h3
-                  class="text-uppercase"
-                  style="margin-top: -14px; margin-left: 16px; "
+      :src="`${baseUrl}web-combiomed-historia-03.png`"
+      height="16%"
+      width="100vw"
+      max-height="16%"
+      class="image-rotation"
+    />
+
+    <!-- NOTICIAS Y EVENTOS -->
+    <v-row>
+      <v-col >
+          <v-col justify-self="center">
+            <v-row style="margin-top:15px;">
+              <v-col cols="12">
+                <v-row
+                  justify="center"
+                  style="height: 50px; color:#293D66;"
                 >
-                  Noticias y Eventos
-                  <br>
-                </h3>
-              </v-col>
-              <v-col md="3">
-                <hr style="color:#293D66;">
+                  <v-col md="3">
+                    <hr style="color:#293D66;">
+                  </v-col>
+                  <v-col md="2">
+                    <h3
+                      class="text-uppercase"
+                      style="margin-top: -14px; margin-left: 16px; "
+                    >
+                      Noticias y Eventos
+                      <br>
+                    </h3>
+                  </v-col>
+                  <v-col md="3">
+                    <hr style="color:#293D66;">
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-col>
-        </v-row>
+          <div class="mycontainer">
+            <principal-news-and-events/>
+          </div>
+          <v-row justify="center" style="margin-bottom:1%;">
+              <v-btn
+                text
+                to='/news'
+              >
+                <p style="color:#293D66;"> Ver todas las noticias </p>
+              </v-btn>
+          </v-row>
       </v-col>
-      <div class="mycontainer">
-        <principal-news-and-events/>
-      </div>
-      <v-row justify="center" style="margin-bottom:1%;">
-          <v-btn
-            text
-            to='/news'
-          >
-            <p style="color:#293D66;"> Ver todas las noticias </p>
-          </v-btn>
-      </v-row>
-    </v-img>
+    </v-row>
 
-    <!-- CONTACTOS -->  
-    <div id="contacts">  
+     <v-img
+      :src="`${baseUrl}web-combiomed-historia-03.png`"
+      height="16%"
+      width="100vw"
+      max-height="16%"
+    />
+    <!-- CONTACTOS -->   
     <contact />
-    </div>
   </v-container>
 </template>
 
@@ -74,9 +101,9 @@
   import CarouselPortada from '@/components/utils/CarouselPortada'
   import Services from '@/components/services/Services'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
-  import LineProducts from '@/components/product/LineProducts'
+  import ProductsLine from '@/components/product/ProductsLine'
   import Accordion from '@/components/utils/Accordion'
-  import Contact from '@/components/utils/Contact'
+  import Contact from '@/components/contacts/ContactsDescription'
 
   export default {
     components: {
@@ -84,7 +111,7 @@
       Accordion,
       PrincipalNewsAndEvents,
       Services,
-      LineProducts,
+      ProductsLine,
       Contact
     },
     data () {
@@ -110,6 +137,10 @@
 .white_back {
   background-color: white !important;
 }
+.image-rotation {
+  transform: rotate(180deg);
+}
+
 .mycontainer {
 	margin:auto;
 	width:60%;

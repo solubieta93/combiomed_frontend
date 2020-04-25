@@ -36,6 +36,9 @@ const mutations = {
     DEL_PRODUCT: (state, payload) => {
         state.product = state.product.filter(x => x.id !== payload)
     },
+    DEL_PRODUCT_TYPES: (state, payload) => {
+        state.productsTypes = state.productsTypes.filter(x => x.id !== payload)
+    },
     PATCH_PRODUCT: (state, payload) => {
         // eslint-disable-next-line camelcase
         const product_i = state.product.findIndex(x => x.id === payload.id)
@@ -170,40 +173,7 @@ const actions = {
                 }
             }
         }
-    },
-    postTypeProduct: async ({ commit }, payload) => {
-        try {
-            const res = await axios.post('/api/types/products/', {
-                title: payload.title,
-                description: payload.description,
-                image: payload.image,
-            },
-            {
-                headers: {
-                    'Authorization': 'Token ' + localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-            })
-            commit('SET_ADD_PRODUCT_TYPE', res.data)
-            return {
-                success: true,
-                message: 'ok',
-            }
-        } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
-            }
-        }
-    },
+    },    
     patchProduct: async ({ commit }, payload) => {
         try {
             const res = await axios.patch('/api/products/' + payload.id + '/', { ...payload.changes },
@@ -272,6 +242,7 @@ const actions = {
         return Object({
             title: '',
             description: '',
+            priority: -1,
         })
     },
     getProductsTypes: async ({ commit }, params) => {
@@ -303,6 +274,83 @@ const actions = {
         }
       }
     },
+    postTypeProduct: async ({ commit }, payload) => {
+        try {
+            const res = await axios.post('/api/types/products/', {
+                ...payload,
+            },
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            commit('SET_ADD_PRODUCT_TYPE', res.data)
+            return {
+                success: true,
+                message: 'ok',
+            }
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
+    },
+    patchTypeProduct: async ({ commit }, payload) => {
+        try {
+            const res = await axios.patch('/api/types/products/' + payload.id + '/', { ...payload.changes },
+            {
+                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
+            })
+            console.log(res, 'result patch')
+            return {
+                success: true,
+                message: 'ok',
+                id: res.data.id,
+            }
+        } catch (error) {
+            console.log(error)
+            return {
+                success: false,
+                message: `Error: ${error}`,
+            }
+        }
+    },
+    delProductTypes: async ({ commit }, payload) => {
+        try {
+            await axios.delete('/api/types/products/' + payload + '/',
+            {
+                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
+            })
+            commit('DEL_PRODUCT_TYPES', payload.id)
+            return {
+                success: true,
+                message: 'ok',
+            }
+        } catch (error) {
+            if (error.response) {
+                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
+                return {
+                    success: false,
+                    message: `Error: ${e}`,
+                }
+            } else if (error.request) {
+                console.log('error request', error.request)
+            } else {
+                console.log(error.message)
+            }
+        }
+    },
+
 }
 
 const getters = {

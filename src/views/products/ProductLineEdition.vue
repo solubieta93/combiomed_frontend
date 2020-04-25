@@ -31,93 +31,162 @@
         {{ error }}
       </v-alert>
     </v-row>
-    <product-form
-      v-if="!loading && !!product"
-      :product-base="product"
-      :on-save="saveProduct"
-      :editing="modeEdition"
+
+    <v-row 
+      v-if="modeEdition"
+        justify="center"
+        align="center"
+    >
+      <v-col align-self="center">
+        <v-row
+            align="center"
+            justify="center"
+        >
+          <v-spacer />
+          <v-divider />
+          <v-col
+            cols="8"
+            sm="8"
+            md="6"
+            lg="4"
+            xl="3"
+          >
+            <v-select
+                :items="selectProductsTypes"
+                hide-details
+                clearable
+                solo
+                flat
+                dense
+                color="#8b0000"
+                :loading="loading"
+                :label="selectedType ? null : 'Seleccione una linea'"
+                @change="onUpdateSelected"
+            />
+          </v-col>
+          <v-divider />
+          <v-spacer />
+        </v-row>
+      </v-col>
+    </v-row>
+
+    <product-line-form
+      v-if="!loading"
+      :line="modeEdition ? productType : line"
+      :on-save="saveLine"
+      :mode="modeEdition ? 'editing' : 'creating'"
     />
   </v-container>
 </template>
 
+
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
-  import ProductForm from '@/components/product/ProductForm'
+  import ProductLineForm from '@/components/product/ProductLineForm'
+
   import { mapGetters } from 'vuex'
+
   export default {
     name: 'ProductEdition',
     components: {
       CarouselPortada,
-      ProductForm,
+      ProductLineForm,
     },
     props: {
-      // modeEdition: {
-      //   type: Boolean,
-      //   default: true,
-      // },
+      modeEdition: {
+        type: Boolean,
+        default: false,
+      },
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
         loading: false,
-        product: null,
+        line: null,
         error: null,
         snackbar: false,
         productId: null,
-        modeEdition: true,
+
+        productsTypes: [],
+        text: '',
+        typeId: null,
+        refresh: false,
+        selectedType: undefined,
+
+        // modeEdition: true,
       }
     },
     computed: {
       ...mapGetters(['user']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
+      selectProductsTypes () {
+        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
+      },
+      productType() {
+        return this.typeId && this.productsTypes ? this.productsTypes.filter(x => x.id.toString() === this.typeId)[0] : null
+      }
     },
-    created () {
-      this.modeEdition = !!this.$route.params.productId
-    },
-    mounted () {
+    async mounted () {
       console.log(this.modeEdition, 'modeEdition')
       if (this.modeEdition) {
-        this.getProduct()
+        this.loading = true
+        await this.getTypes()
+        .then(_ => {
+            this.loading = false
+        })
+        .catch(e => {
+            this.loading = false
+        })
       } else {
         this.buildProduct()
       }
     },
     methods: {
-      getProduct () {
+      async getTypes () {
         this.loading = true
-        this.error = null
-        this.snackbar = false
-        this.productId = this.$route.params.productId
-        this.$store.dispatch('getProduct', this.$route.params.productId)
-          .then(res => {
-            if (res.success) {
-              this.product = res.product
-            } else if (res.notFound) {
-              this.$router.push('/')
-            } else {
-              this.error = res.message
-              this.snackbar = true
-            }
-          })
-          .catch(e => {
-            console.log(e)
-            this.error = e
-            this.snackbar = true
-          }).finally(() => {
-            this.loading = false
-          })
+        await this.$store.dispatch('getProductsTypes')
+        .then(result => {
+          console.log(result.types, 'types')
+          this.productsTypes = result.types
+          this.loading = false
+          return result.types
+        }).catch(e => {
+          this.loading = false
+          return []
+        })
       },
-      async saveProduct (changes) {
+      
+      onUpdateSelected (e) {
+        console.log(typeof e, 'e')
+        this.typeId = e || null
+        if (this.typeId === null) {
+          this.buildProduct()
+        }
+      },
+
+      buildProduct () {
+        this.loading = true
+        this.$store.dispatch('getNewLineProduct').then(x => {
+          this.line = x
+          this.loading = false
+        })
+      },      
+
+      async saveLine (changes) {
         this.loading = true
         const prepared = await this.prepareChanges(changes)
         if (!prepared.success) {
           this.loading = false
           return
         }
-        const payload = this.modeEdition ? { changes, id: this.product.id } : { ...changes }
-        const res = await this.$store.dispatch(this.modeEdition ? 'patchProduct' : 'postProduct', payload)
+        const payload = this.modeEdition ? { changes, id: this.typeId } : { ...changes }
+        const res = await this.$store.dispatch(this.modeEdition ? 'patchTypeProduct' : 'postTypeProduct', payload)
         if (res.success) {
           this.loading = false
-          this.$router.push(`/products/${res.id}`)
+          this.$router.push('/')
+
         } else {
           this.loading = false
           this.error = res.message
@@ -170,17 +239,7 @@
           changes,
         }
       },
-      buildProduct () {
-        this.loading = true
-        this.$store.dispatch('getNewProduct').then(x => {
-          this.product = x
-          this.loading = false
-        })
-      },
     },
   }
 </script>
 
-<style scoped>
-
-</style>

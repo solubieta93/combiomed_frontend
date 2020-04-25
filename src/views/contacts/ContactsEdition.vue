@@ -31,93 +31,158 @@
         {{ error }}
       </v-alert>
     </v-row>
-    <product-form
-      v-if="!loading && !!product"
-      :product-base="product"
-      :on-save="saveProduct"
-      :editing="modeEdition"
+
+    <v-row 
+      v-if="modeEdition"
+        justify="center"
+        align="center"
+    >
+      <v-col align-self="center">
+        <v-row
+            align="center"
+            justify="center"
+        >
+          <v-spacer />
+          <v-divider />
+          <v-col
+            cols="8"
+            sm="8"
+            md="6"
+            lg="4"
+            xl="3"
+          >
+            <v-select
+                :items="selectContacts"
+                hide-details
+                clearable
+                solo
+                flat
+                dense
+                color="#8b0000"
+                :loading="loading"
+                :label="selectedContact ? null : 'Seleccione un contacto'"
+                @change="onUpdateSelected"
+            />
+          </v-col>
+          <v-divider />
+          <v-spacer />
+        </v-row>
+      </v-col>
+    </v-row>
+    <contacts-form
+      v-if="!loading"
+      :contact="modeEdition ? contactExist : contactNull"
+      :on-save="saveContact"
+      :mode="modeEdition ? 'editing' : 'creating'"
     />
   </v-container>
 </template>
 
+
+
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
-  import ProductForm from '@/components/product/ProductForm'
+  import ContactsForm from '@/components/contacts/ContactsForm'
+
   import { mapGetters } from 'vuex'
+
   export default {
     name: 'ProductEdition',
     components: {
       CarouselPortada,
-      ProductForm,
+      ContactsForm,
     },
     props: {
-      // modeEdition: {
-      //   type: Boolean,
-      //   default: true,
-      // },
+      modeEdition: {
+        type: Boolean,
+        default: false,
+      },
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
         loading: false,
-        product: null,
+        refresh: false,
+        text: '',
         error: null,
         snackbar: false,
-        productId: null,
-        modeEdition: true,
+
+        contactNull: null,
+        contacts: [],
+        contactId: null,
+        selectedContact: undefined,
       }
     },
     computed: {
       ...mapGetters(['user']),
+      isAdmin: function () {
+        return this.user && this.user.is_superuser
+      },
+      selectContacts () {
+        return this.contacts.map(x => ({ text: x.name, value: x.id.toString() }))
+      },
+      contactExist() {
+        return this.contactId && this.contacts ? this.contacts.filter(x => x.id.toString() === this.contactId)[0] : null
+      }
     },
-    created () {
-      this.modeEdition = !!this.$route.params.productId
-    },
-    mounted () {
+    async mounted () {
       console.log(this.modeEdition, 'modeEdition')
       if (this.modeEdition) {
-        this.getProduct()
+        this.loading = true
+        await this.getContacts()
+        .then(_ => {
+            this.loading = false
+        })
+        .catch(e => {
+            this.loading = false
+        })
       } else {
-        this.buildProduct()
+        this.buildContact()
       }
     },
     methods: {
-      getProduct () {
+      async getContacts () {
         this.loading = true
-        this.error = null
-        this.snackbar = false
-        this.productId = this.$route.params.productId
-        this.$store.dispatch('getProduct', this.$route.params.productId)
-          .then(res => {
-            if (res.success) {
-              this.product = res.product
-            } else if (res.notFound) {
-              this.$router.push('/')
-            } else {
-              this.error = res.message
-              this.snackbar = true
-            }
-          })
-          .catch(e => {
-            console.log(e)
-            this.error = e
-            this.snackbar = true
-          }).finally(() => {
-            this.loading = false
-          })
+        await this.$store.dispatch('getContacts')
+        .then(result => {
+          console.log(result, 'contacts')
+          this.contacts = result
+          this.loading = false
+          return result
+        }).catch(e => {
+          this.loading = false
+          return []
+        })
       },
-      async saveProduct (changes) {
+      
+      onUpdateSelected (e) {
+        console.log(typeof e, 'e')
+        this.contactId = e || null
+        if (this.contactId === null) {
+          this.buildContact()
+        }
+      },
+
+      buildContact () {
+        this.loading = true
+        this.$store.dispatch('getNewContact').then(x => {
+          this.contactNull = x
+          this.loading = false
+        })
+      },      
+
+      async saveContact (changes) {
         this.loading = true
         const prepared = await this.prepareChanges(changes)
         if (!prepared.success) {
           this.loading = false
           return
         }
-        const payload = this.modeEdition ? { changes, id: this.product.id } : { ...changes }
-        const res = await this.$store.dispatch(this.modeEdition ? 'patchProduct' : 'postProduct', payload)
+        const payload = this.modeEdition ? { changes, id: this.contactId } : { ...changes }
+        const res = await this.$store.dispatch(this.modeEdition ? 'patchContact' : 'postContact', payload)
         if (res.success) {
           this.loading = false
-          this.$router.push(`/products/${res.id}`)
+          this.$router.push(`/contacts`)
         } else {
           this.loading = false
           this.error = res.message
@@ -170,17 +235,6 @@
           changes,
         }
       },
-      buildProduct () {
-        this.loading = true
-        this.$store.dispatch('getNewProduct').then(x => {
-          this.product = x
-          this.loading = false
-        })
-      },
     },
   }
 </script>
-
-<style scoped>
-
-</style>

@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import axios from '../../utils/axios-auth'
 import { apiURI } from '../../utils/globalConstants'
+import { unzip } from '../store'
+
 
 const state = {
     blog: [],
@@ -98,7 +100,8 @@ const actions = {
                 await commit('SET_COUNT_POST', res.data.data.count)
                 await commit('SET_BLOG', res.data.data.results) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
-                    posts: res.data.data.results, // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    posts: res.data.data.results.map(x => unzip(x)), // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
+                    
                     count: res.data.data.count,
                 }
             } else {
@@ -135,23 +138,28 @@ const actions = {
                     ...res.data,
                     // image: res.data.image ? apiURI + res.data.image : null,
                 })
-                return true
+                
+                return {
+                    success: true,
+                    message: 'ok',                    
+                    post: unzip(res.data),
+                    notFound: false,
+                }
             }
-            await commit('SET_PRODUCT_ERROR', res.data.detail)
-            return false
+            return {                
+                success: false,
+                message: res.data[Object.keys(res.data)[0]],
+                post: null,
+                notFound: res.status === 404,
+            }
         } catch (e) {
-            await commit('SET_PRODUCT_ERROR', e.message)
             return false
         }
     },
     postPost: async ({ commit }, payload) => {
         try {
-            const res = await axios.post('/blog', {
-                title: payload.title,
-                abstract: payload.abstract,
-                context: payload.context,
-                news: payload.news,
-                image: payload.image,
+            const res = await axios.post('/blog',{
+                ...payload,
             },
             {
                 headers: {
@@ -164,6 +172,7 @@ const actions = {
             return {
                 success: true,
                 message: 'ok',
+                id: res.data.id,
             }
         } catch (error) {
             if (error.response) {
@@ -181,12 +190,7 @@ const actions = {
     },
     patchPost: async ({ commit }, payload) => {
         try {
-            const res = await axios.patch('blog/' + payload.id, {
-                title: payload.title,
-                abstract: payload.abstract,
-                context: payload.context,
-                news: payload.news,
-            },
+            const res = await axios.patch('blog/' + payload.id, { ...payload.changes },
             {
                 headers: {
                     'Authorization': 'Token ' + localStorage.getItem('token'),
@@ -198,18 +202,13 @@ const actions = {
             return {
                 success: true,
                 message: 'ok',
+                id: res.data.id,
             }
         } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
+            console.log(error)
+            return {
+                success: false,
+                message: `Error: ${error}`,
             }
         }
     },
@@ -305,8 +304,9 @@ const actions = {
     getNewPost: () => {
         return Object({
             title: '',
-            context: '',
             abstract: '',
+            details: [],
+            files: [],
             news: false,
             image: null,
         })

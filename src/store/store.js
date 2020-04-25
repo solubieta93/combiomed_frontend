@@ -6,10 +6,23 @@ import blog from './modules/blog'
 import file from './modules/file'
 import query from './modules/query'
 import contacts from './modules/contacts'
-
 import queryNames from './names/query'
 
 Vue.use(Vuex)
+
+export const unzip = x => ({
+  ...x,
+  // image: x.image ? apiURI + x.image : null,
+  files: x.files
+    ? x.files.map(y => ({
+        ...y,
+        src: apiURI + y.src,
+    }))
+    : [],
+  details: x.details && x.details.details
+    ? x.details.details
+    : [],
+})
 
 export const buildPrefix = (x, prefix) => {
   switch (x) {

@@ -40,8 +40,7 @@
                   >
                     <v-img
                       :src="`${baseUrl}Logo sin genérico - Fondo blanco.png`"
-                      height="70px"
-                      width="300px"
+                      :style="logoStyle"
                       :aspect-ratio="1.0778"
                     />
                   </v-btn>
@@ -175,6 +174,15 @@
       hideSlider () {
         const route = this.$route.path
         return /^\/services\/*/.test(route) || route === '/' || route === '/login'
+      },
+      logoStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:70px; width:240px;'
+          case 'sm': return 'height:70px; width:300px;'
+          case 'md': return 'height:70px; width:300px;'
+          case 'lg': return 'height:70px; width:300px;'
+          case 'xl': return 'height:70px; width:300px;'
+        }
       },
     },
     methods: {

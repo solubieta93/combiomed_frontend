@@ -1,38 +1,46 @@
 <template>
   <v-img :src="`${baseUrl}web-combiomed-futer-04-04-04.png`" style="z-index:2;">
   <v-row justify="center">
-    <v-col cols="3">
-    <v-row justify="center">
-      <v-list-item-icon
-        v-for="i in icons"
-        :key="i"
-        style="margin-left:3px; margin-right: 3px;"
-      >
-        <v-icon
-          color="grey"
-          class="ma-0"
+    <v-col cols="4">
+      <v-row justify="center">
+        <v-list-item-icon
+          v-for="i in icons"
+          :key="i"
+          style="margin-left:3px; margin-right: 3px;"
         >
-          {{ i }}
-        </v-icon>
-      </v-list-item-icon>
-    </v-row>
-  </v-col>
+          <v-icon
+            color="grey"
+            class="ma-0"
+          >
+            {{ i }}
+          </v-icon>
+        </v-list-item-icon>
+      </v-row>
+    </v-col>
   </v-row>
-  
+  <v-row justify="center">
     <v-col 
-      md="12"
-      sm="12"
-      lg="12"
-      xl="12"
-      xs="12"
+      cols="8"
+      sm="7"
+      lg="4"
+      xl="3"
       justify="center"
     >
-    <v-row justify="center">
+    <v-row justify="center" >
+      <v-col 
+      cols="8"
+      sm="10"
+      lg="10"
+      xl="9"
+      justify="center"
+    >
       <p style="color: lightgrey">
         @ Copyright 2020 Combiomed BioCubaFarma
       </p>
+      </v-col>
       </v-row>
     </v-col>
+  </v-row>
   
   </v-img>
 </template>

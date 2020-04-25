@@ -63,50 +63,51 @@
         </div>
 
         <!-- TO ADD CONTACTS, ONLY ADMIN CAN DO IT -->
-        <v-dialog
-        v-model="addContact"
-        max-width="600px"
-        >
-        <contact-add-item
-            :contact="newContact"
-            :mode="'creating'"
-            :onSave="() => { addContact = false; paginate()}"
-        />
-        </v-dialog>
-        
-        <v-card-text
-        v-if="isAdmin"
-        style="height: 100px; position: relative"
-        >
-        <v-btn
-            absolute
-            dark
+        <v-row
+      v-if="isAdmin"
+      justify="center"
+    >
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
             fab
-            right
+            dark
             small
+            right
             color="pink"
-            @click="showAddContactDialog"
-        >
-            <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        </v-card-text>
+            to="/contacts/new"
+          >
+             <v-icon>mdi-plus</v-icon>
+          </v-btn>
+          <v-btn
+            fab
+            dark
+            small
+            right
+            color="green"
+            to="/contacts/edit"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+   </v-row>
         
     </v-container>
 </template>
 
 <script>
-import ContactAddItem from '@/components/utils/ContactAddItem'
-import EditDeleteContact from '@/components/utils/EditDeleteContact'
 import { mapGetters } from 'vuex'
+
 export default {
     components: {
-        ContactAddItem,
-        EditDeleteContact
     },
     props: {
         margin_style:{
             type: String,
-            default: 'margin-top: -13%; margin-bottom: 1%;'
+            default: 'margin-top: 2%; margin-bottom: 1%;'
         }
     },
     data () {
@@ -138,10 +139,6 @@ export default {
                 console.log(this.contactsItem, 'contacts')
             })
             
-        },
-        async showAddContactDialog () {
-        this.newContact = await this.$store.dispatch('getNewContact')
-        this.addContact = true
         },
         my:function(){
             var button = document.getElementById("contacts");

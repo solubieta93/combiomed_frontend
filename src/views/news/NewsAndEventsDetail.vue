@@ -5,74 +5,106 @@
   >
     <v-img
       v-if="!post.image"
-      :src="`${baseUrl}ampa- (1).png`"
-      style="top:0px"
-      max-height="80vh"
-    />
-    <v-img
-      v-else
-      :src="post.image"
-      max-height="70vh"
-    />
-    <v-img
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-      style="top:-46px"
-    />
+      :src="!post.image ? `${baseUrl}ampa- (1).png` : `${baseUrl}web-combiomed-historia-03.png`"
+      :style="imgStyle"
+    >
+      <v-col
+      class="d-flex flex-column-reverse ma-0 pa-0"
+      style="height:100%"
+      >
+        <v-img
+          :src="`${baseUrl}web-combiomed-historia-03.png`"
+          height="16%"
+          width="100vw"
+          max-height="16%"
+
+        />
+      </v-col>
+    </v-img>
 
     <!-- FIRST NEWS -->
     <div class="mycontainer">
-      <div class="mygrid">
-        <div class="item-0">
-          <h3
-            class="text-uppercase"
-            style="color: grey;"
+      <v-row >
+        <v-col 
+          sm="12"
+          lg="5"
+          xl="6"
+          cols="12"
+        >
+          <v-row>
+            <h3
+              class="text-uppercase"
+              style="color: grey;"
+            >
+              {{ post.title }}
+              <br>
+            </h3>
+          </v-row>
+          <v-row
+            v-for="(item, i) in !loading && post ? post.details : []"
+            :key="i"
+            justify="center"
+            align="center"
           >
-            <!-- {{post.title}} -->
-            {{ post.title }}
-            <br>
-          </h3>
-        </div>
-        <!-- <div class="item-1">
-          <hr/>
-        </div> -->
-        <div class="item-2">
-          <p class="text-justify">
-          <!-- {{post.content}} -->
-          {{ post.context }}
-        </p>
-        </div>
-      </div>
+            <v-col
+              cols="12"
+              class="pa-0"
+            >
+              <h4>{{ item.text }}</h4>
+              <p
+                v-for="(value, index) in item.items"
+                :key="index"
+              >
+                {{ value }}
+              </p>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
 
       <!-- TO EDIT NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
-      <v-dialog
-        v-model="editPost"
-        max-width="600px"
+      <v-row
+        v-if="!loading && post && isAdmin"
+        justify="center"
       >
-        <post-add-item
-          :post="post"
-          :mode="'editing'"
-          :onSave="() => { editPost = false; load()}"
-        />
-      </v-dialog>
-      
-      <v-card-text
-        v-if="isAdmin"
-        style="height: 50px; position: relative"
-      >
-        <v-btn
-          absolute
-          dark
-          fab
-          right
-          small
-          color="pink"
-          @click="editPost= true"
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-      </v-card-text>
+        <v-col cols="8">
+          <v-row justify="end">
+            <v-btn
+              fab
+              dark
+              small
+              right
+              color="green"
+              @click="goToEdit"
+            >
+              <v-icon dark>
+                mdi-pencil
+              </v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
 
       <!-- TO DELETE NEWS OR EVENTS, ONLY ADMIN CAN DO IT -->
+      <v-row
+        v-if="!loading && post && isAdmin"
+        justify="center"
+      >
+        <v-col cols="8">
+          <v-row justify="end">
+            <v-btn
+              fab
+              dark
+              small
+              right
+              color="red"
+              @click="deletePos= !deletePos"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
       <v-dialog 
         v-model="deletePos" 
         persistent 
@@ -88,24 +120,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <v-card-text
-        v-if="isAdmin"
-        style="height: 50px; position: relative"
-      >
-        <v-btn
-          absolute
-          dark
-          fab
-          right
-          small
-          color="red"
-          @click="deletePos= !deletePos"
-        >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-      </v-card-text>
-
     </div>
     
     <!-- TO SHOW OTHER TWO NEWS -->
@@ -120,7 +134,6 @@
     </v-row>
 
     <!-- TO SHOW OTHER NEWS AS SUGERENCY -->
-
     <v-col cols="12">
       <v-row
         justify="center"
@@ -155,22 +168,23 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
-  import PostAddItem from '@/components/newsAndevents/PostAddItem'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       ShowPostDetail,
-      PostAddItem,
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
+        post: null,
         twoposts: [],
         plaf: null,
         editPost: false,
         deletePos: false,
+        loading: false,
+        error: null,
       }
     },
     computed: {
@@ -180,6 +194,15 @@
       },
       postId () {
         return this.$route.params.postId
+      },
+      imgStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'height:100%; width:100vw'
+          case 'sm': return 'height:100%; width:100vw'
+          case 'md': return 'height:100%; width:100vw'
+          case 'lg': return 'height:80vh; width:100vw'
+          case 'xl': return 'height:80vh; width:100vw'
+        }        
       },
     },
     watch: {
@@ -198,18 +221,39 @@
           id_distinct: this.$route.params.postId,
         })
         this.twoposts = posts
+        console.log(this.twoposts, 'twoposts')
       },
-      async load () {
-        const ok = await this.$store.dispatch('getPost', this.$route.params.postId)
-        if (!ok) { this.$router.push('/') }
-        await this.paginate()
+      load () {
+        this.loading = true
+        this.error = null
+        this.$store.dispatch('getPost', this.$route.params.postId)
+          .then(res => {
+            if (res.success) {
+              this.post = res.post
+            } else if (res.notFound) {
+              this.$router.push('/')
+            } else {
+              this.error = res.message
+            }
+          })
+          .catch(e => {
+            console.log(e)
+            this.error = e
+          }).finally(() => {
+            this.loading = false
+            this.paginate()
+          })
       },
       async deletePost(post_id) {
         const ok = await this.$store.dispatch('delPost', this.$route.params.postId)
         if (!ok) { this.$router.push('/') }
         // await this.paginate()
         this.$router.push('/news')
-      }
+      },
+      goToEdit () {
+        this.$router.push(`/news/${this.$route.params.postId}/edit`)
+      },
+      
     },
   }
 </script>
@@ -227,7 +271,7 @@ height:100%;
 .mycontainer {
 	margin:auto;
   margin-bottom: 10%;
-	width:60%;
+	width:80%;
 }
 
 .mygrid{

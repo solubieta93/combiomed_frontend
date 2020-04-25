@@ -1,18 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login.vue'
+
 import NewsAndEvents from '@/views/news/NewsAndEvents.vue'
 import NewsAndEventsDetail from '@/views/news/NewsAndEventsDetail.vue'
+import NewsAndEventsEdition from '@/views/news/NewsAndEventsEdition.vue'
+
+import Services from '@/components/services/Services'
 import AutoServices from '@/views/services/AutoServices.vue'
 import TechServices from '@/views/services/TechServices.vue'
 import MecServices from '@/views/services/MecServices.vue'
+
 import Products from '@/views/products/Products.vue'
 import ProductDescription from '@/views/products/ProductDescription.vue'
-import Home from '@/views/Home.vue'
-import Services from '@/components/services/Services'
-import Contacts from '@/views/Contacts'
-import Us from '@/views/Us'
 import ProductEdition from '@/views/products/ProductEdition'
+import ProductLineEdition from '@/views/products/ProductLineEdition'
+
+import Home from '@/views/Home.vue'
+
+import Contacts from '@/views/contacts/Contacts'
+import ContactsEdition from '@/views/contacts/ContactsEdition'
+
+import Us from '@/views/Us'
+
 import { store } from '../store/store'
 const AppLayout = () => import('@/components/layouts/App_Layout.vue')
 
@@ -51,6 +61,26 @@ const router = new Router({
           component: ProductEdition,
           props: {
             modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'newLine',
+          component: ProductLineEdition,
+          props: {
+            modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'editLine',
+          component: ProductLineEdition,
+          props: {
+            modeEdition: true,
           },
           meta: {
             requiresAuth: true,
@@ -100,8 +130,25 @@ const router = new Router({
           component: NewsAndEvents,
         },
         {
+          path: 'new',
+          component: NewsAndEventsEdition,
+          props: {
+            modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: ':postId',
           component: NewsAndEventsDetail,
+        },
+        {
+          path: ':postId/edit',
+          component: NewsAndEventsEdition,
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
     },
@@ -112,6 +159,26 @@ const router = new Router({
         {
           path: '',
           component: Contacts,
+        },
+        {
+          path: 'new',
+          component: ContactsEdition,
+          props: {
+            modeEdition: false,
+          },
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'edit',
+          component: ContactsEdition,
+          props: {
+            modeEdition: true,
+          },
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
     },

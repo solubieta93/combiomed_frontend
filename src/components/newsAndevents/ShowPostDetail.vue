@@ -1,61 +1,122 @@
 <template>
-  <div class="mycontainer2">
-    <div class="mygrid" v-if="ubication_news === 'Right'">
-      <div class="item-0" v-if="ubication_news === 'Right'">
-        <v-img 
-        
+<!--  -->
+  <div class="mycontainer2" >
+    <v-row 
+      v-if="ubication_news === 'Right'" 
+      style="margin-right: 0px; margin-left: 0px;"
+    >
+      <v-col 
+        sm="5"
+        md="6"
+        lg="6"
+        xl="6"
+        cols="7"
+        v-if="ubication_news === 'Right'"
+      >
+        <v-img
             :aspect-ratio="16/9"
             :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
             style="top:0px; opacity:0.50;"
           />
-      </div>
-      <div class="item-1" v-if="ubication_news === 'Right'">
-        <h3
-          class="text-uppercase"
-          style="color: grey;"
-        >
-          {{ post.title }}
-          <br>
-        </h3>
-      </div>
-      <div class="item-2" v-if="ubication_news === 'Right'">
-          <p class="text-justify">
-          <!-- {{post.content}} -->
-          {{ post.context }}
-        </p>
-      </div>
-      <!-- <div class="item-3" v-if="ubication_news === 'Right'">
-          <hr/>
-      </div> -->
-    </div>
+      </v-col>
 
-    <div class="mygrid" v-if="ubication_news === 'Left'">
-      <div class="item-10" v-if="ubication_news === 'Left'">
+      <v-col
+        sm="7"
+        md="6"
+        lg="6"
+        xl="6"
+        cols="5"
+        v-if="ubication_news === 'Right'"
+        style="margin-left: -5%;"
+      >
+        <v-row>
+          <h3
+            class="text-uppercase"
+            style="color: grey;"
+          >
+            {{ post.title }}
+            <br>
+          </h3>
+        </v-row>
+        <v-row
+          v-for="(item, i) in post ? post.details : []"
+          :key="i"
+          justify="center"
+          align="center"
+        >
+          <v-col
+            cols="12"
+            class="pa-0"
+          >
+            <h4>{{ item.text }}</h4>
+            <p
+              v-for="(value, index) in item.items"
+              :key="index"
+            >
+              {{ value }}
+            </p>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+
+    <v-row 
+      v-if="ubication_news === 'Left'"
+      style="margin-right: 0px; margin-left: 0px;"
+    >
+      <v-col
+        sm="7"
+        md="6"
+        lg="6"
+        xl="6"
+        cols="5"
+        v-if="ubication_news === 'Left'"        
+      >
+        <v-row>
+          <h3
+            class="text-uppercase"
+            style=" color: grey;"
+          >
+            {{ post.title }}
+            <br>
+          </h3>
+        </v-row>
+        <v-row
+          v-for="(item, i) in post ? post.details : []"
+          :key="i"
+          justify="center"
+          align="center"
+        >
+          <v-col
+            cols="12"
+            class="pa-0"
+          >
+            <h4>{{ item.text }}</h4>
+            <p
+              v-for="(value, index) in item.items"
+              :key="index"
+            >
+              {{ value }}
+            </p>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col
+        sm="5"
+        md="6"
+        lg="6"
+        xl="6"
+        cols="7"
+        v-if="ubication_news === 'Left'"
+        style="margin-left: -5%;"
+      >
         <v-img 
             :aspect-ratio="16/9"
             :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
             style="top:0px; opacity:0.70;"
           />
-      </div>
-      <div class="item-00" v-if="ubication_news === 'Left'">
-        <h3
-          class="text-uppercase"
-          style=" color: grey;"
-        >
-          {{ post.title }}
-          <br>
-        </h3>
-      </div>
-      <div class="item-20" v-if="ubication_news==='Left'">
-          <p class="text-justify">
-          <!-- {{post.content}} -->
-          {{ post.context }}
-        </p>
-      </div>
-      <!-- <div class="item-30" v-if="ubication_news === 'Left'">
-          <hr/>
-      </div> -->
-    </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -68,12 +129,7 @@
 
       },
       post: {
-        id: Number,
-        title: String,
-        owner: String,
-        context: String,
-        image: null,
-        news: Boolean,
+        type: Object,
         default: null,
       },
 
@@ -98,9 +154,9 @@ height:100%;
 
 .mycontainer2 {
 	margin:auto;
-  margin-bottom: 10%;
+  margin-bottom: 15%;
   background-color: white !important;
-	width:60%;
+	width:80%;
 }
 
 .mygrid{

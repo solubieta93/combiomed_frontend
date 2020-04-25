@@ -12,7 +12,20 @@
       <v-img
         :src="`${baseUrl}combiomed/${item}`"
         height="80vh"
-      />
+      >
+        <v-col
+          class="d-flex flex-column-reverse ma-0 pa-0"
+          style="height:100%"
+        >
+          <v-img
+            :src="`${baseUrl}web-combiomed-historia-03.png`"
+            height="16%"
+            width="100vw"
+            max-height="16%"
+
+          />
+        </v-col>
+      </v-img>
     </v-carousel-item>
   </v-carousel>
 </template>
