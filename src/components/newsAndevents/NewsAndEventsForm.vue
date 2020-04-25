@@ -6,32 +6,20 @@
       <v-row justify="center">
         <v-col md="8">
           <v-text-field
-            v-model="product.name"
-            label="Nombre"
+            v-model="post.title"
+            label="Título"
             :rules="[rules.required, rules.charactersLength(null, 100)]"
             counter="100"
             class="headline"
-            @change="value => changeField('name', value)"
+            @change="value => changeField('title', value)"
           />
           <v-text-field
-            v-model="product.description"
-            label="Descripcion"
+            v-model="post.abstract"
+            label="Descripción"
             :rules="[rules.charactersLength(null, 100)]"
             counter="100"
             class="subtitle-1"
-            @change="value => changeField('description', value)"
-          />
-          <v-select
-            v-model="selectedType"
-            :items="selectProductsTypes"
-            clearable
-            dense
-            color="#8b0000"
-            :loading="loading"
-            label="Linea de producto"
-            :rules="[rules.required]"
-            @click:clear="onUpdateSelected"
-            @change="onUpdateSelected"
+            @change="value => changeField('abstract', value)"
           />
         </v-col>
       </v-row>
@@ -52,14 +40,14 @@
           <files-input-component
             :accept="'image/*'"
             :placeholder="'Seleccione una foto'"
-            label="Imagenes"
+            label="Imágenes"
             @files:changed="(v) => imagesSelected = v"
           />
         </v-col>
       </v-row>
     </v-col>
     <v-row
-      v-for="(item, i) in !loading && product ? product.details : []"
+      v-for="(item, i) in !loading && post ? post.details : []"
       :key="i"
       justify="center"
       align="center"
@@ -193,13 +181,13 @@
   import Rules from '../../utils/rules'
   
   export default {
-    name: 'ProductForm',
+    name: 'PostForm',
     components: {
       ImagesComponent,
       FilesInputComponent,
     },
     props: {
-      productBase: {
+      postBase: {
         type: Object,
         required: true,
       },
@@ -214,19 +202,12 @@
     },
     data: () => ({
       loading: false,
-      product: null,
+      post: null,
       changes: {},
       imagesSelected: null,
       imagesURL: null,
       rules: Rules,
-      productsTypes: [],
-      selectedType: undefined,
     }),
-    computed: {
-      selectProductsTypes () {
-        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
-      },
-    },
     watch: {
       imagesSelected (value) {
         console.log(value, 'selected watch')
@@ -236,31 +217,19 @@
     },
     async created () {
       this.load()
-      await this.getTypes()
-        .then(_ => {
-          const temp = this.product.typeId ? this.selectProductsTypes.filter(x => x.value === this.product.typeId.toString()) : null
-          console.log(temp)
-          if (this.product.typeId && temp) {
-            this.selectedType = temp[0]
-          }
-          this.loading = false
-        })
-        .catch(e => {
-          console.log(e)
-          this.loading = false
-        })
     },
     methods: {
       async save () {
         this.loading = true
+        console.log(this.changes, 'changes')
         await this.onSave(Object(this.changes))
         this.loading = false
       },
       load () {
-        this.product = this.productBase
+        this.post = this.postBase
         this.loading = false
-        this.changes = this.editing ? {} : this.productBase
-        this.imagesURL = this.product.image
+        this.changes = this.editing ? {} : this.postBase
+        this.imagesURL = this.post.image
       },
       changeField (field, value) {
         this.changes[field] = value
@@ -271,55 +240,34 @@
         return a.concat(b)
       },
       removeFromDetails (i) {
-        this.product.details = this.removeElement(i, this.product.details)
-        this.changeField('json_details', JSON.stringify({ details: this.product.details }))
+        this.post.details = this.removeElement(i, this.post.details)
+        this.changeField('json_details', JSON.stringify({ details: this.post.details }))
       },
       removeFromItemOfDetails (i, j) {
-        this.product.details[i].items = this.removeElement(j, this.product.details[i].items)
-        this.changeField('json_details', JSON.stringify({ details: this.product.details }))
+        this.post.details[i].items = this.removeElement(j, this.post.details[i].items)
+        this.changeField('json_details', JSON.stringify({ details: this.post.details }))
       },
       changeDetails (i, j, value) {
-        this.product.details[i].items[j] = value
-        this.changeField('json_details', JSON.stringify({ details: this.product.details }))
+        this.post.details[i].items[j] = value
+        this.changeField('json_details', JSON.stringify({ details: this.post.details }))
       },
       addDetail (i) {
         if (i === undefined || i === null) {
-          this.product.details.push({
+          this.post.details.push({
             text: '',
             items: [],
           })
         } else {
-          this.product.details[i].items.push('')
+          this.post.details[i].items.push('')
         }
       },
       log () {
-        console.log(this.product.details, 'details')
+        console.log(this.post.details, 'details')
         console.log(this.changes['json_details'], 'details json')
       },
-      async getTypes () {
-        this.loading = true
-        await this.$store.dispatch('getProductsTypes').then(result => {
-          this.productsTypes = result.types
-          this.loading = false
-          return result.types
-        }).catch(e => {
-          console.log(e, 'error getTypes')
-          this.loading = false
-          return []
-        })
-      },
-      onUpdateSelected () {
-        const value = this.selectedType ? typeof (this.selectedType) === 'object' ? this.selectedType.value : this.selectedType : null
-        this.changeField('typeId', value)
-        this.product.typeId = value
-      },
       cancel () {
-        this.$router.push(`/products${this.product.id ? `/${this.product.id}` : ''}`)
+        this.$router.push(`/news${this.post.id ? `/${this.post.id}` : ''}`)
       },
     },
   }
 </script>
-
-<style scoped>
-
-</style>

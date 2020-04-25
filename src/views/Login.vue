@@ -10,7 +10,8 @@
         v-if="authError"
         :message="authError"
       />
-      <v-card class="mx-auto" style="width:400px;">
+      <v-card class="mx-auto" 
+      :style="cardStyle">
         <v-card-text>
           <img
             style="margin-left: 25%"
@@ -81,6 +82,16 @@
     },
     computed: {
       ...mapGetters(['authError', 'user']),
+      
+      cardStyle () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'width: 90vw;'
+          case 'sm': return 'width: 90vw;'
+          case 'md': return 'width: 400px;'
+          case 'lg': return 'width: 50vw;'
+          case 'xl': return 'width: 40vw;'
+        }
+      },
     },
     watch: {
       user (value) {

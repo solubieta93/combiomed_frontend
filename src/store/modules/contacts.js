@@ -46,10 +46,7 @@ const actions = {
     postContact: async ({ commit }, payload) => {
         try {
             const res = await axios.post('/contacts/', {
-                name: payload.name,
-                role: payload.role,
-                mail: payload.mail,
-                image: payload.image,
+                ...payload
             },
             {
                 headers: {
@@ -79,74 +76,29 @@ const actions = {
     },
     patchContact: async ({ commit }, payload) => {
         try {
-            const res = await axios.patch('blog/' + payload.id, {
-                name: payload.name,
-                role: payload.role,
-                mail: payload.mail,
-            },
+            console.log(payload.changes, 'changes')
+            const res = await axios.patch('/contacts/' + payload.id + '/', { ...payload.changes },
             {
-                headers: {
-                    'Authorization': 'Token ' + localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
+                headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
+            console.log(res, 'result patch')
             commit('PATCH_CONTACT', res.data)
             return {
                 success: true,
                 message: 'ok',
+                id: res.data.id,
             }
         } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
-            }
-        }
-    },
-    putContact: async ({ commit }, payload) => {
-        try {
-            const res = await axios.put('/contacts/' + payload.id, {
-                name: payload.name,
-                role: payload.role,
-                mail: payload.mail,
-                image: payload.image,
-            },
-            {
-                headers: {
-                    'Authorization': 'Token ' + localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-            })
-            commit('PATCH_CONTACT', res.data)
+            console.log(error)
             return {
-                success: true,
-                message: 'ok',
-            }
-        } catch (error) {
-            if (error.response) {
-                const e = Object.keys(error.response.data).map(key => error.response.data[key].join(' ')).join(' ')
-                return {
-                    success: false,
-                    message: `Error: ${e}`,
-                }
-            } else if (error.request) {
-                console.log('error request', error.request)
-            } else {
-                console.log(error.message)
+                success: false,
+                message: `Error: ${error}`,
             }
         }
     },
     delContact: async ({ commit }, id) => {
         try {
-            const res = await axios.delete(`/contacts/${id}`,
+            const res = await axios.delete(`/contacts/${id}/`,
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
@@ -176,6 +128,7 @@ const actions = {
             name: '',
             mail: '',
             role: '',
+            priority: -1,
             image: null,
         })
     },

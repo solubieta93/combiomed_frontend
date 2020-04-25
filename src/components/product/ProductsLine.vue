@@ -1,11 +1,12 @@
 <template>
-  <v-img
+  <!-- <v-img
     src="../../../public/web-combiomed-productos-noticias&eventos-04.png"
     style="z-index: 2;"
-  >
+  > -->
+  <div style="margin-bottom:5%;">
     <v-col
       cols="12"
-      style="margin-top:10%;"
+      style="margin-top:5%;"
     >
       <v-row
         justify="center"
@@ -38,46 +39,49 @@
   
 
   <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
-    <v-dialog
-      v-model="addLineProduct"
-      max-width="600px"
-    >
-      <product-add-line
-        :line="newLineProduct"
-        :mode="'creating'"
-        :onSave="() => { addLineProduct = false; getTypes() }"
-      />
-    </v-dialog>
-    
-    <v-card-text
+   <v-row
       v-if="isAdmin"
-      style="height: 100px; position: relative"
+      justify="center"
     >
-      <v-btn
-        absolute
-        dark
-        fab
-        right
-        small
-        color="pink"
-        @click="showAddLineProductDialog"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-card-text>
-    </v-img>
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
+            fab
+            dark
+            small
+            right
+            color="pink"
+            to="/products/newLine"
+          >
+             <v-icon>mdi-plus</v-icon>
+          </v-btn>
+          <v-btn
+            fab
+            dark
+            small
+            right
+            color="green"
+            to="/products/editLine"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+   </v-row>
+  </div>
+    <!-- </v-img> -->
 </template>
 
 <script>
   import ResponsiveItems from '@/components/core/ResponsiveItems'
-  import ProductAddLine from '@/components/product/ProductAddLine'
   import { mapGetters } from 'vuex'
   
 
   export default {
     components: {
       ResponsiveItems,
-      ProductAddLine
     },
     data () {
       return {
@@ -120,10 +124,6 @@
           },
           pathTo: '/products' + (productType.id ? `?type=${productType.id}` : ''),
         }
-      },
-      async showAddLineProductDialog () {
-        this.newLineProduct = await this.$store.dispatch('getNewLineProduct')
-        this.addLineProduct = true
       },
     },
   }

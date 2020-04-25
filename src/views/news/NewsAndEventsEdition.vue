@@ -31,10 +31,10 @@
         {{ error }}
       </v-alert>
     </v-row>
-    <product-form
-      v-if="!loading && !!product"
-      :product-base="product"
-      :on-save="saveProduct"
+    <news-and-events-form
+      v-if="!loading && !!post"
+      :post-base="post"
+      :on-save="savePost"
       :editing="modeEdition"
     />
   </v-container>
@@ -42,28 +42,23 @@
 
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
-  import ProductForm from '@/components/product/ProductForm'
+  import NewsAndEventsForm from '@/components/newsAndevents/NewsAndEventsForm'
   import { mapGetters } from 'vuex'
+
   export default {
-    name: 'ProductEdition',
+    name: 'NewsAndEventsEdition',
     components: {
       CarouselPortada,
-      ProductForm,
-    },
-    props: {
-      // modeEdition: {
-      //   type: Boolean,
-      //   default: true,
-      // },
+      NewsAndEventsForm,
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
         loading: false,
-        product: null,
+        post: null,
+        postId: null,
         error: null,
-        snackbar: false,
-        productId: null,
+        snackbar: false,        
         modeEdition: true,
       }
     },
@@ -71,26 +66,26 @@
       ...mapGetters(['user']),
     },
     created () {
-      this.modeEdition = !!this.$route.params.productId
+      this.modeEdition = !!this.$route.params.postId
     },
     mounted () {
       console.log(this.modeEdition, 'modeEdition')
       if (this.modeEdition) {
-        this.getProduct()
+        this.getPost()
       } else {
-        this.buildProduct()
+        this.buildPost()
       }
     },
     methods: {
-      getProduct () {
+      getPost () {
         this.loading = true
         this.error = null
         this.snackbar = false
-        this.productId = this.$route.params.productId
-        this.$store.dispatch('getProduct', this.$route.params.productId)
+        this.postId = this.$route.params.postId
+        this.$store.dispatch('getPost', this.$route.params.postId)
           .then(res => {
             if (res.success) {
-              this.product = res.product
+              this.post = res.post
             } else if (res.notFound) {
               this.$router.push('/')
             } else {
@@ -106,18 +101,18 @@
             this.loading = false
           })
       },
-      async saveProduct (changes) {
+      async savePost (changes) {
         this.loading = true
         const prepared = await this.prepareChanges(changes)
         if (!prepared.success) {
           this.loading = false
           return
         }
-        const payload = this.modeEdition ? { changes, id: this.product.id } : { ...changes }
-        const res = await this.$store.dispatch(this.modeEdition ? 'patchProduct' : 'postProduct', payload)
+        const payload = this.modeEdition ? { changes, id: this.post.id } : { ...changes }
+        const res = await this.$store.dispatch(this.modeEdition ? 'patchPost' : 'postPost', payload)
         if (res.success) {
           this.loading = false
-          this.$router.push(`/products/${res.id}`)
+          this.$router.push(`/news/${res.id}`)
         } else {
           this.loading = false
           this.error = res.message
@@ -170,17 +165,13 @@
           changes,
         }
       },
-      buildProduct () {
+      buildPost () {
         this.loading = true
-        this.$store.dispatch('getNewProduct').then(x => {
-          this.product = x
+        this.$store.dispatch('getNewPost').then(x => {
+          this.post = x
           this.loading = false
         })
       },
     },
   }
 </script>
-
-<style scoped>
-
-</style>
