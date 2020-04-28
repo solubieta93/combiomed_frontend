@@ -15,6 +15,7 @@
         <item-preview
           :item="item.item"
           :pathTo="item.pathTo"
+          :are-products="areProducts"
         ></item-preview>
       </v-col>
     </v-row>
@@ -33,6 +34,10 @@
       items: {
         type: Array,
         default: new Array([]),
+      },
+      areProducts:{
+        type: Boolean,
+        default:false
       },
     },
   }
