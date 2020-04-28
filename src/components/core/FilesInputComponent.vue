@@ -42,7 +42,7 @@
         </v-card-title>
 
         <v-card-text>
-          Por favor, inserte una imagen de menos de {{ size }}MB
+          {{error}}
         </v-card-text>
 
         <v-divider></v-divider>
@@ -90,13 +90,35 @@
     data: () => ({
       files: [],
       dialog: false,
+      error: ""
     }),
     methods: {
       change (value) {
-        if (value && value.length && value[0].size >= 1000000 * this.size) {
-          this.files = []
-          this.dialog = true
-        } else {
+        // if (value && value.length && value[0].size >= 1000000 * this.size){
+        //   this.files = []
+        //   this.error= "Por favor, inserte como máximo 3 imágenes"
+        //   this.dialog = true
+        // }
+        if (value && value.length){
+          if (value.length > 4) {
+            this.files = []
+            this.error= 'Por favor, inserte como máximo 3 imágenes'
+            this.dialog = true
+          }
+          else {
+            for (const item of value) {
+              console.log(value, 'value')
+              console.log(item , 'item')
+              console.log(item.size, 'size')
+              if (item.size >= 1000000 * this.size){
+                this.files = []
+                this.error = `Por favor, inserte una imagen de menos de ${this.size} MB`
+                this.dialog = true
+              }
+            }
+          }
+        } 
+        if(!this.dialog){
           this.$emit('files:changed', this.files)
         }
       },
