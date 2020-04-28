@@ -11,7 +11,7 @@
         align="center"
         justify="center"
       >
-        <div class="display-2">
+        <div>
           <p>No tiene fotos</p>
         </div>
       </v-row>
@@ -20,9 +20,28 @@
       v-else
       style="height: 100%; width: 100%"
       :src="image"
-      aspect-ratio="1"
+      aspect-ratio="16/9"
+      fill-height
       :contain="true"
-    />
+    >
+      <v-row
+        v-if="onlyOne"
+        align="center"
+        justify="center"
+      >
+        <v-chip 
+          :disabled="imgDefault"
+          class="ma-2" 
+          color="teal"
+          text-color="white"
+          @click="setDefault"
+        > 
+          <v-avatar left> <v-icon> mdi-checkbox-marked-circle </v-icon> </v-avatar>
+          <p class="ma-0 justify:center; align: center;" v-if="imgDefault"> Principal </p>
+          <p class="ma-0 justify:center; align: center;" v-if="!imgDefault"> ¿Principal? </p>
+        </v-chip>
+      </v-row>
+    </v-img>
   </div>
 </template>
 
@@ -33,6 +52,14 @@
       imageSrc: {
         type: String,
         default: null,
+      },
+      imgDefault: {
+        type: Boolean,
+        default: false,
+      },
+      onlyOne: {
+        type: Boolean,
+        default: false,
       },
       cycle: {
         type: Boolean,
@@ -50,8 +77,15 @@
     },
     computed: {
       image () {
+        console.log(this.imageSrc, 'img src')
         return this.imageSrc
       },
     },
+    methods: {
+      setDefault(){
+        console.log(this.imageSrc, 'set default')
+        this.$emit('change:default')
+      }
+    }
   }
 </script>

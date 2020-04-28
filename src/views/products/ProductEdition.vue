@@ -6,10 +6,6 @@
   >
     <carousel-portada />
 
-    <!-- <v-img
-      :src="`${baseUrl}web-combiomed-historia-03.png`"
-      style="margin-top: -46px"
-    /> -->
     <v-row
       justify="center"
       align="center"
@@ -49,12 +45,6 @@
     components: {
       CarouselPortada,
       ProductForm,
-    },
-    props: {
-      // modeEdition: {
-      //   type: Boolean,
-      //   default: true,
-      // },
     },
     data () {
       return {
@@ -114,6 +104,7 @@
           return
         }
         const payload = this.modeEdition ? { changes, id: this.product.id } : { ...changes }
+        console.log(payload, 'payload')
         const res = await this.$store.dispatch(this.modeEdition ? 'patchProduct' : 'postProduct', payload)
         if (res.success) {
           this.loading = false
@@ -124,17 +115,24 @@
         }
       },
       prepareChanges: async function (changes) {
-        if (changes.image) {
-          const uploadRes = await this.$store.dispatch('uploadFile', changes.image)
-          if (uploadRes.success) {
-            changes.image = uploadRes.src
-          } else {
-            this.error = 'Error subiendo la imagen'
-            return {
-              success: false,
-              changes: changes,
+        console.log(changes, 'changes')
+        if (changes.json_images) {
+          const images = []
+          for (const item of changes.json_images){
+            console.log(item, 'item')
+            const uploadRes = await this.$store.dispatch('uploadFile', item)
+            if (uploadRes.success) {
+              images.push(uploadRes.src)
+              // changes.json_images = uploadRes.src
+            } else {
+              this.error = 'Error subiendo la imagen'
+              return {
+                success: false,
+                changes: changes,
+              }
             }
           }
+          changes.json_images = JSON.stringify(images)
         }
         if (changes.files && changes.files.length) {
           const files = []

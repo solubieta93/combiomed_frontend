@@ -55,7 +55,7 @@
           <v-btn
             fab
             dark
-            large
+            small
             right
             color="green"
             @click="goToEdit"
@@ -85,12 +85,74 @@
       </v-row>
 
       <v-row justify="center">
-        <v-col md="8">
+        <v-col 
+          sm="6"  
+          md="5"
+          lg="4"
+          xl="3"
+          cols="12"
+        >
           <v-img
-            :src="product.image || `${baseUrl}ampa- (1).png`"
+            :src="product.images[product.defaultImage] "
             style="min-height:350px; max-height: 500px;"
             :contain="true"
           />
+        </v-col>
+      </v-row>
+
+      <v-row 
+        justify="center"
+        align="center"
+        v-if="product.images"
+      >
+        <v-col
+            sm="10"
+            md="8"
+            lg="8"
+            xl="5"
+            cols="12"
+        >
+          <v-img
+            justify="center"
+            
+            :src="`${baseUrl}web-combiomed-historia-03.png`"
+            height="10%"
+            width="100vw"
+            max-height="10%"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row 
+        justify="center"
+        
+        v-if="product.images"
+        
+      >      
+        <v-col 
+          sm="6"
+          md="5"
+          lg="3"
+          xl="2"
+          cols="12"
+          v-for="(item, i) in imagesUrlFiltered"
+          :key="item"
+        >
+          <v-card
+            height="200"
+            max-height="200"
+            max-width="100%"
+            min-width="250"
+            class="mx-auto"
+          >
+            <v-img
+              :src="item[0] || `${baseUrl}ampa- (1).png`"
+              style="height: 100%; width: 100%"
+              aspect-ratio="16/9"
+              fill-height
+            >
+            </v-img>
+          </v-card>
         </v-col>
       </v-row>
     </v-col>
@@ -141,6 +203,28 @@
       isAdmin () {
         return this.user && this.user.is_superuser
       },
+      imagesUrlFiltered () {
+        const a = this.product.images.map((x,i) => [x,i]).filter(x => x[1] !== this.product.defaultImage)
+        return a
+      },
+      imgStyles () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'margin-top:-23%;'
+          case 'sm': return 'margin-top:-15%;'
+          case 'md': return 'margin-top:-15%;'
+          case 'lg': return 'margin-top:-7%;'
+          case 'xl': return 'margin-top:-10%;'
+        }
+      },
+      rowStyle() {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 'width:70%;'
+          case 'sm': return 'width:100%;'
+          case 'md': return 'width:100%;'
+          case 'lg': return 'width:70%;'
+          case 'xl': return 'width:70%;'
+        }
+      }
     },
     methods: {
       getProduct: function () {
@@ -172,3 +256,11 @@
     },
   }
 </script>
+
+
+<style scoped>
+.mycontainer {
+	margin:auto;
+	width:70%;
+}
+</style>
