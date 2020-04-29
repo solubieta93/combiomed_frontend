@@ -91,9 +91,11 @@
           lg="4"
           xl="3"
           cols="12"
+          
         >
           <v-img
-            :src="product.images[product.defaultImage] "
+
+            :src="product.images ? product.images[product.defaultImage] : product.image "
             style="min-height:350px; max-height: 500px;"
             :contain="true"
           />
