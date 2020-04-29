@@ -4,7 +4,7 @@
     class="white_back pa-0 ma-0"
   >
     <v-img
-      :src="!post.image ? `${baseUrl}ampa- (1).png` : `${baseUrl}web-combiomed-historia-03.png`"
+      :src="!post.image ? `${baseUrl}ampa- (1).png` : post.image"
       :style="imgStyle"
     >
       <v-col
