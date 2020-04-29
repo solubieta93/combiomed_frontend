@@ -11,11 +11,15 @@ import FormAlert from '@/components/utils/FormAlert'
 Vue.component('form-alert', FormAlert)
 
 Vue.config.productionTip = false
+document.title = 'Combiomed'
 
 new Vue({
   store,
   router,
   vuetify,
+  beforeCreate () {
+    document.title = 'Combiomed'
+  },
   created () {
     // execute getCurrentUser query
     if (this.$store.getters.token) {
