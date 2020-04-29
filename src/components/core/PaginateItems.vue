@@ -71,6 +71,7 @@
     </v-row>
     <responsive-items
       :items="items"
+      :are-products="areProducts"
     ></responsive-items>
     <v-row
       v-if="!items.length"
@@ -124,6 +125,10 @@
       showDivider: {
         type: Boolean,
         default: true,
+      },
+      areProducts:{
+        type: Boolean,
+        default:false
       },
       refresh: Boolean,
     },

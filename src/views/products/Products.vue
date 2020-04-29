@@ -66,6 +66,7 @@
       :show-search-text="true"
       :update-on-change-text="false"
       :refresh="refresh"
+      :are-products="true"
     >
       <v-row
         justify="center"

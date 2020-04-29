@@ -72,9 +72,9 @@
               </v-col>
             </v-row>
           </v-col>
-          <div class="mycontainer">
+          <!-- <div class="mycontainer"> -->
             <principal-news-and-events/>
-          </div>
+          <!-- </div> -->
           <v-row justify="center" style="margin-bottom:1%;">
               <v-btn
                 text

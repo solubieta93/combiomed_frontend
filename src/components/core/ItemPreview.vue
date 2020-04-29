@@ -16,6 +16,7 @@
         :src="item.image ? item.image : `${baseUrl}ampa- (1).png`"
         class="fill-height"
         :aspect-ratio="16/9"
+        :contain="areProducts"
       >
         <v-expand-transition>
           <v-overlay
@@ -81,6 +82,10 @@
       pathTo: {
         type: String,
         default: null,
+      },
+      areProducts:{
+        type: Boolean,
+        default:false
       },
     },
     data: () => ({
