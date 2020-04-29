@@ -297,8 +297,8 @@
         // this.changeField('image', this.imagesURL ? value[0] : null)
       },
       indexCurrent(value) {
-        console.log(value, 'change indexCurrent')
-        console.log(this.imagesURLs[this.indexCurrent], 'change indexCurrent imgURL')
+        // console.log(value, 'change indexCurrent')
+        // console.log(this.imagesURLs[this.indexCurrent], 'change indexCurrent imgURL')
         this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null 
       },      
     },
@@ -339,7 +339,7 @@
         this.imagesURLs = this.product.images
         this.indexDefault = this.product.defaultImage !== -1 ? this.product.defaultImage : 0
         this.indexCurrent = this.indexDefault
-        this.imgURL = this.imagesURLs[this.indexDefault]
+        this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null
         
         console.log(this.product.images, 'prod images')        
         console.log(this.imagesURL, 'images urls')
