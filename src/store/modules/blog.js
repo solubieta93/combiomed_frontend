@@ -1,8 +1,15 @@
 /* eslint-disable camelcase */
 import axios from '../../utils/axios-auth'
 import { apiURI } from '../../utils/globalConstants'
-import { unzip } from '../store'
+// import { unzip } from '../store'
 
+export const unzip = x => ({
+    ...x,
+    image: x.image ?  apiURI + x.image : null,
+    details: x.details && x.details.details
+      ? x.details.details
+      : [],
+})
 
 const state = {
     blog: [],
@@ -56,7 +63,7 @@ const actions = {
         await axios.get(`/blog/blog`, { params })
         .then(res => {
             if (res.data.success) {
-                const posts = res.data.data.posts // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
+                const posts = res.data.data.posts.map(x => unzip(x)) // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
                 commit('SET_TWOPOSTS', posts)
                 return posts
             } else {
@@ -73,9 +80,9 @@ const actions = {
             const res = await axios.get(`/blog`, { params })
             if (res.status === 200) {
                 await commit('SET_COUNT_POST', res.data.count)
-                await commit('SET_BLOG', res.data.results)
+                await commit('SET_BLOG', res.data.results.map(x => unzip(x)))
                 return {
-                    posts: res.data.results,
+                    posts: res.data.results.map(x => unzip(x)),
                     count: res.data.count,
                 }
             } else {
@@ -98,7 +105,7 @@ const actions = {
             const res = await axios.get(`/blog/blog`, { params })
             if (res.status === 200) {
                 await commit('SET_COUNT_POST', res.data.data.count)
-                await commit('SET_BLOG', res.data.data.results) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
+                await commit('SET_BLOG', res.data.data.results.map(x => unzip(x))) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
                     posts: res.data.data.results.map(x => unzip(x)), // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
                     
@@ -134,11 +141,8 @@ const actions = {
             commit('SET_POST', [])
             const res = await axios.get(`/blog/${id}`)
             if (res.status === 200) {
-                await commit('SET_POST', {
-                    ...res.data,
-                    // image: res.data.image ? apiURI + res.data.image : null,
-                })
-                
+                await commit('SET_POST', unzip(res.data))
+                console.log(unzip(res.data), 'unzip')
                 return {
                     success: true,
                     message: 'ok',                    

@@ -1,6 +1,6 @@
-// import axios from '../../utils/axios-auth'
+import axios from '../../utils/axios-auth'
 import { apiURI, apiKeyFileStack } from '../../utils/globalConstants'
-import { Client } from 'filestack-js'
+// import { Client } from 'filestack-js'
 //
 
 const state = {
@@ -22,53 +22,35 @@ const actions = {
         try {
             // commit('SET_FILE_UPLOADED', null)
             // commit('SET_FILE_UPLOAD_ERROR', null)
-            // const fd = new FormData()
-            // fd.append('file', file, file.name)
-            const client = new Client(apiKeyFileStack)
-
-            const result = await client.upload(file, {},{}) // axios.post(`https://www.filestackapi.com/api/store/S3?key=${apiKeyFileStack}`, {
-            //     fileUpload: fd,
-            // })
-                // .then(res => {
-            console.log('success: ', result)
-            return {
-                success: true,
-                message: 'ok',
-                src: result.url,
+            console.log('uploadfile')
+            const fd = new FormData()
+            fd.append('file', file, file.name)
+            console.log(fd, 'fd')
+            const res = await axios.post('/api/files/', fd,
+            {
+                headers: {
+                    'Authorization': 'Token ' + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            console.log(res, 'result')
+            if (res.status === 201) {
+                commit('SET_FILE_UPLOADED', res.data['file'])
+                return {
+                    success: true,
+                    message: 'ok',
+                    src: res.data['file'],
+                }
+            } else {
+                commit('SET_FILE_UPLOAD_ERROR', 'Upload Error')
+                return {
+                    success: false,
+                    message: 'Upload Error',
+                    src: null,
+                }
             }
-                // })
-                // .catch(err => {
-                // //   console.log(err)
-                // //     return {
-                // //     success: false,
-                // //     message: 'Upload Error',
-                // //     src: null,
-                // // }
-                // })
-            // const res = await axios.post('/api/files/', fd,
-            // {
-            //     headers: {
-            //         'Authorization': 'Token ' + localStorage.getItem('token'),
-            //         'Content-Type': 'application/json',
-            //         'Accept': 'application/json',
-            //     },
-            // })
-            // if (res.status === 201) {
-            //     commit('SET_FILE_UPLOADED', res.data['file'])
-            //     return {
-            //         success: true,
-            //         message: 'ok',
-            //         src: res.data['file'],
-            //     }
-            // } else {
-            //     commit('SET_FILE_UPLOAD_ERROR', 'Upload Error')
-            //     return {
-            //         success: false,
-            //         message: 'Upload Error',
-            //         src: null,
-            //     }
-            // }
-        } catch (error) {
+        } catch (error) { console.log(error, 'error')
             // commit('SET_FILE_UPLOAD_ERROR', error.message)
             return {
                 success: false,

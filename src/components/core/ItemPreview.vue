@@ -35,12 +35,12 @@
                 v-if="hover"
                 style="width: 100%"
               />
-              <h5
+              <!-- <h5
                 v-if="item.owner && hover"
                 class="justify-start pl-2"
               >
                 Autor: {{ item.owner }}
-              </h5>
+              </h5> -->
               <h6
                 v-if="hover"
                 class="justify-start pl-2"

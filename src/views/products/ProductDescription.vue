@@ -67,6 +67,42 @@
         </v-row>
       </v-col>
     </v-row>
+
+    <v-row
+      v-if="!loading && product && isAdmin"
+      justify="center"
+    >
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
+              fab
+              dark
+              small
+              right
+              color="red"
+              @click="deleteProduct= !deleteProduct"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+        </v-row>
+      </v-col>      
+    </v-row>
+    <v-dialog 
+        v-model="deleteProduct" 
+        persistent 
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">Eliminar</v-card-title>
+          <v-card-text>¿Está seguro que desea eliminar?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="deletedProduct(product.id)">Si</v-btn>
+            <v-btn color="green darken-1" text @click="deleteProduct = false">No</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
     <v-col
       v-if="!loading && product"
     >
@@ -94,13 +130,13 @@
           
         >
           <v-img
-
             :src="product.images ? product.images[product.defaultImage] : product.image "
             style="min-height:350px; max-height: 500px;"
             :contain="true"
           />
         </v-col>
       </v-row>
+      
 
       <v-row 
         justify="center"
@@ -194,6 +230,7 @@
         product: null,
         error: null,
         snackbar: false,
+        deleteProduct: false,
       }
     },
     created () {
@@ -254,6 +291,13 @@
       },
       goToEdit () {
         this.$router.push(`/products/${this.$route.params.productId}/edit`)
+      },
+      async deletedProduct() {
+        console.log(this.product.id, 'id')
+        const {success, message} = await this.$store.dispatch('delProduct', this.product.id)
+        console.log(success, 'success')
+        if (!success) { this.$router.push('/') }
+        this.$router.push('/products') 
       },
     },
   }

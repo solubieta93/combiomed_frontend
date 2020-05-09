@@ -1,4 +1,5 @@
 import axios from '../../utils/axios-auth'
+import { apiURI } from '../../utils/globalConstants'
 
 const state = {
     contacts: [],
@@ -31,9 +32,9 @@ const actions = {
         // .then(res => {
         console.log(res, 'ReS CONTACT')
         if (res.status === 200) {
-            const contacts = res.data.results // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
+            const contacts = res.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null }))
             // commit('SET_CONTACTS', contacts)
-            // console.log(contacts, 'contacts action')
+            console.log(contacts, 'contacts action')
             return contacts
         } else {
             commit('SET_CONTACTS_ERROR', res.data.message)

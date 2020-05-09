@@ -3,7 +3,7 @@ import { apiURI } from '@/utils/globalConstants'
 
 const unzipProduct = x => ({
     ...x,
-    // image: x.image ? apiURI + x.image : null,
+    images: x.images ? x.images.map(y => apiURI + y) : [],
     files: x.files
       ? x.files.map(y => ({
           ...y,
@@ -194,13 +194,13 @@ const actions = {
             }
         }
     },
-    delProduct: async ({ commit }, payload) => {
+    delProduct: async ({ commit }, id) => {
         try {
-            await axios.delete('/api/products/' + payload.id + '/',
+            await axios.delete('/api/products/' + id + '/',
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            commit('DEL_PRODUCT', payload.id)
+            commit('DEL_PRODUCT',id)
             return {
                 success: true,
                 message: 'ok',
@@ -254,7 +254,7 @@ const actions = {
           return {
               success: true,
               message: 'ok',
-              types: result.data.results, // .map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
+              types: result.data.results.map(x => ({ ...x, image: x.image ? apiURI + x.image : null })),
               count: result.data.count,
           }
         } else {

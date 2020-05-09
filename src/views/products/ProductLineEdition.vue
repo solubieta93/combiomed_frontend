@@ -71,7 +71,7 @@
     </v-row>
 
     <product-line-form
-      v-if="!loading"
+      v-if="(modeEdition && typeId != null) || !modeEdition"
       :line="modeEdition ? productType : line"
       :on-save="saveLine"
       :mode="modeEdition ? 'editing' : 'creating'"
@@ -112,8 +112,6 @@
         typeId: null,
         refresh: false,
         selectedType: undefined,
-
-        // modeEdition: true,
       }
     },
     computed: {
@@ -160,8 +158,10 @@
       
       onUpdateSelected (e) {
         console.log(typeof e, 'e')
+        console.log(e)
         this.typeId = e || null
         if (this.typeId === null) {
+          
           this.buildProduct()
         }
       },
@@ -182,6 +182,7 @@
           return
         }
         const payload = this.modeEdition ? { changes, id: this.typeId } : { ...changes }
+        console.log(payload, 'payload')
         const res = await this.$store.dispatch(this.modeEdition ? 'patchTypeProduct' : 'postTypeProduct', payload)
         if (res.success) {
           this.loading = false

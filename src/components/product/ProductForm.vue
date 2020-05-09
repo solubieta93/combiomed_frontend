@@ -233,6 +233,7 @@
         </v-col>
       </v-row>
     </v-card-actions>
+    
   </v-card>
 </template>
 
@@ -290,6 +291,7 @@
         this.imagesURLs = !!value && value.length ? value.map(img => URL.createObjectURL(img)) : new Array()
         this.indexCurrent = value && value.length ? 0 : -1
         this.indexDefault = this.indexCurrent
+        this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null 
         
         this.changeField('json_images', this.imagesSelected)
         this.changeField('defaultImage', this.indexDefault)
@@ -299,7 +301,11 @@
       indexCurrent(value) {
         // console.log(value, 'change indexCurrent')
         // console.log(this.imagesURLs[this.indexCurrent], 'change indexCurrent imgURL')
+        console.log('cambie index current')
+        console.log(this.imagesURLs && this.imagesURLs.length, 'Boolean')
+        console.log(this.imagesURLs[this.indexCurrent], 'value')
         this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null 
+        console.log(this.imgURL, 'img url')
       },      
     },
     async created () {

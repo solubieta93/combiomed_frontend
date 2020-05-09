@@ -46,7 +46,7 @@
       <v-row justify="center">
         <v-col cols="8">
           <images-component
-            :image-src="imagesURL"
+            :image-src="imageURL"
             style="width: 100%; height: 300px"
           />
         </v-col>
@@ -151,7 +151,7 @@
     props: {
       contact: {
         type: Object,
-        default: null,
+        required: true
       },
       mode: {
         type: String,
@@ -171,9 +171,12 @@
         changes: {},
         form: null,
         imagesSelected: null,
-        imagesURL: null,
+        imageURL: null,
         deleteContact: false,
       }
+    },
+    created(){
+      this.load()
     },
     computed: {
       ...mapGetters(['user']),
@@ -183,15 +186,22 @@
     },
     watch: {
       imagesSelected (value) {
-        this.imagesURL = value.length ? value.map(img => URL.createObjectURL(img))[0] : null
+        console.log(value, 'value image sele')
+        this.imageURL = value.length ? value.map(img => URL.createObjectURL(img))[0] : null
+        this.changeField('image', value.length ? value[0] : null)
       },
-      line (value) {
+      contact (value) {
         if (value) {
-          console.log(value, 'line')
+          console.log(value, 'contact')
         }
       }
     },
     methods: {
+      load() {
+        console.log(this.contact.image, 'image contact')
+        this.imageURL = this.contact.image 
+      },
+
       async save () {
         this.loading = true
         await this.onSave(Object(this.changes))

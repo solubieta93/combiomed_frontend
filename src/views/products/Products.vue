@@ -196,12 +196,13 @@
     },
     methods: {
       buildItem (product) {
+        console.log(product.images, 'images')
         return {
           item: {
             id: product.id,
             title: product.name,
             description: product.description,
-            image: product.image,
+            image: product.images ? product.images[product.defaultImage] : product.image,
             owner: product.owner,
             files: product.files,
           },

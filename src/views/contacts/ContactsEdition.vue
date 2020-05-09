@@ -70,7 +70,7 @@
       </v-col>
     </v-row>
     <contacts-form
-      v-if="!loading"
+      v-if="(modeEdition && contactId != null) || !modeEdition"
       :contact="modeEdition ? contactExist : contactNull"
       :on-save="saveContact"
       :mode="modeEdition ? 'editing' : 'creating'"

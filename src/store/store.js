@@ -12,7 +12,7 @@ Vue.use(Vuex)
 
 export const unzip = x => ({
   ...x,
-  // image: x.image ? apiURI + x.image : null,
+  images: x.images ? x.images.map(y => apiURI + y) : [],
   files: x.files
     ? x.files.map(y => ({
         ...y,
