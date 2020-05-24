@@ -90,92 +90,99 @@
           </v-col>
         </v-row>
 
-        <v-row justify="center" >
-          <v-col 
-            md="4"
-            sm="3"
-            lg="5"
-            xl="3"
-            xs="1"
-          >
-            <v-text-field
-              label="Nombre"
-              single-line
-              outlined
-              hide-details
-              color="red"
-              dense
-            />
-          </v-col>
-          <v-col 
-            md="4"
-            sm="3"
-            lg="5"
-            xl="3"
-            xs="1"
-          >
-            <v-text-field
-              label="E-mail"
-              single-line
-              outlined
-              dense
-              color="red"
-            />
-          </v-col>
-
-          <v-col
-            md="4"
-            sm="3"
-            lg="10"
-            xl="3"
-            xs="1"
-          >
-            <v-text-field
-              label="Asunto"
-              single-line
-              outlined
-              dense
-              color="red"
-            />
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col
-            md="12"
-            sm="9"
-            lg="10"
-            xl="9"
-            xs="1"
-          >
-            <v-textarea
-              label="Introduzca su mensaje"
-              single-line
-              outlined
-              dense
-              color="red"
-              counter
-              maxlength="1000"
-            />
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col
-            md="12"
-            sm="9"
-            lg="10"
-            xl="9"
-            xs="1"
-          >
-            <v-btn
-              color="#001A33"
-              block
+        <v-form ref="form" v-model="valid">
+          <v-row justify="center" >
+            <v-col 
+              md="4"
+              sm="3"
+              lg="5"
+              xl="3"
+              xs="1"
             >
-              <h5 style="color: white;">
-                Enviar ahora
-              </h5>
-            </v-btn>
-          </v-col>
-        </v-row>
+              <v-text-field
+                label="Nombre"
+                single-line
+                outlined
+                hide-details
+                color="red"
+                dense
+                v-model="emailDetail['name']"
+              />
+            </v-col>
+            <v-col 
+              md="4"
+              sm="3"
+              lg="5"
+              xl="3"
+              xs="1"
+            >
+              <v-text-field
+                label="E-mail"
+                single-line
+                outlined
+                dense
+                color="red"
+                v-model="emailDetail['email']"
+              />
+            </v-col>
+
+            <v-col
+              md="4"
+              sm="3"
+              lg="10"
+              xl="3"
+              xs="1"
+            >
+              <v-text-field
+                label="Asunto"
+                single-line
+                outlined
+                dense
+                color="red"
+                v-model="emailDetail['summary']"
+              />
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col
+              md="12"
+              sm="9"
+              lg="10"
+              xl="9"
+              xs="1"
+            >
+              <v-textarea
+                label="Introduzca su mensaje"
+                single-line
+                outlined
+                dense
+                color="red"
+                counter
+                maxlength="1000"
+                v-model="emailDetail['message']"
+              />
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col
+              md="12"
+              sm="9"
+              lg="10"
+              xl="9"
+              xs="1"
+            >
+              <v-btn
+                color="#001A33"
+                block
+                @click="validateAndSubmit"
+              >
+                <h5 style="color: white;">
+                  Enviar ahora
+                </h5>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-col>
     </v-row>
   </v-img>
@@ -183,6 +190,8 @@
 
 <script>
   import Rules from '../../utils/rules'
+  import { VueReCaptcha } from "vue-recaptcha-v3";
+  Vue.use(VueReCaptcha, { siteKey: "6LctefsUAAAAAPoxInSZX4fbW7eQuXXtxfLDeHK5" });
   export default {
     components: {
     },
@@ -190,6 +199,9 @@
       return {
         baseUrl: process.env.BASE_URL,
         rules: Rules,
+        valid: true,
+        disableSubmit: true,
+        emailDetail: { email: "", message: "", summary: "", name: ""}
       }
     },
     computed: {
@@ -203,6 +215,23 @@
         }
       },
     },
+    methods: {
+      validateAndSubmit() {
+        if (this.$refs.form.validate()) {
+          this.disableSubmit = true;
+          this.$recaptcha("contactus").then(token => {
+            console.log('CAPTCHA DONE')
+            console.log(this.emailDetail)
+            // this.parseContactInfo(this.emailDetail);
+            // parse & store data. Method can be housed in Vuex store
+            // show confirmation message
+
+            router.push("/");
+            // navigate to home page after processing  data
+          });
+        }
+      }
+    }
   }
 </script>
 
