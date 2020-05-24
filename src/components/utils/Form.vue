@@ -189,6 +189,7 @@
 </template>
 
 <script>
+  import Vue from "vue";
   import Rules from '../../utils/rules'
   import { VueReCaptcha } from "vue-recaptcha-v3";
   Vue.use(VueReCaptcha, { siteKey: "6LctefsUAAAAAPoxInSZX4fbW7eQuXXtxfLDeHK5" });
