@@ -278,6 +278,7 @@
           subject: this.mailDetail['summary'],
           message: 'Nombre del remitente: \n ' + this.mailDetail['name'] + '\n' + 'Mensaje: \n' + this.mailDetail['message'],
           from_email: this.mailDetail['email'],
+          to: ['solubieta93@gmail.com'],
         }
         const res = await this.$store.dispatch('sendEmail', templateParams)
         if (res.success) {
