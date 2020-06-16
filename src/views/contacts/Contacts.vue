@@ -10,11 +10,11 @@
         style="top:-46px"
     /> -->
 
-    <!-- CONTACTOS -->  
-    <div id="contacts">  
+    <!-- CONTACTOS -->
+    <div id="contacts">
       <contact margin_style="margin-bottom: 2%;" />
     </div>
-    </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -24,7 +24,7 @@
   export default {
     components: {
       CarouselPortada,
-      Contact
+      Contact,
     },
   }
 </script>

@@ -32,15 +32,15 @@
       </v-alert>
     </v-row>
 
-    <v-row 
+    <v-row
       v-if="modeEdition"
-        justify="center"
-        align="center"
+      justify="center"
+      align="center"
     >
       <v-col align-self="center">
         <v-row
-            align="center"
-            justify="center"
+          align="center"
+          justify="center"
         >
           <v-spacer />
           <v-divider />
@@ -52,16 +52,16 @@
             xl="3"
           >
             <v-select
-                :items="selectContacts"
-                hide-details
-                clearable
-                solo
-                flat
-                dense
-                color="#8b0000"
-                :loading="loading"
-                :label="selectedContact ? null : 'Seleccione un contacto'"
-                @change="onUpdateSelected"
+              :items="selectContacts"
+              hide-details
+              clearable
+              solo
+              flat
+              dense
+              color="#8b0000"
+              :loading="loading"
+              :label="selectedContact ? null : 'Seleccione un contacto'"
+              @change="onUpdateSelected"
             />
           </v-col>
           <v-divider />
@@ -77,8 +77,6 @@
     />
   </v-container>
 </template>
-
-
 
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
@@ -121,21 +119,21 @@
       selectContacts () {
         return this.contacts.map(x => ({ text: x.name, value: x.id.toString() }))
       },
-      contactExist() {
+      contactExist () {
         return this.contactId && this.contacts ? this.contacts.filter(x => x.id.toString() === this.contactId)[0] : null
-      }
+      },
     },
     async mounted () {
       console.log(this.modeEdition, 'modeEdition')
       if (this.modeEdition) {
         this.loading = true
         await this.getContacts()
-        .then(_ => {
+          .then(_ => {
             this.loading = false
-        })
-        .catch(e => {
+          })
+          .catch(e => {
             this.loading = false
-        })
+          })
       } else {
         this.buildContact()
       }
@@ -144,17 +142,17 @@
       async getContacts () {
         this.loading = true
         await this.$store.dispatch('getContacts')
-        .then(result => {
-          console.log(result, 'contacts')
-          this.contacts = result
-          this.loading = false
-          return result
-        }).catch(e => {
-          this.loading = false
-          return []
-        })
+          .then(result => {
+            console.log(result, 'contacts')
+            this.contacts = result
+            this.loading = false
+            return result
+          }).catch(e => {
+            this.loading = false
+            return []
+          })
       },
-      
+
       onUpdateSelected (e) {
         console.log(typeof e, 'e')
         this.contactId = e || null
@@ -169,7 +167,7 @@
           this.contactNull = x
           this.loading = false
         })
-      },      
+      },
 
       async saveContact (changes) {
         this.loading = true

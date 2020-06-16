@@ -173,7 +173,7 @@ const actions = {
                 }
             }
         }
-    },    
+    },
     patchProduct: async ({ commit }, payload) => {
         try {
             const res = await axios.patch('/api/products/' + payload.id + '/', { ...payload.changes },
@@ -200,7 +200,7 @@ const actions = {
             {
                 headers: { 'Authorization': 'Token ' + localStorage.getItem('token') },
             })
-            commit('DEL_PRODUCT',id)
+            commit('DEL_PRODUCT', id)
             return {
                 success: true,
                 message: 'ok',

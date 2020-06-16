@@ -47,7 +47,7 @@ const actions = {
     postContact: async ({ commit }, payload) => {
         try {
             const res = await axios.post('/contacts/', {
-                ...payload
+                ...payload,
             },
             {
                 headers: {
@@ -132,6 +132,55 @@ const actions = {
             priority: -1,
             image: null,
         })
+    },
+    sendEmail: async ({ commit }, payload) => {
+        try {
+            console.log('entre al try del send email')
+            const res = await axios.post('/mail/sendMail/', {
+                ...payload,
+            })
+            console.log(res, '----res')
+            if (res.data.success) {
+                return {
+                    success: true,
+                    message: 'Correo enviado',
+                }
+            }
+            return {
+                success: false,
+                message: 'Correo no enviado, inténtelo nuevamente',
+            }
+        } catch (error) {
+            console.log('----catch error')
+            return {
+                success: false,
+                message: 'Correo no enviado, inténtelo nuevamente',
+            }
+        }
+    },
+    verifyCaptcha: async ({ commit }, payload) => {
+        try {
+            const res = await axios.post('/mail/verify_captcha/', {
+                ...payload,
+            })
+            console.log(res, '----res')
+            if (res.status === 202) {
+                return {
+                    success: true,
+                    message: 'Valid Captcha',
+                }
+            }
+            return {
+                success: false,
+                message: 'Invalid Captcha',
+            }
+        } catch (error) {
+            console.log('----catch error')
+            return {
+                success: false,
+                message: 'Invalid Captcha',
+            }
+        }
     },
 }
 

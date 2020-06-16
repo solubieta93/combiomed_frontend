@@ -7,7 +7,7 @@ import file from './modules/file'
 import query from './modules/query'
 import contacts from './modules/contacts'
 import queryNames from './names/query'
-
+import { apiURI } from '@/utils/globalConstants'
 Vue.use(Vuex)
 
 export const unzip = x => ({

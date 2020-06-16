@@ -1,5 +1,6 @@
 import axios from '../../utils/axios-auth'
-import { apiURI, apiKeyFileStack } from '../../utils/globalConstants'
+// apiKeyFileStack
+import { apiURI } from '../../utils/globalConstants'
 // import { Client } from 'filestack-js'
 //
 
@@ -50,7 +51,7 @@ const actions = {
                     src: null,
                 }
             }
-        } catch (error) { console.log(error, 'error')
+        } catch (error) {
             // commit('SET_FILE_UPLOAD_ERROR', error.message)
             return {
                 success: false,

@@ -5,7 +5,7 @@ import { apiURI } from '../../utils/globalConstants'
 
 export const unzip = x => ({
     ...x,
-    image: x.image ?  apiURI + x.image : null,
+    image: x.image ? apiURI + x.image : null,
     details: x.details && x.details.details
       ? x.details.details
       : [],
@@ -108,7 +108,7 @@ const actions = {
                 await commit('SET_BLOG', res.data.data.results.map(x => unzip(x))) // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })))
                 return {
                     posts: res.data.data.results.map(x => unzip(x)), // .map(post => ({ ...post, image: post.image ? apiURI + post.image : post.image })),
-                    
+
                     count: res.data.data.count,
                 }
             } else {
@@ -145,12 +145,12 @@ const actions = {
                 console.log(unzip(res.data), 'unzip')
                 return {
                     success: true,
-                    message: 'ok',                    
+                    message: 'ok',
                     post: unzip(res.data),
                     notFound: false,
                 }
             }
-            return {                
+            return {
                 success: false,
                 message: res.data[Object.keys(res.data)[0]],
                 post: null,
@@ -162,7 +162,7 @@ const actions = {
     },
     postPost: async ({ commit }, payload) => {
         try {
-            const res = await axios.post('/blog',{
+            const res = await axios.post('/blog', {
                 ...payload,
             },
             {

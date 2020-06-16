@@ -1,7 +1,7 @@
 <template>
   <v-hover
     :key="item.id"
-    v-slot:default="{ hover }"
+    v-slot="{ hover }"
   >
     <v-card
       :elevation="hover ? 10 : 2"
@@ -71,21 +71,21 @@
         type: Number,
         default: 200,
       },
-      style: {
-        type: String,
-        default: null,
-      },
-      class: {
-        type: String,
-        default: null,
-      },
+      // style: {
+      //   type: String,
+      //   default: null,
+      // },
+      // class: {
+      //   type: String,
+      //   default: null,
+      // },
       pathTo: {
         type: String,
         default: null,
       },
-      areProducts:{
+      areProducts: {
         type: Boolean,
-        default:false
+        default: false,
       },
     },
     data: () => ({

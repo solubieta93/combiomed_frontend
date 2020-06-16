@@ -48,7 +48,7 @@ const actions = {
                     message: `Error: ${e}`,
                 }
             } else if (error.request) {
-                console.log('error request', error.request)
+                console.log('error request auth', error.request)
                 return {
                     success: false,
                     message: `Error: ${error}`,
@@ -78,12 +78,10 @@ const actions = {
             if (res.status === 202) {
                 commit('SET_TOKEN', res.data.token)
                 commit('SET_USER', res.data.user)
-            }
-            else {
+            } else {
                 commit('SET_AUTH_ERROR', 'Invalid credentials')
             }
-        }
-        catch(e) {
+        } catch (e) {
             commit('SET_AUTH_ERROR', 'Invalid credentials')
         }
     },

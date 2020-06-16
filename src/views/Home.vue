@@ -11,8 +11,7 @@
     /> -->
 
     <!-- QUIENES SOMOS -->
-    <accordion id="us"/>
-    
+    <accordion id="us" />
 
     <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"
@@ -23,7 +22,7 @@
     />
 
     <!-- PRODUCTOS -->
-    <products-line/>
+    <products-line />
 
     <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"
@@ -45,54 +44,59 @@
 
     <!-- NOTICIAS Y EVENTOS -->
     <v-row>
-      <v-col >
-          <v-col justify-self="center">
-            <v-row style="margin-top:15px;">
-              <v-col cols="12">
-                <v-row
-                  justify="center"
-                  style="height: 50px; color:#293D66;"
-                >
-                  <v-col md="3">
-                    <hr style="color:#293D66;">
-                  </v-col>
-                  <v-col md="2">
-                    <h3
-                      class="text-uppercase"
-                      style="margin-top: -14px; margin-left: 16px; "
-                    >
-                      Noticias y Eventos
-                      <br>
-                    </h3>
-                  </v-col>
-                  <v-col md="3">
-                    <hr style="color:#293D66;">
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-col>
-          <!-- <div class="mycontainer"> -->
-            <principal-news-and-events/>
-          <!-- </div> -->
-          <v-row justify="center" style="margin-bottom:1%;">
-              <v-btn
-                text
-                to='/news'
+      <v-col>
+        <v-col justify-self="center">
+          <v-row style="margin-top:15px;">
+            <v-col cols="12">
+              <v-row
+                justify="center"
+                style="height: 50px; color:#293D66;"
               >
-                <p style="color:#293D66;"> Ver todas las noticias </p>
-              </v-btn>
+                <v-col md="3">
+                  <hr style="color:#293D66;">
+                </v-col>
+                <v-col md="2">
+                  <h3
+                    class="text-uppercase"
+                    style="margin-top: -14px; margin-left: 16px; "
+                  >
+                    Noticias y Eventos
+                    <br>
+                  </h3>
+                </v-col>
+                <v-col md="3">
+                  <hr style="color:#293D66;">
+                </v-col>
+              </v-row>
+            </v-col>
           </v-row>
+        </v-col>
+        <!-- <div class="mycontainer"> -->
+        <principal-news-and-events />
+        <!-- </div> -->
+        <v-row
+          justify="center"
+          style="margin-bottom:1%;"
+        >
+          <v-btn
+            text
+            to="/news"
+          >
+            <p style="color:#293D66;">
+              Ver todas las noticias
+            </p>
+          </v-btn>
+        </v-row>
       </v-col>
     </v-row>
 
-     <v-img
+    <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"
       height="16%"
       width="100vw"
       max-height="16%"
     />
-    <!-- CONTACTOS -->   
+    <!-- CONTACTOS -->
     <contact />
   </v-container>
 </template>
@@ -112,24 +116,23 @@
       PrincipalNewsAndEvents,
       Services,
       ProductsLine,
-      Contact
+      Contact,
     },
     data () {
       return {
         baseUrl: process.env.BASE_URL,
-        style_d: "height: 370px;"
+        style_d: 'height: 370px;',
       }
     },
-    methods:{
-      my:function(){
-            this.style_d="height: 640px;"
-            var leer=document.getElementById("leer");
-            leer.style.display="none";
-            var button = document.getElementById("button1");
-            button.className += "show";
-           
-      }
-    }
+    methods: {
+      my: function () {
+        this.style_d = 'height: 640px;'
+        var leer = document.getElementById('leer')
+        leer.style.display = 'none'
+        var button = document.getElementById('button1')
+        button.className += 'show'
+      },
+    },
   }
 </script>
 
@@ -150,11 +153,11 @@ div {
     position: relative;
 }
 a{
-  text-align: center;  
+  text-align: center;
 }
 #button1 {
     overflow: hidden;
-    
+
 }
 
 #button1 #col1 p {
@@ -166,7 +169,6 @@ a{
 #button1 #col1 h2 {
     text-align: center;
 }
-
 
 #button1 #col2 img {
     height: 340px;
