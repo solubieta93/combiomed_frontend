@@ -1,5 +1,5 @@
 <template>
-<!-- #8c3564 -->
+  <!-- #8c3564 -->
   <v-row
     style="background-color: white;"
     align="center"
@@ -10,8 +10,10 @@
         v-if="authError"
         :message="authError"
       />
-      <v-card class="mx-auto" 
-      :style="cardStyle">
+      <v-card
+        class="mx-auto"
+        :style="cardStyle"
+      >
         <v-card-text>
           <img
             style="margin-left: 25%"
@@ -27,14 +29,13 @@
           <br>
           <v-text-field
             v-model="password"
-            :rules="[rules.required, rules.min]"
+            :rules="[rules.required, rules.charactersLength(8), rules.validPassword]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             label="Contaseña"
-            hint="Como mínimo 6 caracteres"
             counter
             @click:append="show1 = !show1"
-          /> 
+          />
           <v-container>
             <v-row>
               <v-col
@@ -61,6 +62,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import Rules from '../utils/rules'
 
   export default {
     name: 'Login',
@@ -73,16 +75,17 @@
         show3: false,
         show4: false,
         password: '',
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 6 || 'Min 6 characters',
-          emailMatch: () => "The email and password you entered don't match",
-        },
+        rules: Rules,
+        // rules: {
+        //   required: value => !!value || 'Required.',
+        //   min: v => v.length >= 6 || 'Min 6 characters',
+        //   emailMatch: () => "The email and password you entered don't match",
+        // },
       }
     },
     computed: {
       ...mapGetters(['authError', 'user']),
-      
+
       cardStyle () {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 'width: 90vw;'
@@ -100,6 +103,9 @@
           this.$router.push('/')
         }
       },
+      password(v){
+        console.log(v, '--v')
+      }
     },
     methods: {
       login: async function () {

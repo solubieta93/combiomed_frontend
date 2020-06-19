@@ -9,6 +9,9 @@ const charactersLength = (min, max) => {
 }
 const emailValid = (v) => /.+@.+/.test(v) || 'Email must be valid'
 
+const validPassword = (v) =>
+  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d][a-zA-Z0-9!@#$%^&*]{7,50}$/.test(v) || 'Password required almost one special character'
+
 const alphaNumeric = (v) =>
   /^[a-zA-Z0-9]+$/.test(v) || 'Only Alphanumeric characters are allowed'
 
@@ -53,6 +56,7 @@ export {
   isGmail,
   isPhoneNumber,
   inputSize,
+  validPassword,
 }
 
 export default {
@@ -67,4 +71,5 @@ export default {
   isGmail,
   isPhoneNumber,
   inputSize,
+  validPassword,
 }
