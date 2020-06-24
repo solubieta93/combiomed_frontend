@@ -103,9 +103,9 @@
           this.$router.push('/')
         }
       },
-      password(v){
-        console.log(v, '--v')
-      }
+      password (v) {
+        // console.log(v, '--v')
+      },
     },
     methods: {
       login: async function () {

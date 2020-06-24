@@ -7,6 +7,7 @@ const state = {
     user: null,
     authError: null,
     isAdmin: '',
+    last_login_time: 0,
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     },
     SET_TOKEN (state, payload) {
         localStorage.setItem('token', payload)
+    },
+    SET_LOGIN_FAIL (state, payload) {
+        sessionStorage.setItem('num_login_fail', payload)
     },
     SET_AUTH_ERROR: (state, payload) => {
         state.authError = payload
@@ -65,23 +69,38 @@ const actions = {
         // clear token to prevent errors (if malformed)
         commit('SET_TOKEN', '')
         commit('SET_AUTH_ERROR', null)
-
+        const countFailedLogin = sessionStorage.getItem('num_login_fail') !== null ? sessionStorage.getItem('num_login_fail') : 0
+        if (Number(countFailedLogin) === 3) {
+            if ((new Date() - state.last_login_time) < 600000) {
+                // alert to user wait for 10 minutes after
+                commit('SET_AUTH_ERROR', 'Invalid credentials, wait 10 minutes')
+                return
+            } else {
+                // after 10 minutes
+                commit('SET_LOGIN_FAIL', 0)
+            }
+        }
         try {
             const res = await axios.post('/auth/login', {
-                    username: payload.username,
-                    password: payload.password,
-                },
-                {
-                    headers: { 'Content-Type': 'application/json',
-                                'Accept': 'application/json' },
-                })
+                  username: payload.username,
+                  password: payload.password,
+              },
+              {
+                  headers: { 'Content-Type': 'application/json',
+                      'Accept': 'application/json' },
+              })
             if (res.status === 202) {
                 commit('SET_TOKEN', res.data.token)
                 commit('SET_USER', res.data.user)
+                commit('SET_LOGIN_FAIL', 0)
             } else {
+                commit('SET_LOGIN_FAIL', Number(sessionStorage.getItem('num_login_fail')) + 1)
+                state.last_login_time = new Date()
                 commit('SET_AUTH_ERROR', 'Invalid credentials')
             }
         } catch (e) {
+            commit('SET_LOGIN_FAIL', Number(sessionStorage.getItem('num_login_fail')) + 1)
+            state.last_login_time = new Date()
             commit('SET_AUTH_ERROR', 'Invalid credentials')
         }
     },
