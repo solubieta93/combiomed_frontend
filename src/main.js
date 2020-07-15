@@ -6,9 +6,11 @@ import router from '@/utils/router'
 import '@/utils/registerServiceWorker'
 import { store } from '@/store/store'
 import FormAlert from '@/components/utils/FormAlert'
+import Notifications from 'vue-notification';
 
 // Register Global Component
 Vue.component('form-alert', FormAlert)
+Vue.use(Notifications);
 
 Vue.config.productionTip = false
 document.title = 'Combiomed'

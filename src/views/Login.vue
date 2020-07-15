@@ -1,18 +1,26 @@
 <template>
-  <!-- #8c3564 -->
+<!--  backgroundImage: `url(${baseUrl}combiomed/combiomed3.png)`-->
   <v-row
-    style="background-color: white;"
+    style="background-size: cover;"
+    :style="{
+      backgroundAttachment: 'scroll, fixed',
+      backgroundPosition: '0px, 0px, 50% 50%',
+
+      backgroundImage: 'linear-gradient(red, white, red)'
+    }"
     align="center"
     justify="center"
   >
+    <v-overlay :value="showOverlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+
     <div class="login">
-      <form-alert
-        v-if="authError"
-        :message="authError"
-      />
       <v-card
         class="mx-auto"
         :style="cardStyle"
+        elevation="0"
+        style="background-color: transparent;"
       >
         <v-card-text>
           <img
@@ -25,10 +33,18 @@
             label="Nombre de Usuario"
             :rules="[rules.required]"
             clearable
+            outlined
+            dense
+            small
+            rounded
           />
           <br>
           <v-text-field
             v-model="password"
+            outlined
+            dense
+            small
+            rounded
             :rules="[rules.required, rules.charactersLength(8), rules.validPassword]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
@@ -36,24 +52,19 @@
             counter
             @click:append="show1 = !show1"
           />
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
+          <v-row>
+            <v-col>
+              <v-btn
+                block
+                dense
+                color="primary"
+                dark
+                @click="login"
               >
-                <v-btn
-                  rounded
-                  color="primary"
-                  dark
-                  @click="login"
-                >
-                  Aceptar
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
+                Aceptar
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </div>
@@ -63,12 +74,13 @@
 <script>
   import { mapGetters } from 'vuex'
   import Rules from '../utils/rules'
+  import { baseUrl } from '../utils/globalConstants';
 
   export default {
     name: 'Login',
     data () {
       return {
-        baseUrl: process.env.BASE_URL,
+        baseUrl,
         unique: '',
         show1: false,
         show2: true,
@@ -76,11 +88,7 @@
         show4: false,
         password: '',
         rules: Rules,
-        // rules: {
-        //   required: value => !!value || 'Required.',
-        //   min: v => v.length >= 6 || 'Min 6 characters',
-        //   emailMatch: () => "The email and password you entered don't match",
-        // },
+        showOverlay: false
       }
     },
     computed: {
@@ -91,7 +99,7 @@
           case 'xs': return 'width: 90vw;'
           case 'sm': return 'width: 90vw;'
           case 'md': return 'width: 400px;'
-          case 'lg': return 'width: 50vw;'
+          case 'lg': return 'width: 30vw;'
           case 'xl': return 'width: 40vw;'
         }
       },
@@ -106,13 +114,29 @@
       password (v) {
         // console.log(v, '--v')
       },
+      authError (v) {
+        console.log(v, '---v');
+        if (v) {
+          console.log(v, 'entro');
+          this.$notify({
+            type: 'error',
+            title: 'Error',
+            group: 'auth',
+            text: v,
+            duration: 6000,
+          })
+        }
+
+      },
     },
     methods: {
       login: async function () {
+        this.showOverlay = true;
         await this.$store.dispatch('signinUser', {
           username: this.unique,
           password: this.password,
         })
+        this.showOverlay = false;
       },
     },
   }
@@ -120,10 +144,10 @@
 
 <style scoped>
 /* "scoped" attribute limit the CSS to this component only */
-.login {
-  margin-top: 10%;
-  margin-bottom: 5%;
-}
+/*.login {*/
+/*  margin-top: 10%;*/
+/*  margin-bottom: 5%;*/
+/*}*/
 input {
   margin: 10px 0;
   width: 20%;

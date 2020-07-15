@@ -41,12 +41,8 @@ const router = new Router({
       }],
     },
     {
-      path: '/',
-      component: AppLayout,
-      children: [{
-        path: '/login',
-        component: Login,
-      }],
+      path: '/login',
+      component: Login,
     },
     {
       path: '/products',
