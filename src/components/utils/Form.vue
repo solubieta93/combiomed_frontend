@@ -1,11 +1,12 @@
 <template>
+<!--  backgroundImage: `url(${baseUrl}web-combiomed-futer-04-04.png)`-->
   <v-row
     justify="center"
     style="background-size: cover;"
     :style="{
       backgroundAttachment: 'scroll, fixed',
-      backgroundPosition: '0px 0px, 50% 50%',
-      backgroundImage: `url(${baseUrl}web-combiomed-futer-04-04.png)`
+      backgroundPosition: '0px, 0px, 50% 50%',
+      backgroundImage: 'linear-gradient(white, grey)'
     }"
   >
     <v-dialog
@@ -13,24 +14,21 @@
       persistent
       overlay-color="red"
       overlay-opacity=".30"
+      width="50%"
     >
       <v-btn
         dark
-        text
         @click="sendEmailBoolean = false"
       >
         {{ sendEmailMessage }}
-        <v-icon>close</v-icon>
+        <v-icon right>
+          mdi-close
+        </v-icon>
       </v-btn>
     </v-dialog>
 
     <v-col
-      class="xs"
-      md="12"
-      sm="12"
-      lg="12"
-      xl="12"
-
+      class="pb-0"
       cols="12"
     >
       <v-row
@@ -38,20 +36,19 @@
         :style="rowStyle"
       >
         <v-col
-          class="xs"
-          md="4"
-          sm="3"
-          lg="3"
-          xl="3"
-
-          cols="12"
+          class="justify-center align-center pb-0"
+          :class="{'col-3': $vuetify.breakpoint.lgAndUp || $vuetify.breakpoint.smOnly,
+                   'col-12 pb-0': $vuetify.breakpoint.xsOnly, 'col-4': $vuetify.breakpoint.mdOnly}"
         >
           <v-row justify="center">
             <img src="../../../public/ICONOS/map-marker.png">
           </v-row>
-          <v-row justify="center">
-            <v-col cols="10">
-              <p class="body-2 font-italic font-weight-bold">
+          <v-row class="align-center justify-center">
+            <v-col
+              cols="10"
+              class="text-center"
+            >
+              <p class="body-2 font-italic font-weight-bold mb-0 align-center">
                 Calle 202 No.1704 entre 17 y 19. Siboney. Playa. La Habana. Cuba
               </p>
             </v-col>
@@ -59,11 +56,8 @@
         </v-col>
 
         <v-col
-          class="xs"
-          md="3"
-          sm="3"
-          lg="3"
-          xl="3"
+          class="pb-0"
+          :class="{'col-6': $vuetify.breakpoint.xsOnly, 'col-3': !$vuetify.breakpoint.mdOnly && !$vuetify.breakpoint.xsOnly}"
         >
           <v-row justify="center">
             <img src="../../../public/ICONOS/email.png">
@@ -81,11 +75,8 @@
         </v-col>
 
         <v-col
-          class="xs"
-          md="4"
-          sm="3"
-          lg="3"
-          xl="3"
+          class="pb-0"
+          :class="{'col-6': $vuetify.breakpoint.xsOnly, 'col-3': !$vuetify.breakpoint.mdOnly && !$vuetify.breakpoint.xsOnly}"
         >
           <v-row justify="center">
             <img src="../../../public/ICONOS/phone.png">
@@ -103,14 +94,12 @@
       <v-form
         ref="mailForm"
         v-model="valid"
+        :class="{'px-1': $vuetify.breakpoint.xsOnly}"
       >
         <v-row justify="center">
           <v-col
-            class="xs"
-            md="4"
-            sm="3"
-            lg="5"
-            xl="3"
+            :class="{'col-3': $vuetify.breakpoint.xlOnly || $vuetify.breakpoint.smOnly,
+                     'col-4': $vuetify.breakpoint.mdOnly, 'col-5': $vuetify.breakpoint.lgOnly}"
           >
             <v-text-field
               v-model="mailDetail['name']"
@@ -123,11 +112,8 @@
             />
           </v-col>
           <v-col
-            class="xs"
-            md="4"
-            sm="3"
-            lg="5"
-            xl="3"
+            :class="{'col-3': $vuetify.breakpoint.xlOnly || $vuetify.breakpoint.smOnly,
+                     'col-4': $vuetify.breakpoint.mdOnly, 'col-5': $vuetify.breakpoint.lgOnly}"
           >
             <v-text-field
               v-model="mailDetail['email']"
@@ -139,18 +125,15 @@
               :rules="[rules.emailValid, rules.required]"
             />
           </v-col>
-
           <v-col
-            class="xs"
-            md="4"
-            sm="3"
-            lg="10"
-            xl="3"
+            :class="{'col-3': $vuetify.breakpoint.xlOnly || $vuetify.breakpoint.smOnly,
+                     'col-4': $vuetify.breakpoint.mdOnly, 'col-10': $vuetify.breakpoint.lgOnly}"
           >
             <v-text-field
               v-model="mailDetail['summary']"
               label="Asunto"
               single-line
+              hide-details
               outlined
               dense
               color="red"
@@ -159,11 +142,8 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            class="xs"
-            md="12"
-            sm="9"
-            lg="10"
-            xl="9"
+            :class="{'col-9': $vuetify.breakpoint.xlOnly || $vuetify.breakpoint.smOnly,
+                     'col-12': $vuetify.breakpoint.mdOnly || $vuetify.breakpoint.xsOnly , 'col-10': $vuetify.breakpoint.lgOnly}"
           >
             <v-textarea
               v-model="mailDetail['message']"
@@ -177,6 +157,18 @@
             />
           </v-col>
         </v-row>
+        <v-row class="justify-center align-center">
+          <v-col class="justify-center align-center pa-0">
+            <v-row class="justify-center align-center">
+              <my-captcha
+                :call-success="captchaBtn"
+                color="black"
+                resolve="text"
+                style="border: 0px"
+              />
+            </v-row>
+          </v-col>
+        </v-row>
         <v-row justify="center">
           <v-col
             class="xs"
@@ -185,19 +177,12 @@
             lg="10"
             xl="9"
           >
-            <captcha-vue
-              id="recaptcha-main"
-              ref="recaptcha"
-              size="invisible"
-              :sitekey="captchaSiteKey"
-              @verify="onVerify"
-              @expired="onExpired"
-            />
             <v-btn
               color="#001A33"
               block
-              @click="submit"
               :loading="loading"
+              :disabled="btndis"
+              @click="sendMail"
             >
               <h5 style="color: white;">
                 Enviar ahora
@@ -210,15 +195,17 @@
   </v-row>
 </template>
 
-<script type="application/javascript">
+<script type="application/javascript" lang="js">
   import Rules from '../../utils/rules'
-  import VueReCaptcha from 'vue-recaptcha'
+  import myCaptcha from 'vue-captcha'
+
   export default {
     components: {
-      'captcha-vue': VueReCaptcha,
+      'my-captcha': myCaptcha,
     },
     data () {
       return {
+        captcha: false,
         captchaSiteKey: '6LezhgAVAAAAAAGKKnxp1lMw3-iun7_Fw98QWsK3',
         baseUrl: process.env.BASE_URL,
         rules: Rules,
@@ -229,6 +216,12 @@
         sendEmailMessage: '',
         sendEmailBoolean: false,
         loading: false,
+        total: -1,
+        valueSumByUser: -1,
+        textSum: '',
+        errorText: '',
+        showError: false,
+        btndis: true,
       }
     },
     computed: {
@@ -237,11 +230,16 @@
           case 'xs': return 'margin-top: 20%;'
           case 'sm': return 'margin-top: 8%;'
           case 'md': return 'margin-top: 120px;'
-          case 'lg': return 'margin-top: 135px;'
+          case 'lg': return 'margin-top: 110px;'
           case 'xl': return 'margin-top: 300px;'
           default: return 'margin-top: 20%;'
         }
       },
+    },
+    watch: {
+      // valueSumByUser (value) {
+      //   this.checkInput(value)
+      // },
     },
     mounted () {
       let recaptchaScript = document.createElement('script')
@@ -252,76 +250,30 @@
       document.head.appendChild(recaptchaScript)
     },
     created () {
-      this.OnLoadCallback()
     },
     methods: {
-      OnLoadCallback () {
-        this.$nextTick(function () {
-          if (window.grecaptcha !== undefined) {
-            window.grecaptcha.render('recaptcha-main',
-                                     {
-                                       'sitekey': this.captchasiteKey,
-                                       'callback': 'sendMail',
-                                     }
-            )
-          }
-        })
-      },
-      async submit () {
+      async sendMail () {
         this.loading = true
         if (this.$refs.mailForm.validate()) {
-          this.$refs.recaptcha.execute()
-        } else this.loading = false
-      },
-      async sendMail () {
-        var templateParams = {
-          subject: this.mailDetail['summary'],
-          message: 'Nombre del remitente: \n ' + this.mailDetail['name'] + '\n' + 'Mensaje: \n' + this.mailDetail['message'],
-          from_email: this.mailDetail['email'],
-          to: ['solubieta93@gmail.com'],
-        }
-        const res = await this.$store.dispatch('sendEmail', templateParams)
-        if (res.success) {
-          this.sendEmailBoolean = true
-          this.sendEmailMessage = res.message
-        } else {
-          this.sendEmailBoolean = true
-          this.sendEmailMessage = res.message
+          var templateParams = {
+            subject: this.mailDetail['summary'],
+            message: 'Nombre del remitente: \n ' + this.mailDetail['name'] + '\n' + 'Mensaje: \n' + this.mailDetail['message'],
+            from_email: this.mailDetail['email'],
+            to: ['solubieta93@gmail.com'],
+          }
+          const res = await this.$store.dispatch('sendEmail', templateParams)
+          if (res.success) {
+            this.sendEmailBoolean = true
+            this.sendEmailMessage = res.message
+          } else {
+            this.sendEmailBoolean = true
+            this.sendEmailMessage = res.message
+          }
         }
         this.loading = false
       },
-      onExpired: function () {
-        if (this.loading) {
-          this.sendEmailBoolean = true
-          this.sendEmailMessage = 'Conexión inestable, correo no enviado, inténtelo nuevamente'
-          this.loading = false
-        }
-      },
-      resetRecaptcha () {
-        console.log('RESET')
-        this.$refs.recaptcha.reset() // Direct call reset method
-      },
-      async onVerify (response) {
-        const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
-        var templateParams = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Access-Control-Allow-Origin': '*',
-          },
-          params: {
-            secret: '6LezhgAVAAAAAGR5-kJ0TjVopdNxCVm9vaeAZhm9',
-            response,
-          },
-          url: VERIFY_URL,
-        }
-        const responsePost = await this.$store.dispatch('verifyCaptcha', templateParams);
-        if (responsePost.success) {
-          this.sendMail()
-        } else {
-          this.sendEmailBoolean = true
-          this.sendEmailMessage = responsePost.message
-          this.loading = false
-        }
+      captchaBtn () {
+        this.btndis = false
       },
     },
   }
@@ -330,32 +282,5 @@
 <style scoped>
   .back {
     background-color: white;
-  }
-  .mycontainer {
-    margin:auto;
-    width:80%;
-  }
-  .xsOnlyStyle {
-    /*margin-bottom: -9%;*/
-    /*z-index:1;*/
-  }
-  .smAndDownStyle {
-    /*margin-bottom: -5%;*/
-    /*z-index:1;*/
-  }
-  .mdAndUpStyle {
-    /*margin-bottom: -3%;*/
-  }
-  .xlOnlyStyle {
-    height: 50%;
-  }
-  .xsOnlyRowStyle {
-    margin-bottom: 8%;
-  }
-  .smAndDownRowStyle {
-    margin-bottom: 3%;
-  }
-  .mdAndUpRowStyle  {
-    margin-bottom: 5%;
   }
 </style>

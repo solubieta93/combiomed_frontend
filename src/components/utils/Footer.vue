@@ -35,7 +35,7 @@
       >
         <v-row justify="center">
           <v-col
-            class="justify"
+            class="text-center"
             cols="8"
             sm="10"
             lg="10"
