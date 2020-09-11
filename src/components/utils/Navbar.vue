@@ -1,145 +1,225 @@
-<template>
-  <v-app-bar
-    app
-    hide-off-scroll
-    tabs
-    color="transparent"
-    prominent
-  >
-    <v-overlay
-      absolute
-      color="#001A33"
-      class="fill"
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+  <nav>
+    <v-app-bar
+      v-if="$vuetify.breakpoint.smAndDown"
+      app
+      color="transparent"
     >
-      <v-row
-        class="fill pa-0 ma-0"
-        align="end"
+      <v-app-bar-nav-icon
+        v-if="$vuetify.breakpoint.smAndDown"
+        @click="drawer = !drawer"
+        color="red"
+      />
+    </v-app-bar>
+    <v-app-bar
+      v-if="!$vuetify.breakpoint.smAndDown"
+      app
+      hide-off-scroll
+      tabs
+      color="transparent"
+      prominent
+    >
+      <v-overlay
+        v-if="$vuetify.breakpoint.mdAndUp"
+        absolute
+        color="#001A33"
+        class="fill"
       >
-        <v-col
-          class="pa-0 ma-0"
-          align-self="end"
+        <v-row
+          class="fill pa-0 ma-0"
+          align="end"
         >
-          <v-row class="pa-0 ma-0">
-            <v-spacer />
-            <v-col
-              class="pa-0 ma-0"
-              cols="6"
-            >
-              <v-row
-                align="start"
-                class="pa-0 ma-0"
-              >
-                <v-toolbar-title class="text-uppercase">
-                  <v-btn
-                    color="transparent"
-                    title
-                    text
-                    to="/"
-                    width="300px"
-                    height="70px"
-                  >
-                    <v-img
-                      :src="`${baseUrl}Logo sin genérico - Fondo blanco.png`"
-                      :style="logoStyle"
-                      :aspect-ratio="1.0778"
-                    />
-                  </v-btn>
-                </v-toolbar-title>
-              </v-row>
-            </v-col>
-            <v-spacer />
-          </v-row>
-
-          <v-divider
-            dark
-            style="width: 100vw"
-            color="white"
-          />
-          <!--          <template v-slot:extension>-->
-          <v-tabs
-            v-model="tab"
-            :align-with-title="false"
-            background-color="transparent"
-            color="white"
-            :hide-slider="hideSlider"
-            centered
-            show-arrows
-            class="white--text"
+          <v-col
+            class="pa-0 ma-0"
+            align-self="end"
           >
-            <v-tabs-slider
-              v-model="slider"
-              color="#8b0000"
+            <v-row class="pa-0 ma-0">
+              <v-spacer />
+              <v-col
+                class="pa-0 ma-0"
+                cols="6"
+              >
+                <v-row
+                  align="start"
+                  class="pa-0 ma-0"
+                >
+                  <v-toolbar-title class="text-uppercase">
+                    <v-btn
+                      color="transparent"
+                      title
+                      text
+                      to="/"
+                      width="300px"
+                      height="70px"
+                    >
+                      <v-img
+                        :src="`${baseUrl}Logo sin genérico - Fondo blanco.png`"
+                        :style="logoStyle"
+                        :aspect-ratio="1.0778"
+                      />
+                    </v-btn>
+                  </v-toolbar-title>
+                </v-row>
+              </v-col>
+              <v-spacer />
+            </v-row>
+
+            <v-divider
+              dark
+              style="width: 100vw"
+              color="white"
             />
-            <v-item
-              v-for="(link, i) in links"
-              :key="link.text"
-              :value="i"
+            <!--          <template v-slot:extension>-->
+            <v-tabs
+              v-model="tab"
+              :align-with-title="false"
+              background-color="transparent"
+              color="white"
+              :hide-slider="hideSlider"
+              centered
+              show-arrows
+              class="white--text"
             >
+              <v-tabs-slider
+                v-model="slider"
+                color="#8b0000"
+              />
+              <v-item
+                v-for="(link, i) in links"
+                :key="link.text"
+                :value="i"
+              >
+                <v-tab
+                  v-if="!link.items"
+                  background-color="transparent"
+                  class="white--text"
+                  :to="link.route ? link.route : null"
+                  :disabled="!link.route"
+                >
+                  {{ link.text }}
+                </v-tab>
+                <v-menu
+                  v-else
+                  v-model="link.active"
+                  offset-y
+                  style="background-color:transparent"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-tab
+                      background-color="transparent"
+                      class="white--text fill-height"
+                      color="white"
+                      :style="link.style"
+                      v-on="on"
+                    >
+                      {{ link.text }}
+                      <v-icon right>
+                        mdi-menu-down
+                      </v-icon>
+                    </v-tab>
+                  </template>
+
+                  <v-tabs
+                    vertical
+                    class="semitransparent white--text"
+                  >
+                    <v-tabs-slider
+                      v-model="slider"
+                      color="#8b0000"
+                    />
+                    <v-tab
+                      v-for="item in link.items"
+                      :key="item.text"
+                      class="semitransparent white--text"
+                      style="min-width: 150px"
+                      :inactive="!item.route"
+                      :disabled="!item.route"
+                      @click="() => pushRoute(i, item.route)"
+                    >
+                      {{ item.text }}
+                    </v-tab>
+                  </v-tabs>
+                </v-menu>
+              </v-item>
               <v-tab
-                v-if="!link.items"
+                v-if="!!user"
                 background-color="transparent"
                 class="white--text"
-                :to="link.route ? link.route : null"
-                :disabled="!link.route"
+                @click="logout"
               >
-                {{ link.text }}
+                Salir
               </v-tab>
-              <v-menu
-                v-else
-                v-model="link.active"
-                offset-y
-                style="background-color:transparent"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-tab
-                    background-color="transparent"
-                    class="white--text fill-height"
-                    color="white"
-                    :style="link.style"
-                    v-on="on"
-                  >
-                    {{ link.text }}
-                    <v-icon right>
-                      mdi-menu-down
-                    </v-icon>
-                  </v-tab>
-                </template>
-
-                <v-tabs
-                  vertical
-                  class="semitransparent white--text"
-                >
-                  <v-tabs-slider
-                    v-model="slider"
-                    color="#8b0000"
-                  />
-                  <v-tab
-                    v-for="item in link.items"
-                    :key="item.text"
-                    class="semitransparent white--text"
-                    style="min-width: 150px"
-                    :inactive="!item.route"
-                    :disabled="!item.route"
-                    @click="() => pushRoute(i, item.route)"
-                  >
-                    {{ item.text }}
-                  </v-tab>
-                </v-tabs>
-              </v-menu>
-            </v-item>
-            <v-tab
-              v-if="!!user"
-              background-color="transparent"
-              class="white--text"
-              @click="logout"
+            </v-tabs>
+          </v-col>
+        </v-row>
+      </v-overlay>
+    </v-app-bar>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      dark
+      temporary
+    >
+      <v-row class="justify-center">
+        <v-col class="mt-5 text-center">
+          <v-avatar
+            style="height:70px; width:240px;"
+          >
+            <img
+              :src="`${baseUrl}Logo sin genérico - Fondo blanco.png`"
+              :aspect-ratio="1.0778"
             >
-              Logout
-            </v-tab>
-          </v-tabs>
+          </v-avatar>
         </v-col>
       </v-row>
-    </v-overlay>
-  </v-app-bar>
+      <v-divider
+        style="border-color: white; width: calc(100% - 30px); margin-left: 15px;"
+        class="mb-3"
+      />
+      <v-list>
+        <v-list-item
+          v-for="link in linksWithoutServices"
+          :key="link.text"
+          router
+          :to="link.route"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="white--text">
+              {{ link.text }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-group aria-expanded="false">
+          <template v-slot:activator class="white--text">
+            <v-list-item-title class="white--text">Servicios</v-list-item-title>
+          </template>
+
+          <v-list-item
+            v-for="link in linkServices"
+            :key="link.text"
+            router
+            :to="link.route"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="white--text">
+                {{ link.text }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+        <v-list-item
+          v-if="!!user"
+          @click="logout"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="white--text">
+              Salir
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </nav>
 </template>
 
 <script>
@@ -164,6 +244,18 @@
           },
           { text: 'Noticias y Eventos', route: '/news' },
           { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
+        ],
+        linksWithoutServices: [
+          { text: 'Inicio', route: '/', roles: [] },
+          { text: 'Nosotros', route: '/us', roles: [] },
+          { text: 'Productos', route: '/products', roles: [] },
+          { text: 'Noticias y Eventos', route: '/news' },
+          { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
+        ],
+        linkServices: [
+          { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
+          { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
+          { text: 'AUTOMÁTICA', route: '/services/auto', roles: [] },
         ],
         baseUrl: process.env.BASE_URL,
         tab: null,

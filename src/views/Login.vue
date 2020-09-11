@@ -1,12 +1,11 @@
 <template>
 <!--  backgroundImage: `url(${baseUrl}combiomed/combiomed3.png)`-->
+<!--  // backgroundImage: 'linear-gradient(rgb(233,13,8,.7) , white, rgb(233,13,8,.7))'-->
   <v-row
     style="background-size: cover;"
     :style="{
       backgroundAttachment: 'scroll, fixed',
       backgroundPosition: '0px, 0px, 50% 50%',
-
-      backgroundImage: 'linear-gradient(red, white, red)'
     }"
     align="center"
     justify="center"
@@ -19,8 +18,8 @@
       <v-card
         class="mx-auto"
         :style="cardStyle"
-        elevation="0"
-        style="background-color: transparent;"
+        elevation="6"
+        style="box-shadow: 0 2px 3px 2px rgba(233, 13, 8, 1); border-radius: 2px;"
       >
         <v-card-text>
           <img

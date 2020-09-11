@@ -41,41 +41,33 @@
       </v-col>
 
       <div id="contacts">
-        <v-row
-          v-if="contactsItem.length"
-          justify="center"
-        >
-          <v-col
-            v-for="(item, i) in contactsItem"
-            :key="i"
-            class="xs"
-            md="6"
-            sm="12"
-            lg="3"
-            xl="4"
+        <v-col cols="8" >
+          <v-row v-if="contactsItem.length" class="justify-center align-center">
+            <v-col
+              v-for="(item, i) in contactsItem"
+              :key="i"
+              class="xs"
+            >
+              <div class="contactos">
+                <v-avatar size="200" style="object-fit: cover">
+                  <v-img :src="item.image" aspect-ratio="16/9"></v-img>
+                </v-avatar>
+                <h4>{{ item.name }}</h4>
+                <h4 class="text-uppercase">
+                  {{ item.role }}
+                </h4>
+                <h5><i class="fi-mail large" /> {{ item.mail }}</h5>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row
+            v-else
+            justify="center"
           >
-            <div class="contactos">
-              <img
-                id="p1"
-                :src="item.image"
-                alt=""
-                width="250"
-                height="260"
-              >
-              <h4>{{ item.name }}</h4>
-              <h4 class="text-uppercase">
-                {{ item.role }}
-              </h4>
-              <h5><i class="fi-mail large" /> {{ item.mail }}</h5>
-            </div>
-          </v-col>
-        </v-row>
-        <v-row
-          v-else
-          justify="center"
-        >
-          <p> No hay contactos que mostrar </p>
-        </v-row>
+            <p> No hay contactos que mostrar </p>
+          </v-row>
+        </v-col>
+
       </div>
     </div>
 
