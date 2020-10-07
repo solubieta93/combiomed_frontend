@@ -32,6 +32,12 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-row class="justify-center text--white">
+      <v-btn icon small href="https://wwww.gacetaoficial.gob.cu/es">
+        <v-icon color="white"> mdi-download </v-icon>
+      </v-btn>
+      <span class="white--text">Descargar Gaceta Oficial de Cuba</span>
+    </v-row>
     <v-row justify="center">
       <v-col
         class="justify"
