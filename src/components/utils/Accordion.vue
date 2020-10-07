@@ -49,17 +49,17 @@
           </p>
         </v-col>
       </v-row>
-      <v-row class="justify-center">
-        <v-img
-          style="object-fit: cover"
-          src="organigrama.png"
-        />
-      </v-row>
       <v-expand-transition>
         <div
           v-show="!readless"
           class="my_container"
         >
+          <v-row class="justify-center">
+            <v-img
+              style="object-fit: cover"
+              src="organigrama.png"
+            />
+          </v-row>
           <v-row justify="center">
             <v-col
               class="xs"
