@@ -49,6 +49,12 @@
           </p>
         </v-col>
       </v-row>
+      <v-row class="justify-center">
+        <v-img
+          style="object-fit: cover"
+          src="organigrama.png"
+        />
+      </v-row>
       <v-expand-transition>
         <div
           v-show="!readless"
@@ -56,11 +62,12 @@
         >
           <v-row justify="center">
             <v-col
+              class="xs"
               md="4"
               sm="6"
               lg="4"
               xl="4"
-              xs="1"
+
               cols="12"
             >
               <h2>Génesis</h2>
@@ -74,11 +81,12 @@
               </p>
             </v-col>
             <v-col
+              class="xs"
               md="4"
               sm="6"
               lg="4"
               xl="4"
-              xs="1"
+
               cols="12"
             >
               <img
