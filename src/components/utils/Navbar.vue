@@ -7,8 +7,11 @@
     >
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
-        @click="drawer = !drawer"
         color="red"
+        @click="drawer = !drawer"
+      />
+      <intenationalization-button
+        @changeLocale="(locale)=> changeLocale(locale)"
       />
     </v-app-bar>
     <v-app-bar
@@ -62,6 +65,9 @@
                 </v-row>
               </v-col>
               <v-spacer />
+              <intenationalization-button
+                @changeLocale="(locale)=> changeLocale(locale)"
+              />
             </v-row>
 
             <v-divider
@@ -190,8 +196,13 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-group aria-expanded="false">
-          <template v-slot:activator class="white--text">
-            <v-list-item-title class="white--text">Servicios</v-list-item-title>
+          <template
+            v-slot:activator
+            class="white--text"
+          >
+            <v-list-item-title class="white--text">
+              Servicios
+            </v-list-item-title>
           </template>
 
           <v-list-item
@@ -224,7 +235,11 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import FlagIcon from 'vue-flag-icon'
+  import { i18n } from '@/plugins/i18n'
+  import IntenationalizationButton from './IntenationalizationButton'
   export default {
+    components: { IntenationalizationButton },
     data () {
       return {
         drawer: null,
@@ -285,6 +300,9 @@
       pushRoute (i, path) {
         this.tab = i
         if (path) this.$router.push({ path })
+      },
+      changeLocale (locale) {
+        i18n.locale = locale
       },
     },
   }

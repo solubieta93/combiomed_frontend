@@ -7,15 +7,18 @@ import '@/utils/registerServiceWorker'
 import { store } from '@/store/store'
 import FormAlert from '@/components/utils/FormAlert'
 import Notifications from 'vue-notification';
+import { i18n } from '@/plugins/i18n';
+import FlagIcon from 'vue-flag-icon';
 
 // Register Global Component
 Vue.component('form-alert', FormAlert)
 Vue.use(Notifications);
-
+Vue.use(FlagIcon);
 Vue.config.productionTip = false
 document.title = 'Combiomed'
 
 new Vue({
+  i18n,
   store,
   router,
   vuetify,

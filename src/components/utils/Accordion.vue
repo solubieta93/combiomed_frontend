@@ -20,7 +20,7 @@
                 class="text-uppercase"
                 style="margin-top: -14px; margin-left: 16px; "
               >
-                quienes somos
+                {{$t('quienessomos')}}
                 <br>
               </h3>
             </v-row>
@@ -36,16 +36,11 @@
       >
         <v-col md="8">
           <p class="text-justify">
-            Nuestra institución fue creada en 1969 con el nombre de Centro de Investigaciones
-            Digitales (CID), más tarde Instituto Central de Investigación Digital (ICID), con el
-            objetivo de desarrollar la primera computadora cubana. Desde diciembre de 2018 y hasta
-            la actualidad nos nombramos COMBIOMED Tecnología Médica Digital.
+            {{$t('quienesSomosText1')}}
             <br>
           </p>
           <p class="text-justify">
-            Tenemos referencia en el mercado nacional e internacional y brindamos soluciones tecnológicas
-            seguras y asequibles para la salud. Nuestro objetivo es investigar, desarrollar, producir,
-            comercializar y brindar servicio técnico a equipos electrónicos para la medicina, la automatización, etc.
+            {{$t('quienesSomosText2')}}
           </p>
         </v-col>
       </v-row>
@@ -70,14 +65,10 @@
 
               cols="12"
             >
-              <h2>Génesis</h2>
-              <h3> PRIMERA COMPUTADORA CUBANA: CID 201</h3>
+              <h2>{{$t('genesis')}}</h2>
+              <h3> {{$t('computadoraText1')}}</h3>
               <p class="text-justify">
-                El 18 de Abril de 1970 funcionó la primera computadora cubana. Más tarde, comenzó la producción
-                de minicomputadoras como la CID 201A y CID 201B. Se produjeron más de 100 equipos, con los cuáles
-                se logró el inicio del desarrollo de la automatización en nuestro centro, logrando automatizar
-                centrales azucareros y otros centro de la economía nacional, tarea que sigue incrementándose posteriormente,
-                con el diseño y producción de los primeros autómatas NODOREM.
+                {{$t('computadoraText2')}}
               </p>
             </v-col>
             <v-col
@@ -91,7 +82,7 @@
             >
               <img
                 src="CID 201.png"
-                alt="La primera computadora cubana CID 201"
+                :alt="$t('computadoraAltImageText')"
                 fill-height
               >
             </v-col>
@@ -107,7 +98,7 @@
           text
           @click="readless = !readless"
         >
-          {{ readless ? 'Leer más' : 'Leer menos' }}
+          {{ readless ? $t('leermas') : $t('leermenos') }}
         </v-btn>
       </v-row>
     </v-card>
