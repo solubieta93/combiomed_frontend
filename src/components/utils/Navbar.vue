@@ -102,7 +102,7 @@
                   :to="link.route ? link.route : null"
                   :disabled="!link.route"
                 >
-                  {{ link.text }}
+                  {{ $t(link.text) }}
                 </v-tab>
                 <v-menu
                   v-else
@@ -118,7 +118,7 @@
                       :style="link.style"
                       v-on="on"
                     >
-                      {{ link.text }}
+                      {{ $t(link.text) }}
                       <v-icon right>
                         mdi-menu-down
                       </v-icon>
@@ -142,7 +142,7 @@
                       :disabled="!item.route"
                       @click="() => pushRoute(i, item.route)"
                     >
-                      {{ item.text }}
+                      {{ $t(item.text) }}
                     </v-tab>
                   </v-tabs>
                 </v-menu>
@@ -153,7 +153,7 @@
                 class="white--text"
                 @click="logout"
               >
-                Salir
+                {{ $t('out') }}
               </v-tab>
             </v-tabs>
           </v-col>
@@ -191,7 +191,7 @@
         >
           <v-list-item-content>
             <v-list-item-title class="white--text">
-              {{ link.text }}
+              {{ $t(link.text) }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -201,7 +201,7 @@
             class="white--text"
           >
             <v-list-item-title class="white--text">
-              Servicios
+              {{ $t('service') }}
             </v-list-item-title>
           </template>
 
@@ -213,7 +213,7 @@
           >
             <v-list-item-content>
               <v-list-item-title class="white--text">
-                {{ link.text }}
+                {{ $t(link.text) }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -224,7 +224,7 @@
         >
           <v-list-item-content>
             <v-list-item-title class="white--text">
-              Salir
+              {{ $t('out') }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -245,32 +245,32 @@
         drawer: null,
         slider: 3,
         links: [
-          { text: 'Nosotros', route: '/us', roles: [] },
-          { text: 'Productos', route: '/products', roles: [] },
-          { text: 'Servicios',
+          { text: 'quienessomos', route: '/us', roles: [] },
+          { text: 'product', route: '/products', roles: [] },
+          { text: 'service',
             active: false,
             style: 'min-width:150px',
             items: [
-              { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
-              { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
-              { text: 'AUTOMÁTICA', route: '/services/auto', roles: [] },
+              { text: 'tech', route: '/services/tech', roles: [] },
+              { text: 'mec', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
+              { text: 'aut', route: '/services/auto', roles: [] },
             ],
             roles: [],
           },
-          { text: 'Noticias y Eventos', route: '/news' },
-          { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
+          { text: 'newsEvents', route: '/news' },
+          { text: 'contacts', route: '/contacts' }, // route: '/clients' },
         ],
         linksWithoutServices: [
-          { text: 'Inicio', route: '/', roles: [] },
-          { text: 'Nosotros', route: '/us', roles: [] },
-          { text: 'Productos', route: '/products', roles: [] },
-          { text: 'Noticias y Eventos', route: '/news' },
-          { text: 'Contactos', route: '/contacts' }, // route: '/clients' },
+          { text: 'home', route: '/', roles: [] },
+          { text: 'quienessomos', route: '/us', roles: [] },
+          { text: 'product', route: '/products', roles: [] },
+          { text: 'newsEvents', route: '/news' },
+          { text: 'contacts', route: '/contacts' }, // route: '/clients' },
         ],
         linkServices: [
-          { text: 'TÉCNICOS', route: '/services/tech', roles: [] },
-          { text: 'MECÁNICA', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
-          { text: 'AUTOMÁTICA', route: '/services/auto', roles: [] },
+          { text: 'tech', route: '/services/tech', roles: [] },
+          { text: 'mec', route: '/services/mec', roles: [] }, //, route: '/auto', roles: [] },
+          { text: 'aut', route: '/services/auto', roles: [] },
         ],
         baseUrl: process.env.BASE_URL,
         tab: null,

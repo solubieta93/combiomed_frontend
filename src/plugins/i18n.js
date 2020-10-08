@@ -17,6 +17,15 @@ const messages = {
     computadoraText1: '',
     computadoraText2: '',
     computadoraAltImageText: '',
+    product: 'Products',
+    service: 'Services',
+    tech: 'TECH',
+    mec: '',
+    aut: '',
+    newsEvents: 'News & Events',
+    contacts: 'Contacts',
+    home: 'Home',
+    out: 'Logout',
   },
   es: {
     quienessomos: 'quienes somos',
@@ -37,6 +46,15 @@ const messages = {
       '                centrales azucareros y otros centro de la economía nacional, tarea que sigue incrementándose posteriormente,\n' +
       '                con el diseño y producción de los primeros autómatas NODOREM.',
     computadoraAltImageText: 'La primera computadora cubana CID 201',
+    product: 'Productos',
+    service: 'Servicios',
+    tech: 'TÉCNICOS',
+    mec: 'MECÁNICA',
+    aut: 'AUTOMÁTICA',
+    newsEvents: 'Noticias y Eventos',
+    contacts: 'Contactos',
+    home: 'Inicio',
+    out: 'Salir',
   },
 }
 
