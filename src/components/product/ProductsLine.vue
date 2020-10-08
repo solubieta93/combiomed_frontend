@@ -21,7 +21,7 @@
               class="text-uppercase"
               style=" margin-top:-5%;margin-left: 16px; color:#293D66;"
             >
-              líneas de productos
+              {{$t('linesProduct')}}
               <br>
             </h3>
           </v-row>
@@ -36,7 +36,6 @@
         :items="productsLine"
       />
     </v-container>
-  
 
   <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
    <v-row
@@ -77,8 +76,6 @@
 <script>
   import ResponsiveItems from '@/components/core/ResponsiveItems'
   import { mapGetters } from 'vuex'
-  
-
   export default {
     components: {
       ResponsiveItems,

@@ -41,8 +41,8 @@
     data () {
       return {
         languages: [
-          { flag: 'us', language: 'en', title: 'English' },
           { flag: 'es', language: 'es', title: 'Español' },
+          { flag: 'us', language: 'en', title: 'English' },
         ],
         currentLanguage: 0,
       }

@@ -26,6 +26,7 @@ const messages = {
     contacts: 'Contacts',
     home: 'Home',
     out: 'Logout',
+    linesProduct: 'Products Lines',
   },
   es: {
     quienessomos: 'quienes somos',
@@ -55,6 +56,8 @@ const messages = {
     contacts: 'Contactos',
     home: 'Inicio',
     out: 'Salir',
+
+    linesProduct: 'Líneas de Productos',
   },
 }
 
