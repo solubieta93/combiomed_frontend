@@ -109,7 +109,20 @@ const messages = {
 
     techText1: ' TECHNICAL SERVICE',
     techText2: 'Technical Services to Medical Equipment guarantees the after-sales service to the medical equipment marketed by COMBIOMED. With highly qualified engineers and technicians based in Havana, Villa Clara and Las Tunas, it performs the installation and preventive and corrective maintenance of equipment in Cuba and the rest of the world. In addition, it trains medical and technical personnel in the use of technology. \',',
+    notContacts: 'Dont have any contacts to show',
+    seeAllNews: 'Show all news',
 
+    formName: 'Name',
+    formSummary: 'Summary',
+    formMsj: 'Write your message',
+    formSend: 'Send',
+    formMail: 'E-mail',
+    downloadGaceta: 'Download "Gaceta Oficial de Cuba"',
+
+    notData: 'Dont have elements to show',
+    countByPage: 'Count by page',
+    buscar: 'Search',
+    all: 'All',
   },
   es: {
     quienessomos: 'quienes somos',
@@ -227,6 +240,22 @@ const messages = {
       '          por COMBIOMED. Con ingenieros y técnicos altamente calificados radicados en La Habana, Villa Clara y Las Tunas,\n' +
       '          realiza la instalación y mantenimiento preventivo y correctivo de los equipos de Cuba y el resto del mundo.\n' +
       '          Además, capacita a personal médico y técnico en el uso de la tecnología.',
+
+    notContacts: 'No hay contactos que mostrar',
+    seeAllNews: 'Ver todas las noticias',
+
+    formName: 'Nombre',
+    formSummary: 'Asunto',
+    formMsj: 'Introduzca su mensaje',
+    formSend: 'Enviar ahora',
+    formMail: 'Correo',
+
+    downloadGaceta: 'Descargar Gaceta Oficial de Cuba',
+    notData: 'No hay elementos para mostrar',
+
+    countByPage: 'Cantidad por paginas',
+    buscar: 'Buscar',
+    all: 'Todos',
   },
 }
 

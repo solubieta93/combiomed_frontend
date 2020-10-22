@@ -60,7 +60,7 @@
                     class="text-uppercase"
                     style="margin-top: -14px; margin-left: 16px; "
                   >
-                    Noticias y Eventos
+                    {{ $t('newsEvents') }}
                     <br>
                   </h3>
                 </v-col>
@@ -83,7 +83,7 @@
             to="/news"
           >
             <p style="color:#293D66;">
-              Ver todas las noticias
+              {{ $t('seeAllNews') }}
             </p>
           </v-btn>
         </v-row>

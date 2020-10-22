@@ -8,23 +8,22 @@
       :style="imgStyle"
     >
       <v-col
-      class="d-flex flex-column-reverse ma-0 pa-0"
-      style="height:100%"
+        class="d-flex flex-column-reverse ma-0 pa-0"
+        style="height:100%"
       >
         <v-img
           :src="`${baseUrl}web-combiomed-historia-03.png`"
           height="16%"
           width="100vw"
           max-height="16%"
-
         />
       </v-col>
     </v-img>
 
     <!-- FIRST NEWS -->
     <div class="mycontainer">
-      <v-row >
-        <v-col 
+      <v-row>
+        <v-col
           sm="12"
           lg="5"
           xl="6"
@@ -104,31 +103,45 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-dialog 
-        v-model="deletePos" 
-        persistent 
+      <v-dialog
+        v-model="deletePos"
+        persistent
         max-width="290"
       >
         <v-card>
-          <v-card-title class="headline">Eliminar Noticia</v-card-title>
+          <v-card-title class="headline">
+            Eliminar Noticia
+          </v-card-title>
           <v-card-text>¿Está seguro que desea eliminar la noticia?</v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="deletePost(post.id)">Si</v-btn>
-            <v-btn color="green darken-1" text @click="deletePos = false">No</v-btn>
+            <v-spacer />
+            <v-btn
+              color="green darken-1"
+              text
+              @click="deletePost(post.id)"
+            >
+              Si
+            </v-btn>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="deletePos = false"
+            >
+              No
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </div>
-    
+
     <!-- TO SHOW OTHER TWO NEWS -->
     <v-row
       v-for="(card, i) in this.twoposts"
       :key="card.title"
     >
       <show-post-detail
-        :post="card" 
-        :ubication_news="i === 0 ? 'Right' : (i === 1 ? 'Left' : '') "       
+        :post="card"
+        :ubication_news="i === 0 ? 'Right' : (i === 1 ? 'Left' : '') "
       />
     </v-row>
 
@@ -146,7 +159,7 @@
             class="text-uppercase"
             style="margin-top: -14px; margin-left: 16px;"
           >
-            Noticias y Eventos
+            {{ $t('newsEvents') }}
             <br>
           </h3>
         </v-col>
@@ -201,7 +214,7 @@
           case 'md': return 'height:100%; width:100vw'
           case 'lg': return 'height:80vh; width:100vw'
           case 'xl': return 'height:80vh; width:100vw'
-        }        
+        }
       },
     },
     watch: {
@@ -243,7 +256,7 @@
             this.paginate()
           })
       },
-      async deletePost(post_id) {
+      async deletePost (post_id) {
         const ok = await this.$store.dispatch('delPost', this.$route.params.postId)
         if (!ok) { this.$router.push('/') }
         // await this.paginate()
@@ -252,7 +265,7 @@
       goToEdit () {
         this.$router.push(`/news/${this.$route.params.postId}/edit`)
       },
-      
+
     },
   }
 </script>

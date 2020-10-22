@@ -36,7 +36,7 @@
               style="width: 120px; max-width: 120px"
               :hint="`Total: ${count}`"
               persistent-hint
-              label="Cantidad por paginas"
+              :label="$t('countByPage')"
               :rules="[x => (Number.isInteger(x))]"
               @input="v => changeLimit(v)"
             />
@@ -79,7 +79,7 @@
       align="center"
     >
       <v-spacer />
-      <h2 class="align-center">No hay elementos para mostrar</h2>
+      <h2 class="align-center">{{ $t('notData') }}</h2>
       <v-spacer />
     </v-row>
   </v-col>

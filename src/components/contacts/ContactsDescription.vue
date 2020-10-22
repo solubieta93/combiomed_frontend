@@ -29,7 +29,7 @@
                 @mouseover="mouse_over_contact"
                 @click="click_contact"
               >
-                contactos
+                {{ $t('contacts') }}
                 <br>
               </h4>
             </v-row>
@@ -41,16 +41,25 @@
       </v-col>
 
       <div id="contacts">
-        <v-col cols="8" >
-          <v-row v-if="contactsItem.length" class="justify-center align-center">
+        <v-col cols="8">
+          <v-row
+            v-if="contactsItem.length"
+            class="justify-center align-center"
+          >
             <v-col
               v-for="(item, i) in contactsItem"
               :key="i"
               class="xs"
             >
               <div class="contactos">
-                <v-avatar size="200" style="object-fit: cover">
-                  <v-img :src="item.image" aspect-ratio="16/9"></v-img>
+                <v-avatar
+                  size="200"
+                  style="object-fit: cover"
+                >
+                  <v-img
+                    :src="item.image"
+                    aspect-ratio="16/9"
+                  />
                 </v-avatar>
                 <h4>{{ item.name }}</h4>
                 <h4 class="text-uppercase">
@@ -64,10 +73,9 @@
             v-else
             justify="center"
           >
-            <p> No hay contactos que mostrar </p>
+            <p> {{ $t('notContacts') }} </p>
           </v-row>
         </v-col>
-
       </div>
     </div>
 

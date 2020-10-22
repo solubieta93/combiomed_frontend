@@ -8,7 +8,7 @@
     <v-text-field
       v-model="text"
       hide-details
-      :placeholder="placeHolder"
+      :placeholder="$t(placeHolder)"
       single-line
       :disabled="loading"
       :loading="loading"
@@ -44,7 +44,7 @@
       },
       placeHolder: {
         type: String,
-        default: 'Buscar',
+        default: 'buscar',
       },
       searchText: {
         type: Function,

@@ -103,7 +103,7 @@
           >
             <v-text-field
               v-model="mailDetail['name']"
-              label="Nombre"
+              :label="$t('formName')"
               single-line
               outlined
               hide-details
@@ -117,7 +117,7 @@
           >
             <v-text-field
               v-model="mailDetail['email']"
-              label="E-mail"
+              :label="$t('formMail')"
               single-line
               outlined
               dense
@@ -131,7 +131,7 @@
           >
             <v-text-field
               v-model="mailDetail['summary']"
-              label="Asunto"
+              :label="$t('formSummary')"
               single-line
               hide-details
               outlined
@@ -147,7 +147,7 @@
           >
             <v-textarea
               v-model="mailDetail['message']"
-              label="Introduzca su mensaje"
+              :label="$t('formMsj')"
               single-line
               outlined
               dense
@@ -185,7 +185,7 @@
               @click="sendMail"
             >
               <h5 style="color: white;">
-                Enviar ahora
+                {{ $t('formSend') }}
               </h5>
             </v-btn>
           </v-col>

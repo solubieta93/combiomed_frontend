@@ -1,32 +1,32 @@
 <template>
-<!--  -->
-  <div class="mycontainer2" >
-    <v-row 
-      v-if="ubication_news === 'Right'" 
+  <!--  -->
+  <div class="mycontainer2">
+    <v-row
+      v-if="ubication_news === 'Right'"
       style="margin-right: 0px; margin-left: 0px;"
     >
-      <v-col 
+      <v-col
+        v-if="ubication_news === 'Right'"
         sm="5"
         md="6"
         lg="6"
         xl="6"
         cols="7"
-        v-if="ubication_news === 'Right'"
       >
         <v-img
-            :aspect-ratio="16/9"
-            :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
-            style="top:0px; opacity:0.50;"
-          />
+          :aspect-ratio="16/9"
+          :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
+          style="top:0px; opacity:0.50;"
+        />
       </v-col>
 
       <v-col
+        v-if="ubication_news === 'Right'"
         sm="7"
         md="6"
         lg="6"
         xl="6"
         cols="5"
-        v-if="ubication_news === 'Right'"
         style="margin-left: -5%;"
       >
         <v-row>
@@ -60,17 +60,17 @@
       </v-col>
     </v-row>
 
-    <v-row 
+    <v-row
       v-if="ubication_news === 'Left'"
       style="margin-right: 0px; margin-left: 0px;"
     >
       <v-col
+        v-if="ubication_news === 'Left'"
         sm="7"
         md="6"
         lg="6"
         xl="6"
         cols="5"
-        v-if="ubication_news === 'Left'"        
       >
         <v-row>
           <h3
@@ -102,19 +102,19 @@
         </v-row>
       </v-col>
       <v-col
+        v-if="ubication_news === 'Left'"
         sm="5"
         md="6"
         lg="6"
         xl="6"
         cols="7"
-        v-if="ubication_news === 'Left'"
         style="margin-left: -5%;"
       >
-        <v-img 
-            :aspect-ratio="16/9"
-            :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
-            style="top:0px; opacity:0.70;"
-          />
+        <v-img
+          :aspect-ratio="16/9"
+          :src="post.image ? post.image : `${baseUrl}ampa- (1).png`"
+          style="top:0px; opacity:0.70;"
+        />
       </v-col>
     </v-row>
   </div>
@@ -123,7 +123,7 @@
 <script>
   export default {
     props: {
-      ubication_news: {
+      ubicationNews: {
         type: String,
         default: 'Left',
 

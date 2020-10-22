@@ -14,33 +14,33 @@
             <h2>Editar Contacto</h2>
           </v-card-title>
           <v-text-field
-              v-model="contact.name"
-              :rules="[rules.required, rules.charactersLength(null, 100)]"
-              label="Nombre"
-              @change="value => changeField('name', value)"
-            />
-            <v-text-field
-              v-model="contact.role"
-              :rules="[rules.required, rules.charactersLength(null, 100)]"
-              label="Rol"
-              @change="value => changeField('role', value)"
-            />
-            <v-text-field
-              v-model="contact.mail"
-              :rules="[rules.required, rules.charactersLength(null, 100)]"
-              label="Correo"
-              @change="value => changeField('mail', value)"
-            />
-            <v-text-field
-              v-model="contact.priority"
-              class="mx-auto"
-              type="number"
-              :min="Math.min(1)"
-              style="width: 120px; max-width: 120px"
-              label="Prioridad"
-              :rules="[x => (Number.isInteger(x))]"
-              @input="value => changeField('priority', value)"
-            />
+            v-model="contact.name"
+            :rules="[rules.required, rules.charactersLength(null, 100)]"
+            label="Nombre"
+            @change="value => changeField('name', value)"
+          />
+          <v-text-field
+            v-model="contact.role"
+            :rules="[rules.required, rules.charactersLength(null, 100)]"
+            label="Rol"
+            @change="value => changeField('role', value)"
+          />
+          <v-text-field
+            v-model="contact.mail"
+            :rules="[rules.required, rules.charactersLength(null, 100)]"
+            label="Correo"
+            @change="value => changeField('mail', value)"
+          />
+          <v-text-field
+            v-model="contact.priority"
+            class="mx-auto"
+            type="number"
+            :min="Math.min(1)"
+            style="width: 120px; max-width: 120px"
+            label="Prioridad"
+            :rules="[x => (Number.isInteger(x))]"
+            @input="value => changeField('priority', value)"
+          />
         </v-col>
       </v-row>
       <v-row justify="center">
@@ -66,7 +66,7 @@
         </v-col>
       </v-row>
     </v-col>
-    
+
     <v-card-actions>
       <v-row justify="center">
         <v-col cols="8">
@@ -119,21 +119,35 @@
         </v-col>
       </v-row>
     </v-card-actions>
-    <v-dialog 
-        v-model="deleteContact" 
-        persistent 
-        max-width="290"
-      >
-        <v-card>
-          <v-card-title class="headline">Eliminar</v-card-title>
-          <v-card-text>¿Está seguro que desea eliminar?</v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="deletedContact()">Si</v-btn>
-            <v-btn color="green darken-1" text @click="deleteContact = false">No</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+    <v-dialog
+      v-model="deleteContact"
+      persistent
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Eliminar
+        </v-card-title>
+        <v-card-text>¿Está seguro que desea eliminar?</v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deletedContact()"
+          >
+            Si
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteContact = false"
+          >
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -151,7 +165,7 @@
     props: {
       contact: {
         type: Object,
-        required: true
+        required: true,
       },
       mode: {
         type: String,
@@ -175,9 +189,6 @@
         deleteContact: false,
       }
     },
-    created(){
-      this.load()
-    },
     computed: {
       ...mapGetters(['user']),
       isAdmin () {
@@ -194,12 +205,15 @@
         if (value) {
           console.log(value, 'contact')
         }
-      }
+      },
+    },
+    created () {
+      this.load()
     },
     methods: {
-      load() {
+      load () {
         console.log(this.contact.image, 'image contact')
-        this.imageURL = this.contact.image 
+        this.imageURL = this.contact.image
       },
 
       async save () {
@@ -214,10 +228,10 @@
         this.changes[field] = value
       },
 
-      async deletedContact() {
+      async deletedContact () {
         const ok = await this.$store.dispatch('delContact', this.contact.id)
         if (!ok) { this.$router.push('/') }
-        this.$router.push('/contacts') 
+        this.$router.push('/contacts')
       },
       cancel () {
         this.$router.push('/')

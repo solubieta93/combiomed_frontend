@@ -1,14 +1,13 @@
 <template>
-<v-container>
-  <responsive-items
-    :items="newsItems"
-  />
-</v-container>
+  <v-container>
+    <responsive-items
+      :items="newsItems"
+    />
+  </v-container>
 </template>
 
 <script>
   import ResponsiveItems from '@/components/core/ResponsiveItems'
-  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -29,7 +28,7 @@
       await this.paginate()
     },
     methods: {
-       async paginate () {
+      async paginate () {
         this.loading = true
         const { posts } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
@@ -50,7 +49,7 @@
           pathTo: `/news/${news.id}`,
         }
       },
-      async filterItems() {
+      async filterItems () {
         this.loading = true
         const { posts, count } = await this.$store.dispatch('getPaginateBlog', {
           offset: 0,
@@ -62,11 +61,10 @@
           items: this.postFixed.map(x => this.buildItem(x)),
           count,
         }
-      }
+      },
     },
   }
 </script>
-
 
 <style scoped>
 

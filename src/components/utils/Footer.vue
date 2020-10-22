@@ -36,7 +36,7 @@
       <v-btn icon small href="https://wwww.gacetaoficial.gob.cu/es">
         <v-icon color="white"> mdi-download </v-icon>
       </v-btn>
-      <span class="white--text">Descargar Gaceta Oficial de Cuba</span>
+      <span class="white--text">{{ $t('downloadGaceta')}}</span>
     </v-row>
     <v-row justify="center">
       <v-col
