@@ -19,9 +19,9 @@
         />
       </v-col>
     </v-img>
-  
+
     <!-- TITLE -->
-    <v-col 
+    <v-col
       cols="12"
     >
       <v-row
@@ -37,7 +37,7 @@
               class="text-uppercase"
               style="margin-top: -14px; "
             >
-              Servicio de Mecánica
+              {{ $t('mechServ') }}
               <br>
             </h4>
           </v-row>
@@ -53,46 +53,37 @@
       >
         <v-col md="7">
           <p class="text-justify">
-            COMBIOMED Tecnología Médica Digital incluye facilidades para la producción electromecánica,
-            soportado por décadas de experiencia con las más modernas tecnologías para la fabricación de
-            partes mecánicas de alta calidad para equipos médicos y otros.
+            {{ $t('mechText1') }}
             <br>
           </p>
           <p class="text-justify">
-            La Planta de Producciones Mecánicas (PPM) de la empresa COMBIOMED Tecnología Médica Digital brinda los siguientes servicios:
+            {{ $t('mechText2') }}
           </p>
           <h4
             class="text-justify text-uppercase"
             style="color:grey;"
           >
-            CONFORMADO EN FRÍO
+            {{ $t('mechText3') }}
             <br>
           </h4>
           <p class="text-justify">
-            Es un proceso que se trabaja en chapas de diferentes materiales, entre ellos
-            metales como aluminio, acero, acero inoxidable, horiblen; siendo materiales que proporciona nuestra empresa,
-            además de tener en cuenta la solicitud del cliente en la utilización de otro tipo de material como
-            chapas, cobre y latón. Se emplea en la producción de soportes, estructuras metálicas, rejas, medios de protección,
-            y cualquier otro tipo de proceso que necesite doblado, punzonado y soldadura.
+            {{ $t('mechText4') }}
           </p>
           <p class="text-justify">
-            Para el conformado en frío la maquinaria es la siguiente:
+            {{ $t('mechText5') }}
             <br>
           </p>
           <p class="text-justify">
-            - Cizalla para cortar chapas de hasta 4 mm
+            {{ $t('mechText6') }}
           </p>
           <p class="text-justify">
-            - Multiponchadora TRUMP 1000: maquinaria que además de punzonar, puede generar conformaciones en frío mediante
-            punzones especiales que permiten el logro de diferentes formas buscando estética, rigidez y nervios en chapas
-            desde 0.5mm a 3mm de espesor.
+            {{ $t('mechText7') }}
           </p>
           <p class="text-justify">
-            - Press Brake CNC (Control Numérico): Brinda óptima precisión hasta 0.2mm en los doblados,
-            la cual ofrece una amplia gama de dobleces de diferentes formas y longitudes.
+            {{ $t('mechText8') }}
           </p>
           <p class="text-justify">
-            - Press Brake: de utilidad para doblar metal de hasta 2 metros de longitud.
+            {{ $t('mechText9') }}
           </p>
         </v-col>
       </v-row>
@@ -128,75 +119,66 @@
         >
           <v-col md="7">
             <h3 class="text-uppercase">
-              MAQUINADO
+              {{ $t('mechText10') }}
               <br>
             </h3>
             <p class="text-justify">
-              Es un proceso de desprendimiento de virutas para barras de diferentes materiales como:
-              aluminio, latón (piezas hidráulicas), bronce fosfórico (bujes), acero, acero inoxidable,
-              acrílico PVC, entre otros plásticos que utiliza:
+              {{ $t('mechText11') }}
             </p>
             <p class="text-justify">
-              - Maquinaria de tres tornos convencionales que facilita el trabajo pequeño, mediano y largo alcance
-              para piezas en revoluciones.
+              {{ $t('mechText12') }}
               <br>
             </p>
             <p class="text-justify">
-              - Tres fresas universales para diferentes piezas (cuadradas, circular, piñones, etc.)
+              {{ $t('mechText13') }}
             </p>
             <p class="text-justify">
-              - Taladro de banco
+              {{ $t('mechText14') }}
             </p>
             <p class="text-justify">
-              - Taladro de columna
+              {{ $t('mechText15') }}
             </p>
             <p class="text-justify">
-              - Taladro radial
+              {{ $t('mechText16') }}
             </p>
             <h3 class="text-uppercase">
-              RECTIFICADO CILÍNDRICO Y PLANO
+              {{ $t('mechText17') }}
               <br>
             </h3>
             <p class="text-justify">
-              Se rectifican todo tipo de piezas planas obteniendo un excelente acabado, facilitado por los punzones
-              piedra de grano fino que permiten lograr una óptima precisión y rigurosidad en la superficie de las piezas.
-              En el caso de la rectificación cilíndrica, se emplea en piezas de revolución tipo eje obteniendo un perfecto
-              resultado final.
+              {{ $t('mechText18') }}
             </p>
             <h3 class="text-uppercase">
-              PINTURA ELECTROSTÁTICA
+              {{ $t('mechText19') }}
               <br>
             </h3>
             <p class="text-justify">
-              Se utiliza pintura en polvo de alta calidad mediante corriente y fluido de aire, solo para piezas metálicas
-              de diversos tamaños. Es un proceso que premia el acabado de la pintura en la superficie metálica.
+              {{ $t('mechText20') }}
             </p>
             <h3 class="text-uppercase">
-              SOLDADURA
+              {{ $t('mechText21') }}
               <br>
             </h3>
             <p class="text-justify">
-              - Soldadura argón para aluminio
+              {{ $t('mechText22') }}
             </p>
             <p class="text-justify">
-              - Soldadura eléctrica para acero (por medio de electrodos)
+              {{ $t('mechText23') }}
             </p>
             <p class="text-justify">
-              - Soldadura con oxígeno de acetileno para acero
+              {{ $t('mechText24') }}
             </p>
             <p class="text-justify">
-              - Soldadura con máquina de puntear para acero
+              {{ $t('mechText25') }}
             </p>
             <h3
               class="text-uppercase"
             >
-              DISEÑO MECÁNICO
+              {{ $t('mechText26') }}
               <br>
             </h3>
             <p class="text-justify">
-              Contamos con un colectivo de ingenieros con vasta experiencia en el diseño mecánico. Nos valemos de programas como
-              Autodesk Inventor y AutoCAD para dar soluciones a los diferentes problemas que pueda presentar el cliente, adaptado
-              a las tecnologías y recursos con que cuenta nuestra Planta Mecánica.
+              {{ $t('mechText27') }}
             </p>
           </v-col>
         </v-row>
@@ -244,7 +226,7 @@
           case 'xl': return 'z-index: 1; margin-top:-10%;'
         }
       },
-    }
+    },
   }
 </script>
 
