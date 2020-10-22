@@ -63,7 +63,7 @@
                 </v-avatar>
                 <h4>{{ item.name }}</h4>
                 <h4 class="text-uppercase">
-                  {{ item.role }}
+                  {{ locale === 'es' ? item.role_json.es : item.role_json.en }}
                 </h4>
                 <h5><i class="fi-mail large" /> {{ item.mail }}</h5>
               </div>
@@ -116,6 +116,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import { i18n } from '@/plugins/i18n'
 
   export default {
     components: {
@@ -142,6 +143,9 @@
       isAdmin: function () {
         return this.user && this.user.is_superuser
       },
+      locale () {
+        return i18n.locale;
+      }
     },
     async created () {
       this.paginate()

@@ -19,11 +19,17 @@
             label="Nombre"
             @change="value => changeField('name', value)"
           />
+          <!--            @change="value => changeFieldRol('role', value, 'es')"-->
           <v-text-field
-            v-model="contact.role"
+            v-model="contactRoleEsp"
             :rules="[rules.required, rules.charactersLength(null, 100)]"
-            label="Rol"
-            @change="value => changeField('role', value)"
+            label="Rol en español"
+          />
+          <!--            @change="value => changeFieldRol('role', value, 'en')"-->
+          <v-text-field
+            v-model="contactRoleEng"
+            :rules="[rules.required, rules.charactersLength(null, 100)]"
+            label="Rol en inglés"
           />
           <v-text-field
             v-model="contact.mail"
@@ -187,12 +193,24 @@
         imagesSelected: null,
         imageURL: null,
         deleteContact: false,
+        languageSelected: 'es',
+        contactRoleEsp: '',
+        contactRoleEng: '',
       }
     },
     computed: {
       ...mapGetters(['user']),
       isAdmin () {
         return this.user && this.user.is_superuser
+      },
+      itemsLanguage () {
+        return [
+          { text: 'Español', value: 'es' },
+          { text: 'Inglés', value: 'en' },
+        ]
+      },
+      language () {
+        return this.languageSelected
       },
     },
     watch: {
@@ -203,7 +221,7 @@
       },
       contact (value) {
         if (value) {
-          console.log(value, 'contact')
+          this.load()
         }
       },
     },
@@ -214,10 +232,22 @@
       load () {
         console.log(this.contact.image, 'image contact')
         this.imageURL = this.contact.image
+        this.contactRoleEsp = this.contact.role_json ? this.contact.role_json.es : ''
+        this.contactRoleEng = this.contact.role_json ? this.contact.role_json.en : ''
       },
 
       async save () {
         this.loading = true
+        if (this.contactRoleEng || this.contactRoleEsp) {
+          this.changes['role'] = {}
+          if (this.contactRoleEng) {
+            this.changes['role']['en'] = this.contactRoleEng;
+          }
+          if (this.contactRoleEsp) {
+            this.changes['role']['es'] = this.contactRoleEsp;
+          }
+          this.changes['role'] = JSON.stringify(this.changes['role'])
+        }
         await this.onSave(Object(this.changes))
         this.loading = false
       },
@@ -227,7 +257,6 @@
         console.log(value, 'value')
         this.changes[field] = value
       },
-
       async deletedContact () {
         const ok = await this.$store.dispatch('delContact', this.contact.id)
         if (!ok) { this.$router.push('/') }

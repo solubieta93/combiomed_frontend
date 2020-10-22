@@ -105,7 +105,7 @@
         error: null,
         snackbar: false,
 
-        contactNull: null,
+        contactNull: {},
         contacts: [],
         contactId: null,
         selectedContact: undefined,
