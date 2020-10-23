@@ -76,6 +76,7 @@
 <script>
   import ResponsiveItems from '@/components/core/ResponsiveItems'
   import { mapGetters } from 'vuex'
+  import { i18n } from '@/plugins/i18n'
   export default {
     components: {
       ResponsiveItems,
@@ -96,6 +97,9 @@
       productsLine () {
         return this.productsTypes.map(x => this.buildItem(x))
       },
+      locale () {
+        return i18n.locale;
+      },
     },
     mounted: async function () {
       await this.getTypes()
@@ -110,15 +114,14 @@
           return []
         })
       },
+      // id: productType.id,
+      // title: productType.title,
+      // description: productType.description,
+      // image: productType.image,
+      // owner: '',
       buildItem (productType) {
         return {
-          item: {
-            id: productType.id,
-            title: productType.title,
-            description: productType.description,
-            image: productType.image,
-            owner: '',
-          },
+          item: { ...productType },
           pathTo: '/products' + (productType.id ? `?type=${productType.id}` : ''),
         }
       },

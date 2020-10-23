@@ -32,15 +32,15 @@
       </v-alert>
     </v-row>
 
-    <v-row 
+    <v-row
       v-if="modeEdition"
-        justify="center"
-        align="center"
+      justify="center"
+      align="center"
     >
       <v-col align-self="center">
         <v-row
-            align="center"
-            justify="center"
+          align="center"
+          justify="center"
         >
           <v-spacer />
           <v-divider />
@@ -52,16 +52,16 @@
             xl="3"
           >
             <v-select
-                :items="selectProductsTypes"
-                hide-details
-                clearable
-                solo
-                flat
-                dense
-                color="#8b0000"
-                :loading="loading"
-                :label="selectedType ? null : 'Seleccione una linea'"
-                @change="onUpdateSelected"
+              :items="selectProductsTypes"
+              hide-details
+              clearable
+              solo
+              flat
+              dense
+              color="#8b0000"
+              :loading="loading"
+              :label="selectedType ? null : 'Seleccione una linea'"
+              @change="onUpdateSelected"
             />
           </v-col>
           <v-divider />
@@ -78,7 +78,6 @@
     />
   </v-container>
 </template>
-
 
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
@@ -122,21 +121,21 @@
       selectProductsTypes () {
         return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
       },
-      productType() {
+      productType () {
         return this.typeId && this.productsTypes ? this.productsTypes.filter(x => x.id.toString() === this.typeId)[0] : null
-      }
+      },
     },
     async mounted () {
       console.log(this.modeEdition, 'modeEdition')
       if (this.modeEdition) {
         this.loading = true
         await this.getTypes()
-        .then(_ => {
+          .then(_ => {
             this.loading = false
-        })
-        .catch(e => {
+          })
+          .catch(e => {
             this.loading = false
-        })
+          })
       } else {
         this.buildProduct()
       }
@@ -145,23 +144,22 @@
       async getTypes () {
         this.loading = true
         await this.$store.dispatch('getProductsTypes')
-        .then(result => {
-          console.log(result.types, 'types')
-          this.productsTypes = result.types
-          this.loading = false
-          return result.types
-        }).catch(e => {
-          this.loading = false
-          return []
-        })
+          .then(result => {
+            console.log(result.types, 'types')
+            this.productsTypes = result.types
+            this.loading = false
+            return result.types
+          }).catch(e => {
+            this.loading = false
+            return []
+          })
       },
-      
+
       onUpdateSelected (e) {
         console.log(typeof e, 'e')
         console.log(e)
         this.typeId = e || null
         if (this.typeId === null) {
-          
           this.buildProduct()
         }
       },
@@ -172,7 +170,7 @@
           this.line = x
           this.loading = false
         })
-      },      
+      },
 
       async saveLine (changes) {
         this.loading = true
@@ -187,7 +185,6 @@
         if (res.success) {
           this.loading = false
           this.$router.push('/')
-
         } else {
           this.loading = false
           this.error = res.message
@@ -243,4 +240,3 @@
     },
   }
 </script>
-

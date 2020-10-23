@@ -36,8 +36,8 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col 
-          sm="6"  
+        <v-col
+          sm="6"
           md="3"
           lg="3"
           xl="3"
@@ -45,8 +45,8 @@
         >
           <images-component
             :image-src="imgURL"
-            :imgDefault="indexCurrent >= 0 && indexCurrent === indexDefault"
-            onlyOne
+            :img-default="indexCurrent >= 0 && indexCurrent === indexDefault"
+            only-one
             style="width: 100%; height: 300px"
             @change:default="changeDefault"
           />
@@ -62,20 +62,20 @@
             :accept="'image/*'"
             :placeholder="'Seleccione imágenes'"
             label="Imagenes"
-            multiple            
+            multiple
             @files:changed="(v) => imagesSelected = v"
           />
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col 
+        <v-col
+          v-for="(item, i) in imagesURLs"
+          :key="item"
           sm="6"
           md="5"
           lg="5"
           xl="5"
           cols="12"
-          v-for="(item, i) in imagesURLs"
-          :key="item"
         >
           <div style="width: 100%; height: 300px">
             <v-img
@@ -91,14 +91,18 @@
                 align="center"
                 justify="center"
               >
-                <v-chip 
+                <v-chip
                   :disabled="true"
-                  class="ma-2" 
+                  class="ma-2"
                   color="red"
                   text-color="white"
-                > 
-                  <v-avatar left> <v-icon> mdi-checkbox-marked-circle </v-icon> </v-avatar>
-                  <p class="ma-0 justify:center; align: center;"> Principal </p>
+                >
+                  <v-avatar left>
+                    <v-icon> mdi-checkbox-marked-circle </v-icon>
+                  </v-avatar>
+                  <p class="ma-0 justify:center; align: center;">
+                    Principal
+                  </p>
                 </v-chip>
               </v-row>
             </v-img>
@@ -233,7 +237,6 @@
         </v-col>
       </v-row>
     </v-card-actions>
-    
   </v-card>
 </template>
 
@@ -242,13 +245,13 @@
   import FilesInputComponent from '../core/FilesInputComponent'
   import ResponsiveItems from '../core/ResponsiveItems'
   import Rules from '../../utils/rules'
-  
+
   export default {
     name: 'ProductForm',
     components: {
       ImagesComponent,
       FilesInputComponent,
-      ResponsiveItems
+      ResponsiveItems,
     },
     props: {
       productBase: {
@@ -282,7 +285,7 @@
         return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
       },
       imagesUrlFiltered () {
-        return this.imagesURLs.map((x,i) => [x,i]).filter(x => x[1] !== this.indexCurrent)
+        return this.imagesURLs.map((x, i) => [x, i]).filter(x => x[1] !== this.indexCurrent)
       },
     },
     watch: {
@@ -291,22 +294,22 @@
         this.imagesURLs = !!value && value.length ? value.map(img => URL.createObjectURL(img)) : new Array()
         this.indexCurrent = value && value.length ? 0 : -1
         this.indexDefault = this.indexCurrent
-        this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null 
-        
+        this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null
+
         this.changeField('json_images', this.imagesSelected)
         this.changeField('defaultImage', this.indexDefault)
-        
+
         // this.changeField('image', this.imagesURL ? value[0] : null)
       },
-      indexCurrent(value) {
+      indexCurrent (value) {
         // console.log(value, 'change indexCurrent')
         // console.log(this.imagesURLs[this.indexCurrent], 'change indexCurrent imgURL')
         console.log('cambie index current')
         console.log(this.imagesURLs && this.imagesURLs.length, 'Boolean')
         console.log(this.imagesURLs[this.indexCurrent], 'value')
-        this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null 
+        this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null
         console.log(this.imgURL, 'img url')
-      },      
+      },
     },
     async created () {
       this.load()
@@ -339,15 +342,15 @@
         this.product = this.productBase
         this.loading = false
         this.changes = this.editing ? {} : this.productBase
-        
+
         // this.imagesURL = this.product.image
         // this.imgURL = this.imagesURL
         this.imagesURLs = this.product.images
         this.indexDefault = this.product.defaultImage !== -1 ? this.product.defaultImage : 0
         this.indexCurrent = this.indexDefault
         this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null
-        
-        console.log(this.product.images, 'prod images')        
+
+        console.log(this.product.images, 'prod images')
         console.log(this.imagesURL, 'images urls')
         console.log(this.indexDefault, 'indexDefault ')
         console.log(this.imgURL, 'imgURL ')

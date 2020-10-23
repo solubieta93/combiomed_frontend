@@ -29,7 +29,7 @@
           >
             <v-col>
               <h4 class="text-uppercase pl-2">
-                {{ item.title }}
+                {{ item.title_json ? locale === 'es' ? item.title_json.es : item.title_json.en : item.title }}
               </h4>
               <v-divider
                 v-if="hover"
@@ -45,7 +45,7 @@
                 v-if="hover"
                 class="justify-start pl-2"
               >
-                {{ item.description }}
+                {{ item.description_json ? locale === 'es' ? item.description_json.es : item.description_json.en : item.description }}
               </h6>
             </v-col>
           </v-overlay>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+  import { i18n } from '@/plugins/i18n'
   export default {
     name: 'ItemPreview',
     props: {
@@ -92,5 +93,10 @@
       baseUrl: process.env.BASE_URL,
 
     }),
+    computed: {
+      locale () {
+        return i18n.locale;
+      },
+    },
   }
 </script>

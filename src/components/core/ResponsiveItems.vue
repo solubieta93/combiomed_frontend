@@ -35,9 +35,9 @@
         type: Array,
         default: new Array([]),
       },
-      areProducts:{
+      areProducts: {
         type: Boolean,
-        default:false
+        default: false
       },
     },
   }
