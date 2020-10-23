@@ -75,33 +75,69 @@
       <v-col cols="8">
         <v-row justify="end">
           <v-btn
-              fab
-              dark
-              small
-              right
-              color="red"
-              @click="deleteProduct= !deleteProduct"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
+            fab
+            dark
+            small
+            right
+            color="red"
+            @click="deleteProduct= !deleteProduct"
+          >
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
         </v-row>
-      </v-col>      
+      </v-col>
     </v-row>
-    <v-dialog 
-        v-model="deleteProduct" 
-        persistent 
-        max-width="290"
-      >
-        <v-card>
-          <v-card-title class="headline">Eliminar</v-card-title>
-          <v-card-text>¿Está seguro que desea eliminar?</v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="deletedProduct(product.id)">Si</v-btn>
-            <v-btn color="green darken-1" text @click="deleteProduct = false">No</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+    <v-dialog
+      v-model="deleteProduct"
+      persistent
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Eliminar
+        </v-card-title>
+        <v-card-text>¿Está seguro que desea eliminar?</v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deletedProduct(product.id)"
+          >
+            Si
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteProduct = false"
+          >
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- BUTTON DOWNLOAD PRODUCT PDF    -->
+    <v-row
+      v-if="!loading && product"
+      justify="center"
+    >
+      <v-col cols="8">
+        <v-row justify="end">
+          <v-btn
+            fab
+            dark
+            small
+            right
+            color="red"
+            target="Descargar"
+            :href="`${baseUrl}pdfs/${localeLang}/${product.name}.pdf`"
+          >
+            <v-icon>mdi-download</v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
 
     <v-col
       v-if="!loading && product"
@@ -121,13 +157,12 @@
       </v-row>
 
       <v-row justify="center">
-        <v-col 
-          sm="6"  
+        <v-col
+          sm="6"
           md="5"
           lg="4"
           xl="3"
           cols="12"
-          
         >
           <v-img
             :src="product.images ? product.images[product.defaultImage] : product.image "
@@ -136,23 +171,22 @@
           />
         </v-col>
       </v-row>
-      
 
-      <v-row 
+      <v-row
+        v-if="product.images"
         justify="center"
         align="center"
-        v-if="product.images"
       >
         <v-col
-            sm="10"
-            md="8"
-            lg="8"
-            xl="5"
-            cols="12"
+          sm="10"
+          md="8"
+          lg="8"
+          xl="5"
+          cols="12"
         >
           <v-img
             justify="center"
-            
+
             :src="`${baseUrl}web-combiomed-historia-03.png`"
             height="10%"
             width="100vw"
@@ -161,20 +195,19 @@
         </v-col>
       </v-row>
 
-      <v-row 
-        justify="center"
-        
+      <v-row
         v-if="product.images"
-        
-      >      
-        <v-col 
+
+        justify="center"
+      >
+        <v-col
+          v-for="(item, i) in imagesUrlFiltered"
+          :key="item"
           sm="6"
           md="5"
           lg="3"
           xl="2"
           cols="12"
-          v-for="(item, i) in imagesUrlFiltered"
-          :key="item"
         >
           <v-card
             height="200"
@@ -188,8 +221,7 @@
               style="height: 100%; width: 100%"
               aspect-ratio="16/9"
               fill-height
-            >
-            </v-img>
+            />
           </v-card>
         </v-col>
       </v-row>
@@ -218,7 +250,7 @@
 <script>
   import CarouselPortada from '@/components/utils/CarouselPortada'
   import { mapGetters } from 'vuex'
-
+  import { i18n } from '@/plugins/i18n'
   export default {
     components: {
       CarouselPortada,
@@ -243,7 +275,7 @@
         return this.user && this.user.is_superuser
       },
       imagesUrlFiltered () {
-        const a = this.product.images.map((x,i) => [x,i]).filter(x => x[1] !== this.product.defaultImage)
+        const a = this.product.images.map((x, i) => [x, i]).filter(x => x[1] !== this.product.defaultImage)
         return a
       },
       imgStyles () {
@@ -255,7 +287,7 @@
           case 'xl': return 'margin-top:-10%;'
         }
       },
-      rowStyle() {
+      rowStyle () {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 'width:70%;'
           case 'sm': return 'width:100%;'
@@ -263,6 +295,11 @@
           case 'lg': return 'width:70%;'
           case 'xl': return 'width:70%;'
         }
+      },
+    },
+    computed: {
+      localeLang() {
+        return i18n.locale;
       }
     },
     methods: {
@@ -292,17 +329,16 @@
       goToEdit () {
         this.$router.push(`/products/${this.$route.params.productId}/edit`)
       },
-      async deletedProduct() {
+      async deletedProduct () {
         console.log(this.product.id, 'id')
-        const {success, message} = await this.$store.dispatch('delProduct', this.product.id)
+        const { success, message } = await this.$store.dispatch('delProduct', this.product.id)
         console.log(success, 'success')
         if (!success) { this.$router.push('/') }
-        this.$router.push('/products') 
+        this.$router.push('/products')
       },
     },
   }
 </script>
-
 
 <style scoped>
 .mycontainer {
