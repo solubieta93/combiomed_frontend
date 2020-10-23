@@ -7,6 +7,36 @@
       backgroundImage: `url(${baseUrl}web-combiomed-futer-04-04-04.png)`
     }"
   >
+    <v-dialog
+      v-model="avisoLegal"
+      persistent
+      style="height: available"
+    >
+      <v-card>
+        <v-card-title>
+          <v-textarea
+            :label="$t('avisoLegalTitle')"
+            filled
+            readonly
+            :value="$t('avisoLegalFullText')"
+            rows="20"
+            hide-details
+          />
+        </v-card-title>
+        <v-card-actions class="pa-0">
+          <v-col class="pa-0">
+            <v-row class="justify-end container">
+              <v-btn
+                color="primary"
+                @click="avisoLegal= false"
+              >
+                Entendido
+              </v-btn>
+            </v-row>
+          </v-col>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-row justify="center">
       <v-col cols="4">
         <v-row justify="center">
@@ -27,16 +57,32 @@
                 {{ i.icon }}
               </v-icon>
             </v-btn>
-
           </v-list-item-icon>
         </v-row>
       </v-col>
     </v-row>
     <v-row class="justify-center text--white">
-      <v-btn icon small href="https://wwww.gacetaoficial.gob.cu/es">
-        <v-icon color="white"> mdi-download </v-icon>
+      <v-btn
+        text
+        @click="avisoLegal = true"
+      >
+        <span
+          class="white--text "
+          style="text-decoration: underline"
+        >{{ $t('avisoLegalTitle') }}</span>
       </v-btn>
-      <span class="white--text">{{ $t('downloadGaceta')}}</span>
+    </v-row>
+    <v-row class="justify-center text--white">
+      <v-btn
+        icon
+        small
+        href="https://wwww.gacetaoficial.gob.cu/es"
+      >
+        <v-icon color="white">
+          mdi-download
+        </v-icon>
+      </v-btn>
+      <span class="white--text">{{ $t('downloadGaceta') }}</span>
     </v-row>
     <v-row justify="center">
       <v-col
@@ -65,9 +111,11 @@
 </template>
 
 <script>
+  import { i18n } from '@/plugins/i18n'
   export default {
     data () {
       return {
+        avisoLegal: false,
         baseUrl: process.env.BASE_URL,
         icons: [
           { icon: 'fab fa-facebook', route: 'https://www.facebook.com/COMBIOMED-2269852883332348/' },
@@ -78,6 +126,11 @@
           // 'fab fa-instagram',
         ],
       }
+    },
+    computed: {
+      avisoLegalText () {
+        return 'avisoLegalFullText'
+      },
     },
   }
 </script>

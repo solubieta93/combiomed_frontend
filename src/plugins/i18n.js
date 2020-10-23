@@ -123,6 +123,10 @@ const messages = {
     countByPage: 'Count by page',
     buscar: 'Search',
     all: 'All',
+    avisoLegalTitle: 'Legal Warning',
+    avisoLegalFullText: 'Información General\n' +
+      'El sitio web combiomed.biocubafarma.cu pertenece a la empresa COMBIOMED Tecnología Médica' +
+      ' Digital (en adelante COMBIOMED) con domicilio en calle 202, entre 17 y 19 Siboney, Playa, La Habana. \n',
   },
   es: {
     quienessomos: 'quienes somos',
@@ -256,6 +260,58 @@ const messages = {
     countByPage: 'Cantidad por paginas',
     buscar: 'Buscar',
     all: 'Todos',
+    avisoLegalTitle: 'Aviso Legal',
+    avisoLegalFullText: 'Información General\n' +
+      'El sitio web combiomed.biocubafarma.cu pertenece a la empresa COMBIOMED Tecnología Médica Digital (en adelante COMBIOMED) ' +
+      'con domicilio en calle 202, entre 17 y 19 Siboney, Playa, La Habana. \n' +
+      'Disponibilidad\n' +
+      'El equipo de trabajo a cargo del mantenimiento, administración y actualización del sitio garantizará la disponibilidad' +
+      ' y acceso a la web así como los servicios petenecientes a la misma. \n ' +
+      'COMBIOMED se reserva  el derecho de actualizar, modificar, alterar, agregar o eliminar partes del presente sitio web, en ' +
+      'cualquier momento que lo considere conveniente, sin necesidad de aviso previo tanto para aumentar o eliminar contenidos y ' +
+      'servicios que se presten a través de la misma como para cambiar su localización y visibilidad. ' +
+      'Asimismo, se reserva el derecho de dar de baja el sitio web y cancelar el servicio, a su sola discreción, no generando ello' +
+      'responsabilidad alguna para COMBIOMED. \n' +
+      'Propiedad intelectual y uso de los contenidos\n' +
+      'Todo el material y contenido publicados en el sitio web, incluidos, textos, software, gráficos, signos distintivos, ' +
+      'elementos corporativos, programas de software, bases de datos, música y/o audio, marcas, logotipos, diseños gráficos, ' +
+      'fotografías, videos, contenidos interactivos y similares pertenecen en titularidad a COMBIOMED y sus colaboradores, ' +
+      'encontrándose protegidos por derechos de propiedad intelectual. \n' +
+      'Queda terminantemente prohibido el empleo de mecanismos que puedan alterar su diseño, configuración original o ' +
+      'contenidos del portal web, incluso su utilización, reproducción, explotación en cualquier medio sin autorización previa ' +
+      'y expresa de COMBIOMED. \n' +
+      ' El usuario se comprometerá a utilizar la información, contenidos y/o elementos a los que acceda en ' +
+      'el sitio web exclusivamente para su uso y necesidades y a no realizar en ningún caso una explotación comercial, directa o ' +
+      'indirecta de los mismos, además de realizar cualquier otro acto que viole los derechos de propiedad. \n' +
+      'Ud. se compromete a utilizar el portal únicamente con fines legítimos y de modo que no infrinja, restrinja o inhiba la ' +
+      'utilización y disfrute de servicios de COMBIOMED, así como no utilizar este portal para la realización de actividades ' +
+      'contrarias a las leyes, la moral, las buenas costumbres o al orden público establecido. Asímismo el usuario deberá abstenerse ' +
+      'de suprimir, alterar, aludir o manipular cualquier dispositivo de protección o sistema de seguridad que tuviera instalado en ' +
+      'el portal de COMBIOMED\n' +
+      'El usuario se comprometerá a no acceder, o intentar acceder, a ninguno de los servicios utilizando medios automatizados, ' +
+      'incluidos secuencias de comandos o rastreadores web. Asimismo se compromete a no involucrarse en ninguna actividad que ' +
+      'interfiera o interrumpa los servicios y redes conectados.\n.' +
+      'Todos aquellos contenidos incluidos en el sitio web son titularidad de COMBIOMED, por lo cual se autoriza la reproducción, ' +
+      'distribución y comunicación pública siempre y cuando se cumpla con las siguientes condiciones:\n' +
+      '-Queda prohibida en cualquier circunstancia la desnaturalización del contenido.\n' +
+      '-El usuario queda obligado en todo caso a citar la fuente de los contenidos.\n' +
+      'Enlaces a otras páginas de internet\n' +
+      'La página web COMBIOMED contiene enlaces o vínculos pertenecientes a otros sitios web, dichos enlaces se proveen ' +
+      'como un servicio a los usuarios con el objetivo de facilitar las indagaciones y búsquedas de interés a través de ' +
+      'internet. Las mismas, no están vinculadas de ninguna manera al sitio web o a los productos y servicios de COMBIOMED, ' +
+      'es por ello que nuestro equipo no será responsable de los contenidos, informaciones o servicios incluidos en dichos ' +
+      'sitios de internet cuyos enlaces se indiquen en el sitio web, siendo meramente de carácter informativo sin implicar ' +
+      'relación entre ambos. \n' +
+      'Protección de datos personales\n' +
+      'El sitio web se compromete al cumplimiento de su obligación de mantener en secreto los datos de carácter personal, ' +
+      'aunque brinda la posibilidad al usuario de navegar sin brindar dicha información, solo' +
+      ' algunas acciones requirieren de este paso y la información que nos proporcione voluntariamente, ' +
+      'se incluirá en una base de datos que quedaría bajo responsabilidad de COMBIOMED, incorporada en servidores protegidos del ' +
+      'acceso, pérdida, tratamiento o divulgación no autorizados, con el objetivo de proporcionarle un servicio personalizado y ' +
+      'a la altura de sus necesidades, mejorando el canal de comunicación con el usuario. \n ' +
+      'Información de contacto\n' +
+      'En caso de que UD detecte irregularidades, violaciones de estos términos y condiciones o desee aclarar ' +
+      'sus dudas en relación a nuestros servicios, puede escribirnos a la cuenta de correo combio@icid.cu\n',
   },
 }
 
