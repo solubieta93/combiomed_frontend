@@ -10,9 +10,9 @@ const unzipProduct = x => ({
           src: apiURI + y.src,
       }))
       : [],
-    details: x.details && x.details.details
-      ? x.details.details
-      : [],
+    details: x.details
+        ? x.details
+        : {},
 })
 
 const state = {
@@ -232,7 +232,7 @@ const actions = {
         return Object({
             name: '',
             description: '',
-            details: [],
+            details: {},
             files: [],
             image: null,
             typeId: null,

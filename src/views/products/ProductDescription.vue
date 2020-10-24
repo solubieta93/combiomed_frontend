@@ -145,13 +145,15 @@
       <v-row justify="center">
         <v-col md="8">
           <h1 style=" color: #C80000 ;  ">
-            {{ product.name }}
+            {{ localeLang === 'es' ? product.name_json.es : product.name_json.en }}
+<!--            {{ product.name }}-->
           </h1>
           <p
             style="color:grey"
             class="text-uppercase"
           >
-            {{ product.description }}
+            {{ localeLang === 'es' ? product.description_json.es : product.description_json.en }}
+<!--            {{ product.description }}-->
           </p>
         </v-col>
       </v-row>
@@ -227,7 +229,7 @@
       </v-row>
     </v-col>
     <v-row
-      v-for="(item, i) in !loading && product ? product.details : []"
+      v-for="(item, i) in !loading && product ? localeLang === 'es' ? product.details.es : product.details.en ? product.details.en : [] : []"
       :key="i"
       justify="center"
       align="center"
@@ -274,6 +276,9 @@
       isAdmin () {
         return this.user && this.user.is_superuser
       },
+      localeLang() {
+        return i18n.locale;
+      },
       imagesUrlFiltered () {
         const a = this.product.images.map((x, i) => [x, i]).filter(x => x[1] !== this.product.defaultImage)
         return a
@@ -296,11 +301,6 @@
           case 'xl': return 'width:70%;'
         }
       },
-    },
-    computed: {
-      localeLang() {
-        return i18n.locale;
-      }
     },
     methods: {
       getProduct: function () {
