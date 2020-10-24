@@ -2,11 +2,11 @@
   <!--  -->
   <div class="mycontainer2">
     <v-row
-      v-if="ubication_news === 'Right'"
+      v-if="ubicationNews === 'Right'"
       style="margin-right: 0px; margin-left: 0px;"
     >
       <v-col
-        v-if="ubication_news === 'Right'"
+        v-if="ubicationNews === 'Right'"
         sm="5"
         md="6"
         lg="6"
@@ -21,7 +21,7 @@
       </v-col>
 
       <v-col
-        v-if="ubication_news === 'Right'"
+        v-if="ubicationNews === 'Right'"
         sm="7"
         md="6"
         lg="6"
@@ -34,12 +34,14 @@
             class="text-uppercase"
             style="color: grey;"
           >
-            {{ post.title }}
+            {{ localeLang === 'es' ? post.title_json.es : post.title_json.en }}
+<!--            {{ post.title }}-->
             <br>
           </h3>
         </v-row>
+<!--        v-for="(item, i) in post ? post.details : []"-->
         <v-row
-          v-for="(item, i) in post ? post.details : []"
+          v-for="(item, i) in post ? localeLang === 'es' ? post.details.es : post.details.en ? post.details.en : [] : []"
           :key="i"
           justify="center"
           align="center"
@@ -61,11 +63,11 @@
     </v-row>
 
     <v-row
-      v-if="ubication_news === 'Left'"
+      v-if="ubicationNews === 'Left'"
       style="margin-right: 0px; margin-left: 0px;"
     >
       <v-col
-        v-if="ubication_news === 'Left'"
+        v-if="ubicationNews === 'Left'"
         sm="7"
         md="6"
         lg="6"
@@ -77,12 +79,14 @@
             class="text-uppercase"
             style=" color: grey;"
           >
-            {{ post.title }}
+            {{ localeLang === 'es' ? post.title_json.es : post.title_json.en }}
+<!--            {{ post.title }}-->
             <br>
           </h3>
         </v-row>
+<!--        v-for="(item, i) in post ? post.details : []"-->
         <v-row
-          v-for="(item, i) in post ? post.details : []"
+          v-for="(item, i) in post ? localeLang === 'es' ? post.details.es : post.details.en ? post.details.en : [] : []"
           :key="i"
           justify="center"
           align="center"
@@ -102,7 +106,7 @@
         </v-row>
       </v-col>
       <v-col
-        v-if="ubication_news === 'Left'"
+        v-if="ubicationNews === 'Left'"
         sm="5"
         md="6"
         lg="6"
@@ -121,6 +125,7 @@
 </template>
 
 <script>
+  import { i18n } from '@/plugins/i18n'
   export default {
     props: {
       ubicationNews: {
@@ -138,6 +143,11 @@
       return {
         baseUrl: process.env.BASE_URL,
       }
+    },
+    computed: {
+      localeLang () {
+        return i18n.locale;
+      },
     },
   }
 </script>

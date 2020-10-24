@@ -60,7 +60,7 @@
               dense
               color="#8b0000"
               :loading="loading"
-              :label="selectedType ? null : 'Seleccione una linea'"
+              :label="selectedType ? null : 'Seleccione una línea'"
               @change="onUpdateSelected"
             />
           </v-col>

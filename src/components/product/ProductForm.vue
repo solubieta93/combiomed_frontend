@@ -8,12 +8,13 @@
       light
       centered
     >
-      <v-tab class="justify-center">
+      <v-tab>
         Idioma Español
       </v-tab>
       <v-tab>
         Idioma Inglés
       </v-tab>
+      <!--      ESPANNOL-->
       <v-tab-item>
         <v-card elevation="0">
           <v-col>
@@ -125,7 +126,7 @@
             </v-row>
           </v-col>
           <v-row
-            v-for="(item, i) in !loading && product ? productDetailsEsp: []"
+            v-for="(item, i) in !loading && product ? product.details_es: []"
             :key="i"
             justify="center"
             align="center"
@@ -252,6 +253,7 @@
           </v-card-actions>
         </v-card>
       </v-tab-item>
+      <!--      INGLES-->
       <v-tab-item>
         <v-col cols="12">
           <v-card elevation="0">
@@ -278,7 +280,7 @@
               </v-row>
             </v-col>
             <v-row
-              v-for="(item, i) in !loading && product ? productDetailsEng: []"
+              v-for="(item, i) in !loading && product ? product.details_en: []"
               :key="i"
               justify="center"
               align="center"
@@ -405,7 +407,7 @@
       productDetailsEng: [],
       changes: {},
       imagesSelected: [],
-      imagesURLs: new Array(),
+      imagesURLs: [],
       indexCurrent: -1,
       indexDefault: -1,
       imgURL: null,
@@ -429,7 +431,7 @@
     watch: {
       imagesSelected (value) {
         console.log(value, 'selected watch')
-        this.imagesURLs = !!value && value.length ? value.map(img => URL.createObjectURL(img)) : new Array()
+        this.imagesURLs = !!value && value.length ? value.map(img => URL.createObjectURL(img)) : []
         this.indexCurrent = value && value.length ? 0 : -1
         this.indexDefault = this.indexCurrent
         this.imgURL = this.imagesURLs && this.imagesURLs.length ? this.imagesURLs[this.indexCurrent] : null
@@ -481,10 +483,10 @@
       },
       load () {
         this.product = this.productBase
-        this.productDetails = this.product.details
-        this.productDetailsEng = this.productDetails.en ? this.productDetails.en : []
-        this.productDetailsEsp = this.productDetails.es ? this.productDetails.es : []
-        console.log(this.product.details, '----load')
+        // this.productDetails = this.product.details
+        // this.productDetailsEng = this.productDetails.en ? this.productDetails.en : []
+        // this.productDetailsEsp = this.productDetails.es ? this.productDetails.es : []
+        // console.log(this.product.details, '----load')
         this.loading = false
         this.changes = this.editing ? {} : this.productBase
 
@@ -529,6 +531,7 @@
           }
         }
       },
+
       removeElement (i, item) {
         const a = i > 0 ? item.slice(0, i) : []
         const b = i < item.length - 1 ? item.slice(i + 1, item.length) : []
@@ -537,40 +540,52 @@
       removeFromDetails (i) {
         const lang = this.pos ? 'en' : 'es'
         if (lang === 'en') {
-          this.productDetailsEng = this.removeElement(i, this.productDetailsEng)
-        } else { this.productDetailsEsp = this.removeElement(i, this.productDetailsEsp) }
-        this.product.details = { es: this.productDetailsEsp, en: this.productDetailsEng }
-        this.changeField('json_details', JSON.stringify(this.product.details))
+          this.product.details_en = this.removeElement(i, this.product.details_en)
+          this.changeField('json_details_en', JSON.stringify({ details: this.product.details_en }))
+        } else {
+          this.product.details_es = this.removeElement(i, this.product.details_es)
+          this.changeField('json_details_es', JSON.stringify({ details: this.product.details_es }))
+        }
       },
       removeFromItemOfDetails (i, j) {
         const lang = this.pos ? 'en' : 'es'
         if (lang === 'en') {
-          this.productDetailsEng[i].items = this.removeElement(j, this.productDetailsEng[i].items)
-        } else { this.productDetailsEsp[i].items = this.removeElement(j, this.productDetailsEsp[i].items) }
-        this.product.details = { es: this.productDetailsEsp, en: this.productDetailsEng }
-        this.changeField('json_details', JSON.stringify(this.product.details))
+          this.product.details_en[i].items = this.removeElement(j, this.product.details_en[i].items)
+          this.changeField('json_details_en', JSON.stringify({ details: this.product.details_en }))
+        } else {
+          this.product.details_es[i].items = this.removeElement(j, this.product.details_es[i].items)
+          this.changeField('json_details_es', JSON.stringify({ details: this.product.details_es }))
+        }
       },
       changeDetails (i, j, value) {
         const lang = this.pos ? 'en' : 'es'
         if (lang === 'en') {
-          this.productDetailsEng[i].items[j] = value
-        } else { this.productDetailsEsp[i].items[j] = value }
-        this.product.details = { es: this.productDetailsEsp, en: this.productDetailsEng }
-        this.changes['json_details'] = JSON.stringify(this.product.details)
+          this.product.details_en[i].items[j] = value
+          this.changeField('json_details_en', JSON.stringify({ details: this.product.details_en }))
+        } else {
+          this.product.details_es[i].items[j] = value
+          this.changeField('json_details_es', JSON.stringify({ details: this.product.details_es }))
+        }
       },
       addDetail (i) {
         const lang = this.pos ? 'en' : 'es'
         if (i === undefined || i === null) {
           if (lang === 'en') {
-            this.productDetailsEng.push({ text: '', items: [] })
-          } else if (lang === 'es') {
-            this.productDetailsEsp.push({ text: '', items: [] })
+            this.product.details_en.push({
+              text: '',
+              items: [],
+            })
+          } else {
+            this.product.details_es.push({
+              text: '',
+              items: [],
+            })
           }
         } else {
           if (lang === 'en') {
-            this.productDetailsEng[i].items.push('')
-          } else if (lang === 'es') {
-            this.productDetailsEsp[i].items.push('')
+            this.product.details_en[i].items.push('')
+          } else {
+            this.product.details_es[i].items.push('')
           }
         }
         console.log(this.productDetails, '----after')

@@ -146,14 +146,14 @@
         <v-col md="8">
           <h1 style=" color: #C80000 ;  ">
             {{ localeLang === 'es' ? product.name_json.es : product.name_json.en }}
-<!--            {{ product.name }}-->
+            {{ product.name }}
           </h1>
           <p
             style="color:grey"
             class="text-uppercase"
           >
             {{ localeLang === 'es' ? product.description_json.es : product.description_json.en }}
-<!--            {{ product.description }}-->
+            {{ product.description }}
           </p>
         </v-col>
       </v-row>
@@ -204,7 +204,7 @@
       >
         <v-col
           v-for="(item, i) in imagesUrlFiltered"
-          :key="item"
+          :key="i"
           sm="6"
           md="5"
           lg="3"
@@ -229,7 +229,7 @@
       </v-row>
     </v-col>
     <v-row
-      v-for="(item, i) in !loading && product ? localeLang === 'es' ? product.details.es : product.details.en ? product.details.en : [] : []"
+      v-for="(item, i) in !loading && product ? localeLang === 'es' ? product.details_es : product.details_en ? product.details_en : [] : []"
       :key="i"
       justify="center"
       align="center"
