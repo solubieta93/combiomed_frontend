@@ -6,11 +6,11 @@
     class="ma-0 pa-0"
   >
     <v-carousel-item
-      v-for="(item,i) in combiomedPortada"
-      :key="i"
+      v-for="item in 8"
+      :key="item"
     >
       <v-img
-        :src="`${baseUrl}combiomed/${item}`"
+        :src="`${baseUrl}banner/${item}.png`"
         height="80vh"
       >
         <v-col
@@ -22,7 +22,6 @@
             height="16%"
             width="100vw"
             max-height="16%"
-
           />
         </v-col>
       </v-img>
@@ -34,8 +33,6 @@
   export default ({
     data: function () {
       return {
-        combiomedPortada:
-          [ 'combiomed0.png', 'combiomed2.png', 'combiomed3.png', 'combiomed4.png', 'combiomed6.png' ],
         baseUrl: process.env.BASE_URL,
       }
     },
