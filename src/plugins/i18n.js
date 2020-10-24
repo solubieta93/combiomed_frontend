@@ -257,7 +257,7 @@ const messages = {
     downloadGaceta: 'Descargar Gaceta Oficial de Cuba',
     notData: 'No hay elementos para mostrar',
 
-    countByPage: 'Cantidad por paginas',
+    countByPage: 'Cantidad por páginas',
     buscar: 'Buscar',
     all: 'Todos',
     avisoLegalTitle: 'Aviso Legal',

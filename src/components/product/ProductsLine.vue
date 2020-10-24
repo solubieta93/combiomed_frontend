@@ -21,7 +21,7 @@
               class="text-uppercase"
               style=" margin-top:-5%;margin-left: 16px; color:#293D66;"
             >
-              {{$t('linesProduct')}}
+              {{ $t('linesProduct') }}
               <br>
             </h3>
           </v-row>
@@ -37,8 +37,8 @@
       />
     </v-container>
 
-  <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
-   <v-row
+    <!-- TO ADD LINE PRODUCTS, ONLY ADMIN CAN DO IT -->
+    <v-row
       v-if="isAdmin"
       justify="center"
     >
@@ -52,7 +52,7 @@
             color="pink"
             to="/products/newLine"
           >
-             <v-icon>mdi-plus</v-icon>
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
           <v-btn
             fab
@@ -68,9 +68,9 @@
           </v-btn>
         </v-row>
       </v-col>
-   </v-row>
+    </v-row>
   </div>
-    <!-- </v-img> -->
+  <!-- </v-img> -->
 </template>
 
 <script>
@@ -98,7 +98,7 @@
         return this.productsTypes.map(x => this.buildItem(x))
       },
       locale () {
-        return i18n.locale;
+        return i18n.locale
       },
     },
     mounted: async function () {

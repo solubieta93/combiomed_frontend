@@ -130,6 +130,7 @@
 <script>
   import PaginateItems from '@/components/core/PaginateItems'
   import { mapGetters } from 'vuex'
+  import { i18n } from '../../plugins/i18n'
 
   export default {
     components: {
@@ -157,8 +158,11 @@
       isAdmin: function () {
         return this.user && this.user.is_superuser
       },
+      localeLang () {
+        return i18n.locale;
+      },
       selectProductsTypes () {
-        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
+        return this.productsTypes.map(x => ({ text: this.localeLang === 'es' ? x.title_json.es : x.title_json.en, value: x.id.toString() }))
       },
       routeType () {
         return this.$route.query['type'] && this.selectProductsTypes.some(x => x.value === this.$route.query['type'])

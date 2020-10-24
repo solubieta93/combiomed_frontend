@@ -119,7 +119,7 @@
         return this.user && this.user.is_superuser
       },
       selectProductsTypes () {
-        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
+        return this.productsTypes.map(x => ({ text: x.title_json.es, value: x.id.toString() }))
       },
       productType () {
         return this.typeId && this.productsTypes ? this.productsTypes.filter(x => x.id.toString() === this.typeId)[0] : null

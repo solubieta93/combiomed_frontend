@@ -65,11 +65,13 @@
         const { posts, count } = result
         this.posts = posts
         this.count_post = count
+        console.log('result --> ', result)
+        console.log('count post --> ', this.count_post)
         this.loading = false
         this.firstStep = false
         return {
           items: posts.map(x => this.buildItem(x)),
-          count: !search ? count - 4 : count,
+          count: !search ? count - 4 >= 0 ? count - 4 : 0 : count,
         }
       },
       buildItem (news) {
