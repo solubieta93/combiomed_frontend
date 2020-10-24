@@ -199,8 +199,8 @@
         return {
           item: {
             id: product.id,
-            title: product.name,
-            description: product.description,
+            title_json: product.name_json,
+            description_json: product.description_json,
             image: product.images ? product.images[product.defaultImage] : product.image,
             owner: product.owner,
             files: product.files,

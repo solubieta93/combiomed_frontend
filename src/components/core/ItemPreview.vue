@@ -29,7 +29,7 @@
           >
             <v-col>
               <h4 class="text-uppercase pl-2">
-                {{ item.title_json ? locale === 'es' ? item.title_json.es : item.title_json.en : item.title }}
+                {{ locale === 'es' ? item.title_json.es : item.title_json.en }}
               </h4>
               <v-divider
                 v-if="hover"

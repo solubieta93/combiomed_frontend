@@ -146,14 +146,12 @@
         <v-col md="8">
           <h1 style=" color: #C80000 ;  ">
             {{ localeLang === 'es' ? product.name_json.es : product.name_json.en }}
-            {{ product.name }}
           </h1>
           <p
             style="color:grey"
             class="text-uppercase"
           >
             {{ localeLang === 'es' ? product.description_json.es : product.description_json.en }}
-            {{ product.description }}
           </p>
         </v-col>
       </v-row>

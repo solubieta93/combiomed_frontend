@@ -76,8 +76,8 @@
         return {
           item: {
             id: news.id,
-            title: news.title,
-            description: news.abstract,
+            title_json: news.title_json,
+            description_json: news.abstract_json,
             image: news.image,
           },
           pathTo: `/news/${news.id}`,
