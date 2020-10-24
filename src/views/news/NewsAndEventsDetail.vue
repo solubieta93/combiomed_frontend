@@ -34,12 +34,14 @@
               class="text-uppercase"
               style="color: grey;"
             >
-              {{ post.title }}
+              {{ localeLang === 'es' ? post.title_json.es : post.title_json.en }}
+<!--              {{ post.title }}-->
               <br>
             </h3>
           </v-row>
+          <!--            v-for="(item, i) in !loading && post ? post.details : []"-->
           <v-row
-            v-for="(item, i) in !loading && post ? post.details : []"
+            v-for="(item, i) in post ? localeLang === 'es' ? post.details_es : post.details_en ? post.details_en : [] : []"
             :key="i"
             justify="center"
             align="center"
@@ -141,7 +143,7 @@
     >
       <show-post-detail
         :post="card"
-        :ubication_news="i === 0 ? 'Right' : (i === 1 ? 'Left' : '') "
+        :ubicationNews="i === 0 ? 'Right' : (i === 1 ? 'Left' : '') "
       />
     </v-row>
 
@@ -181,7 +183,7 @@
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import ShowPostDetail from '@/components/newsAndevents/ShowPostDetail'
   import { mapGetters } from 'vuex'
-
+  import { i18n } from '@/plugins/i18n'
   export default {
     components: {
       NewsAndEventsItems,
@@ -215,6 +217,9 @@
           case 'lg': return 'height:80vh; width:100vw'
           case 'xl': return 'height:80vh; width:100vw'
         }
+      },
+      localeLang () {
+        return i18n.locale;
       },
     },
     watch: {

@@ -6,8 +6,11 @@ import { apiURI } from '../../utils/globalConstants'
 export const unzip = x => ({
     ...x,
     image: x.image ? apiURI + x.image : null,
-    details: x.details && x.details.details
-      ? x.details.details
+    details_es: x.details_es && x.details_es.details
+      ? x.details_es.details
+      : [],
+    details_en: x.details_en && x.details_en.details
+      ? x.details_en.details
       : [],
 })
 
@@ -309,7 +312,8 @@ const actions = {
         return Object({
             title: '',
             abstract: '',
-            details: [],
+            details_es: [],
+            details_en: [],
             files: [],
             news: false,
             image: null,

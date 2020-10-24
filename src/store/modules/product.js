@@ -13,7 +13,7 @@ const unzipProduct = x => ({
     details_es: x.details_es && x.details_es.details
       ? x.details_es.details
       : [],
-    details_en: x.details_eng && x.details_en.details
+    details_en: x.details_en && x.details_en.details
       ? x.details_en.details
       : [],
 })

@@ -58,7 +58,7 @@
         post: null,
         postId: null,
         error: null,
-        snackbar: false,        
+        snackbar: false,
         modeEdition: true,
       }
     },

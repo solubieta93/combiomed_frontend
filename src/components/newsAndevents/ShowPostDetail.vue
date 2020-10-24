@@ -41,7 +41,7 @@
         </v-row>
 <!--        v-for="(item, i) in post ? post.details : []"-->
         <v-row
-          v-for="(item, i) in post ? localeLang === 'es' ? post.details.es : post.details.en ? post.details.en : [] : []"
+          v-for="(item, i) in post ? localeLang === 'es' ? post.details_es : post.details_en ? post.details_en : [] : []"
           :key="i"
           justify="center"
           align="center"
@@ -86,7 +86,7 @@
         </v-row>
 <!--        v-for="(item, i) in post ? post.details : []"-->
         <v-row
-          v-for="(item, i) in post ? localeLang === 'es' ? post.details.es : post.details.en ? post.details.en : [] : []"
+          v-for="(item, i) in post ? localeLang === 'es' ? post.details_es : post.details_en ? post.details_en : [] : []"
           :key="i"
           justify="center"
           align="center"
