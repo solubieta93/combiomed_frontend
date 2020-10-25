@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-row class="justify-end pr-8">
     <v-menu offset-y>
       <template v-slot:activator="{on, attrs}">
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import { i18n } from '@/plugins/i18n'
   export default {
     data () {
       return {
@@ -44,7 +45,7 @@
           { flag: 'es', language: 'es', title: 'Español' },
           { flag: 'us', language: 'en', title: 'English' },
         ],
-        currentLanguage: 0,
+        currentLanguage: i18n.locale === 'es' ? 0 : 1,
       }
     },
     methods: {
@@ -52,7 +53,7 @@
         this.currentLanguage = index
         this.$emit('changeLocale', language)
       },
-    }
+    },
   }
 </script>
 

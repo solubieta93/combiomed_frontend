@@ -1,6 +1,6 @@
 <template>
-<!--  backgroundImage: `url(${baseUrl}combiomed/combiomed3.png)`-->
-<!--  // backgroundImage: 'linear-gradient(rgb(233,13,8,.7) , white, rgb(233,13,8,.7))'-->
+  <!--  backgroundImage: `url(${baseUrl}combiomed/combiomed3.png)`-->
+  <!--  // backgroundImage: 'linear-gradient(rgb(233,13,8,.7) , white, rgb(233,13,8,.7))'-->
   <v-row
     style="background-size: cover;"
     :style="{
@@ -10,8 +10,56 @@
     align="center"
     justify="center"
   >
+    <v-dialog
+      v-model="initLogin"
+      persistent
+      max-width="400"
+    >
+      <v-card>
+        <v-card-title style="text-align: justify" >
+          {{ $t('loginDialogText') }}
+        </v-card-title>
+        <v-card-text
+          class="pb-0"
+          style="text-align: center"
+        >
+          <span
+            class="red--text subtitle-1"
+          >{{ $t('loginDialogText2') }}</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-row class="justify-center container--fluid">
+            <v-col class="pa-0">
+              <v-btn
+                text
+                color="primary"
+                block
+                style="text-decoration: underline "
+                @click="() => goBack()"
+              >
+                {{ $t('goBack') }}
+              </v-btn>
+            </v-col>
+            <v-col class="pa-0">
+              <v-btn
+                text
+                block
+                color="primary"
+                style="text-decoration: underline "
+                @click="initLogin = false"
+              >
+                {{ $t('understand') }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-overlay :value="showOverlay">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
+      <v-progress-circular
+        indeterminate
+        size="64"
+      />
     </v-overlay>
 
     <div class="login">
@@ -29,7 +77,7 @@
           >
           <v-text-field
             v-model="unique"
-            label="Nombre de Usuario"
+            :label="$t('userName')"
             :rules="[rules.required]"
             clearable
             outlined
@@ -47,7 +95,7 @@
             :rules="[rules.required, rules.charactersLength(8), rules.validPassword]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            label="Contaseña"
+            :label="$t('password')"
             counter
             @click:append="show1 = !show1"
           />
@@ -60,7 +108,7 @@
                 dark
                 @click="login"
               >
-                Aceptar
+                {{ $t('accept') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -73,7 +121,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import Rules from '../utils/rules'
-  import { baseUrl } from '../utils/globalConstants';
+  import { baseUrl } from '../utils/globalConstants'
 
   export default {
     name: 'Login',
@@ -87,7 +135,8 @@
         show4: false,
         password: '',
         rules: Rules,
-        showOverlay: false
+        showOverlay: false,
+        initLogin: true,
       }
     },
     computed: {
@@ -114,9 +163,9 @@
         // console.log(v, '--v')
       },
       authError (v) {
-        console.log(v, '---v');
+        console.log(v, '---v')
         if (v) {
-          console.log(v, 'entro');
+          console.log(v, 'entro')
           this.$notify({
             type: 'error',
             title: 'Error',
@@ -125,17 +174,19 @@
             duration: 6000,
           })
         }
-
       },
     },
     methods: {
       login: async function () {
-        this.showOverlay = true;
+        this.showOverlay = true
         await this.$store.dispatch('signinUser', {
           username: this.unique,
           password: this.password,
         })
-        this.showOverlay = false;
+        this.showOverlay = false
+      },
+      goBack () {
+        this.$router.push('/')
       },
     },
   }

@@ -127,6 +127,14 @@ const messages = {
     avisoLegalFullText: 'Información General\n' +
       'El sitio web combiomed.biocubafarma.cu pertenece a la empresa COMBIOMED Tecnología Médica' +
       ' Digital (en adelante COMBIOMED) con domicilio en calle 202, entre 17 y 19 Siboney, Playa, La Habana. \n',
+    login: 'Login',
+    userName: 'Username',
+    password: 'Password',
+    accept: 'Accept',
+    loginDialogText: 'This action is currently only allowed for administrators.\n ',
+    loginDialogText2: 'Sorry for the inconvenience we could cause ',
+    understand: 'Understand',
+    goBack: 'Go back',
   },
   es: {
     quienessomos: 'quienes somos',
@@ -159,6 +167,7 @@ const messages = {
     contacts: 'Contactos',
     home: 'Inicio',
     out: 'Salir',
+    userName: 'Nombre de Usuario',
 
     linesProduct: 'Líneas de Productos',
     servAutoText1: 'Con más de cuatro décadas de experiencia, nuestro equipo de Automatización de COMBIOMED se\n' +
@@ -312,6 +321,13 @@ const messages = {
       'Información de contacto\n' +
       'En caso de que UD detecte irregularidades, violaciones de estos términos y condiciones o desee aclarar ' +
       'sus dudas en relación a nuestros servicios, puede escribirnos a la cuenta de correo combio@icid.cu\n',
+    login: 'Entrar',
+    password: 'Contraseña',
+    accept: 'Aceptar',
+    loginDialogText: 'Esta acción actualmente es solo permitida para los administradores del sitio \n.',
+    loginDialogText2: 'Disculpe las molestias que pudimos causar.',
+    understand: 'Entiendo',
+    goBack: 'Ir atrás',
   },
 }
 

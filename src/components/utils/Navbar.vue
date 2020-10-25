@@ -10,6 +10,7 @@
         color="red"
         @click="drawer = !drawer"
       />
+
       <intenationalization-button
         @changeLocale="(locale)=> changeLocale(locale)"
       />
@@ -148,12 +149,11 @@
                 </v-menu>
               </v-item>
               <v-tab
-                v-if="!!user"
                 background-color="transparent"
                 class="white--text"
-                @click="logout"
+                @click="!!user ? logout() : login()"
               >
-                {{ $t('out') }}
+                {{ !!user ? $t('out') : $t('login') }}
               </v-tab>
             </v-tabs>
           </v-col>
@@ -219,12 +219,11 @@
           </v-list-item>
         </v-list-group>
         <v-list-item
-          v-if="!!user"
-          @click="logout"
+          @click="!!user ? logout() : login()"
         >
           <v-list-item-content>
             <v-list-item-title class="white--text">
-              {{ $t('out') }}
+              {{ !!user ? $t('out') : $t('login') }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -294,8 +293,12 @@
     },
     methods: {
       logout: async function () {
+        console.log('logout')
         await this.$store.dispatch('signOut')
         this.$router.push('/')
+      },
+      login () {
+        this.$router.push('/login')
       },
       pushRoute (i, path) {
         this.tab = i
