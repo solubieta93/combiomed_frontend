@@ -4,7 +4,10 @@
     class="pa-0 ma-0"
     style="background-color: white"
   >
-    <carousel-portada />
+    <carousel-portada
+      :folder-name="product.name_json.es ? product.name_json.es : 'products'"
+      :count-items="2"
+    />
 
     <!-- <v-img
       :src="`${baseUrl}web-combiomed-historia-03.png`"

@@ -3,23 +3,10 @@
     fluid
     class="white_back pa-0 ma-0"
   >
-    <v-img
-      src="ampa- (1).png"
-      height="80vh"
-    >
-      <v-col
-        class="d-flex flex-column-reverse ma-0 pa-0"
-        style="height:100%"
-      >
-        <v-img
-          src="web-combiomed-historia-03.png"
-          height="16%"
-          width="100vw"
-          max-height="16%"
-        />
-      </v-col>
-    </v-img>
-
+    <carousel-portada
+      folder-name="news"
+      :count-items="9"
+    />
     <!-- TITLE -->
     <v-col cols="12">
       <v-row
@@ -79,13 +66,14 @@
 <script>
   import NewsAndEventsItems from '@/components/newsAndevents/NewsAndEventsItems'
   import PrincipalNewsAndEvents from '@/components/newsAndevents/PrincipalNewsAndEvents'
-
+  import CarouselPortada from '@/components/utils/CarouselPortada'
   import { mapGetters } from 'vuex'
 
   export default {
     components: {
       NewsAndEventsItems,
       PrincipalNewsAndEvents,
+      CarouselPortada,
     },
     data () {
       return {

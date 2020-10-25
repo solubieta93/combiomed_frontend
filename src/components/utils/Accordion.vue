@@ -1,5 +1,13 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+  >
+<!--    style="background-size: cover; position: relative"
+    :style="{
+      backgroundAttachment: 'scroll',
+      backgroundPosition: '0px 0px, 50% 50%',
+      backgroundImage: ` url(\'${baseUrl}background/web-combiomed-historia-04.png\')`
+    }"-->
     <v-card
       tile
       elevation="0"
@@ -20,7 +28,7 @@
                 class="text-uppercase"
                 style="margin-top: -14px; margin-left: 16px; "
               >
-                {{$t('quienessomos')}}
+                {{ $t('quienessomos') }}
                 <br>
               </h3>
             </v-row>
@@ -36,11 +44,11 @@
       >
         <v-col md="8">
           <p class="text-justify">
-            {{$t('quienesSomosText1')}}
+            {{ $t('quienesSomosText1') }}
             <br>
           </p>
           <p class="text-justify">
-            {{$t('quienesSomosText2')}}
+            {{ $t('quienesSomosText2') }}
           </p>
         </v-col>
       </v-row>
@@ -65,10 +73,10 @@
 
               cols="12"
             >
-              <h2>{{$t('genesis')}}</h2>
-              <h3> {{$t('computadoraText1')}}</h3>
+              <h2>{{ $t('genesis') }}</h2>
+              <h3> {{ $t('computadoraText1') }}</h3>
               <p class="text-justify">
-                {{$t('computadoraText2')}}
+                {{ $t('computadoraText2') }}
               </p>
             </v-col>
             <v-col
@@ -127,5 +135,4 @@ div img{
   margin:auto;
   width:100%;
 }
-
 </style>

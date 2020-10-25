@@ -4,22 +4,11 @@
     fluid
     style="background-color: white"
   >
-    <v-img
-      :src="`${baseUrl}doctus VIII.png`"
-      :style="imgStyle"
-    >
-      <v-col
-        class="d-flex flex-column-reverse ma-0 pa-0"
-        style="height:100%"
-      >
-        <v-img
-          :src="`${baseUrl}web-combiomed-historia-03.png`"
-          height="16%"
-          width="100vw"
-          max-height="16%"
-        />
-      </v-col>
-    </v-img>
+
+    <carousel-portada
+      :folder-name="productsSelected"
+      :count-items="countProductsSelected"
+    />
 
     <v-row
       justify="center"
@@ -131,10 +120,12 @@
   import PaginateItems from '@/components/core/PaginateItems'
   import { mapGetters } from 'vuex'
   import { i18n } from '../../plugins/i18n'
+  import CarouselPortada from '@/components/utils/CarouselPortada'
 
   export default {
     components: {
       PaginateItems,
+      CarouselPortada,
     },
     data () {
       return {
@@ -151,6 +142,8 @@
         hasCreated: false,
         addProduct: false,
         newProduct: [],
+        productsSelected: 'products',
+        countProductsSelected: 4,
       }
     },
     computed: {
@@ -159,7 +152,7 @@
         return this.user && this.user.is_superuser
       },
       localeLang () {
-        return i18n.locale;
+        return i18n.locale
       },
       selectProductsTypes () {
         return this.productsTypes.map(x => ({ text: this.localeLang === 'es' ? x.title_json.es : x.title_json.en, value: x.id.toString() }))

@@ -6,12 +6,13 @@
     class="ma-0 pa-0"
   >
     <v-carousel-item
-      v-for="item in 8"
+      v-for="item in countItems"
       :key="item"
     >
       <v-img
-        :src="`${baseUrl}banner/${item}.png`"
+        :src="`${baseUrl}${folderName}/${item}.png`"
         height="80vh"
+        @error="errorInFolder"
       >
         <v-col
           class="d-flex flex-column-reverse ma-0 pa-0"
@@ -31,10 +32,25 @@
 
 <script>
   export default ({
+    props: {
+      folderName: {
+        type: String,
+        default: 'banner',
+      },
+      countItems: {
+        type: Number,
+        default: 8,
+      },
+    },
     data: function () {
       return {
         baseUrl: process.env.BASE_URL,
       }
+    },
+    methods: {
+      errorInFolder () {
+        this.folderName = 'banner'
+      },
     },
   })
 </script>
