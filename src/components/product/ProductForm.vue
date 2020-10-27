@@ -30,7 +30,7 @@
                 />
                 <v-text-field
                   v-model="descriptionEsp"
-                  label="Descripcion"
+                  label="Descripción"
                   :rules="[rules.charactersLength(null, 100)]"
                   counter="100"
                   class="subtitle-1"
@@ -43,7 +43,7 @@
                   dense
                   color="#8b0000"
                   :loading="loading"
-                  label="Linea de producto"
+                  label="Línea de producto"
                   :rules="[rules.required]"
                   @click:clear="onUpdateSelected"
                   @change="onUpdateSelected"
@@ -378,6 +378,7 @@
   import ImagesComponent from '../core/ImagesComponent'
   import FilesInputComponent from '../core/FilesInputComponent'
   import Rules from '../../utils/rules'
+  import {i18n} from '../../plugins/i18n'
 
   export default {
     name: 'ProductForm',
@@ -421,8 +422,11 @@
       descriptionEng: '',
     }),
     computed: {
+      localeLang () {
+        return i18n.locale;
+      },
       selectProductsTypes () {
-        return this.productsTypes.map(x => ({ text: x.title, value: x.id.toString() }))
+        return this.productsTypes.map(x => ({ text: this.localeLang === 'es' ? x.title_json.es : x.title_json.en, value: x.id.toString() }))
       },
       imagesUrlFiltered () {
         return this.imagesURLs.map((x, i) => [x, i]).filter(x => x[1] !== this.indexCurrent)
