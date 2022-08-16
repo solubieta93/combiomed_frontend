@@ -1,4 +1,4 @@
-# ananda-spa-staff-dev
+# combiomed-staff-dev
 
 ## Project setup
 ```
